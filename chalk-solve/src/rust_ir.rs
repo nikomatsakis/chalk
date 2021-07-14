@@ -3,9 +3,9 @@
 //! compiler.
 
 use chalk_derive::{Fold, HasInterner, Visit};
-use chalk_ir::cast::Cast;
 use chalk_ir::fold::shift::Shift;
 use chalk_ir::interner::Interner;
+use chalk_ir::{cast::Cast, AssocConstId, Const};
 use chalk_ir::{
     try_break,
     visit::{ControlFlow, Visit},
@@ -22,12 +22,20 @@ pub struct AssociatedTyValueId<I: Interner>(pub I::DefId);
 chalk_ir::id_visit!(AssociatedTyValueId);
 chalk_ir::id_fold!(AssociatedTyValueId);
 
+/// Identifier for an "associated const value" found in some impl.
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct AssociatedConstValueId<I: Interner>(pub I::DefId);
+
+chalk_ir::id_visit!(AssociatedConstValueId);
+chalk_ir::id_fold!(AssociatedConstValueId);
+
 #[derive(Clone, Debug, PartialEq, Eq, Hash, Visit)]
 pub struct ImplDatum<I: Interner> {
     pub polarity: Polarity,
     pub binders: Binders<ImplDatumBound<I>>,
     pub impl_type: ImplType,
     pub associated_ty_value_ids: Vec<AssociatedTyValueId<I>>,
+    pub associated_const_value_ids: Vec<AssociatedConstValueId<I>>,
 }
 
 impl<I: Interner> ImplDatum<I> {
@@ -238,6 +246,7 @@ pub struct TraitDatum<I: Interner> {
     pub flags: TraitFlags,
 
     pub associated_ty_ids: Vec<AssocTypeId<I>>,
+    pub associated_const_ids: Vec<AssocConstId<I>>,
 
     /// If this is a well-known trait, which one? If `None`, this is a regular,
     /// user-defined trait.
@@ -505,6 +514,49 @@ impl<I: Interner> Visit<I> for AssociatedTyDatum<I> {
     }
 }
 
+/// Represents an associated const declaration found inside of a trait:
+///
+/// ```notrust
+/// trait Foo<P1..Pn> { // P0 is Self
+///     const Bar: [type] (= [const]);
+/// }
+/// ```
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
+pub struct AssociatedConstDatum<I: Interner> {
+    /// The trait this associated const is defined in.
+    pub trait_id: TraitId<I>,
+
+    /// The ID of this associated const.
+    pub id: AssocConstId<I>,
+
+    /// Name of this associated const.
+    pub name: I::Identifier,
+
+    /// Type of this associated const.
+    pub ty: Ty<I>,
+
+    /// Value of this associated const with variables `P0...Pn`
+    /// from the trait the assoc const is in.
+    pub binders: Option<Binders<Const<I>>>,
+}
+
+// Manual implementation to avoid I::Identifier type.
+impl<I: Interner> Visit<I> for AssociatedConstDatum<I> {
+    fn visit_with<'i, B>(
+        &self,
+        visitor: &mut dyn chalk_ir::visit::Visitor<'i, I, BreakTy = B>,
+        outer_binder: DebruijnIndex,
+    ) -> ControlFlow<B>
+    where
+        I: 'i,
+    {
+        try_break!(self.trait_id.visit_with(visitor, outer_binder));
+        try_break!(self.id.visit_with(visitor, outer_binder));
+        try_break!(self.ty.visit_with(visitor, outer_binder));
+        self.binders.visit_with(visitor, outer_binder)
+    }
+}
+
 /// Encodes the parts of `AssociatedTyDatum` where the parameters
 /// `P0..Pm` are in scope (`bounds` and `where_clauses`).
 #[derive(Clone, Debug, PartialEq, Eq, Hash, Fold, Visit, HasInterner)]
@@ -612,6 +664,13 @@ pub struct AssociatedTyValue<I: Interner> {
 pub struct AssociatedTyValueBound<I: Interner> {
     /// Type that we normalize to. The X in `type Foo<'a> = X`.
     pub ty: Ty<I>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Hash, Fold, Visit)]
+pub struct AssociatedConstValue<I: Interner> {
+    pub impl_id: ImplId<I>,
+    pub associated_const_id: AssocConstId<I>,
+    pub value: Binders<Const<I>>,
 }
 
 /// Represents the bounds for an `impl Trait` type.

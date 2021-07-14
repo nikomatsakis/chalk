@@ -262,6 +262,7 @@ impl<I: Interner> RenderAsRust<I> for ConstValue<I> {
             ConstValue::InferenceVar(_) => write!(f, "_"),
             ConstValue::Placeholder(_) => write!(f, "<const placeholder>"),
             ConstValue::Concrete(value) => write!(f, "{:?}", value.interned),
+            ConstValue::ConstProjection(_) => todo!(),
         }
     }
 }

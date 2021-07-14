@@ -9,7 +9,7 @@ use chalk_ir::{
 use std::collections::BTreeSet;
 
 /// Collects the identifiers needed to resolve all the names for a given
-/// set of identifers, excluding identifiers we already have.
+/// set of identifiers, excluding identifiers we already have.
 ///
 /// When recording identifiers to print, the `LoggingRustIrDatabase` only
 /// records identifiers the solver uses. But the solver assumes well-formedness,
@@ -65,6 +65,10 @@ pub fn collect_unrecorded_ids<'i, I: Interner, DB: RustIrDatabase<I>>(
                         .visit_with(&mut collector, DebruijnIndex::INNERMOST);
                     assoc_ty_datum.visit_with(&mut collector, DebruijnIndex::INNERMOST);
                 }
+                for assoc_const_id in &trait_datum.associated_const_ids {
+                    let assoc_const_datum = collector.db.associated_const_data(*assoc_const_id);
+                    assoc_const_datum.visit_with(&mut collector, DebruijnIndex::INNERMOST);
+                }
             }
             RecordedItemId::OpaqueTy(opaque_id) => {
                 collector
@@ -81,6 +85,10 @@ pub fn collect_unrecorded_ids<'i, I: Interner, DB: RustIrDatabase<I>>(
                 for id in &impl_datum.associated_ty_value_ids {
                     let assoc_ty_value = collector.db.associated_ty_value(*id);
                     assoc_ty_value.visit_with(&mut collector, DebruijnIndex::INNERMOST);
+                }
+                for id in &impl_datum.associated_const_value_ids {
+                    let assoc_const_value = collector.db.associated_const_value(*id);
+                    assoc_const_value.visit_with(&mut collector, DebruijnIndex::INNERMOST);
                 }
                 impl_datum.visit_with(&mut collector, DebruijnIndex::INNERMOST);
             }

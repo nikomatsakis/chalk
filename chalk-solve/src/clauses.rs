@@ -624,7 +624,7 @@ pub fn program_clauses_that_could_match<I: Interner>(
                     )?;
                 }
 
-                push_program_clauses_for_associated_type_values_in_impls_of(
+                push_program_clauses_for_associated_values_in_impls_of(
                     builder,
                     environment,
                     trait_id,
@@ -722,7 +722,7 @@ fn push_clauses_for_compatible_normalize<I: Interner>(
 /// }
 /// ```
 #[instrument(level = "debug", skip(builder))]
-fn push_program_clauses_for_associated_type_values_in_impls_of<I: Interner>(
+fn push_program_clauses_for_associated_values_in_impls_of<I: Interner>(
     builder: &mut ClauseBuilder<'_, I>,
     environment: &Environment<I>,
     trait_id: TraitId<I>,

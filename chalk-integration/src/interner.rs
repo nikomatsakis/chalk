@@ -4,8 +4,8 @@ use chalk_ir::{
     TyKind,
 };
 use chalk_ir::{
-    AdtId, AliasTy, AssocTypeId, CanonicalVarKind, CanonicalVarKinds, ConstData, Constraint,
-    Constraints, FnDefId, Goals, InEnvironment, Lifetime, OpaqueTy, OpaqueTyId,
+    AdtId, AliasTy, AssocConstId, AssocTypeId, CanonicalVarKind, CanonicalVarKinds, ConstData,
+    Constraint, Constraints, FnDefId, Goals, InEnvironment, Lifetime, OpaqueTy, OpaqueTyId,
     ProgramClauseImplication, ProgramClauses, ProjectionTy, QuantifiedWhereClauses,
     SeparatorTraitRef, Substitution, TraitId, Ty, TyData, VariableKind, VariableKinds, Variances,
 };
@@ -95,6 +95,13 @@ impl Interner for ChalkIr {
         fmt: &mut fmt::Formatter<'_>,
     ) -> Option<fmt::Result> {
         tls::with_current_program(|prog| Some(prog?.debug_assoc_type_id(id, fmt)))
+    }
+
+    fn debug_assoc_const_id(
+        id: AssocConstId<ChalkIr>,
+        fmt: &mut fmt::Formatter<'_>,
+    ) -> Option<fmt::Result> {
+        tls::with_current_program(|prog| Some(prog?.debug_assoc_const_id(id, fmt)))
     }
 
     fn debug_opaque_ty_id(

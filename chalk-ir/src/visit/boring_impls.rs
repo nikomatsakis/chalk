@@ -5,11 +5,11 @@
 //! The more interesting impls of `Visit` remain in the `visit` module.
 
 use crate::{
-    try_break, AdtId, AssocTypeId, ClausePriority, ClosureId, Constraints, ControlFlow,
-    DebruijnIndex, FloatTy, FnDefId, ForeignDefId, GeneratorId, GenericArg, Goals, ImplId, IntTy,
-    Interner, Mutability, OpaqueTyId, PlaceholderIndex, ProgramClause, ProgramClauses,
-    QuantifiedWhereClauses, QuantifierKind, Safety, Scalar, Substitution, SuperVisit, TraitId,
-    UintTy, UniverseIndex, Visit, Visitor,
+    try_break, AdtId, AssocConstId, AssocTypeId, ClausePriority, ClosureId, Constraints,
+    ControlFlow, DebruijnIndex, FloatTy, FnDefId, ForeignDefId, GeneratorId, GenericArg, Goals,
+    ImplId, IntTy, Interner, Mutability, OpaqueTyId, PlaceholderIndex, ProgramClause,
+    ProgramClauses, QuantifiedWhereClauses, QuantifierKind, Safety, Scalar, Substitution,
+    SuperVisit, TraitId, UintTy, UniverseIndex, Visit, Visitor,
 };
 use std::{marker::PhantomData, sync::Arc};
 
@@ -231,6 +231,7 @@ id_visit!(AdtId);
 id_visit!(TraitId);
 id_visit!(OpaqueTyId);
 id_visit!(AssocTypeId);
+id_visit!(AssocConstId);
 id_visit!(FnDefId);
 id_visit!(ClosureId);
 id_visit!(GeneratorId);

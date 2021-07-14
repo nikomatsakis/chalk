@@ -1,6 +1,7 @@
 #[macro_use]
 mod util;
 
+mod assoc_const;
 mod assoc_ty;
 mod built_ins;
 mod const_;

@@ -551,6 +551,8 @@ impl<I: Interner> AntiUnifier<'_, '_, I> {
             (ConstValue::Placeholder(_), _) | (_, ConstValue::Placeholder(_)) => {
                 self.new_const_variable(ty)
             }
+
+            (ConstValue::ConstProjection(_), _) | (_, ConstValue::ConstProjection(_)) => todo!(),
         }
     }
 

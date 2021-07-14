@@ -1,6 +1,6 @@
 use crate::interner::ChalkIr;
 use crate::{tls, Identifier, TypeKind};
-use chalk_ir::{could_match::CouldMatch, UnificationDatabase};
+use chalk_ir::{could_match::CouldMatch, AssocConstId, UnificationDatabase};
 use chalk_ir::{debug::Angle, Variance};
 use chalk_ir::{
     debug::SeparatorTraitRef, AdtId, AliasTy, AssocTypeId, Binders, CanonicalVarKinds, ClosureId,
@@ -9,9 +9,10 @@ use chalk_ir::{
     Substitution, TraitId, Ty, TyKind, UintTy, Variances,
 };
 use chalk_solve::rust_ir::{
-    AdtDatum, AdtRepr, AssociatedTyDatum, AssociatedTyValue, AssociatedTyValueId, ClosureKind,
-    FnDefDatum, FnDefInputsAndOutputDatum, GeneratorDatum, GeneratorWitnessDatum, ImplDatum,
-    ImplType, OpaqueTyDatum, TraitDatum, WellKnownTrait,
+    AdtDatum, AdtRepr, AssociatedConstDatum, AssociatedConstValue, AssociatedConstValueId,
+    AssociatedTyDatum, AssociatedTyValue, AssociatedTyValueId, ClosureKind, FnDefDatum,
+    FnDefInputsAndOutputDatum, GeneratorDatum, GeneratorWitnessDatum, ImplDatum, ImplType,
+    OpaqueTyDatum, TraitDatum, WellKnownTrait,
 };
 use chalk_solve::split::Split;
 use chalk_solve::RustIrDatabase;
@@ -76,6 +77,10 @@ pub struct Program {
     pub associated_ty_values:
         BTreeMap<AssociatedTyValueId<ChalkIr>, Arc<AssociatedTyValue<ChalkIr>>>,
 
+    /// For each associated ty value `const C: T = XXX` found in an impl:
+    pub associated_const_values:
+        BTreeMap<AssociatedConstValueId<ChalkIr>, Arc<AssociatedConstValue<ChalkIr>>>,
+
     // From opaque type name to item-id. Used during lowering only.
     pub opaque_ty_ids: BTreeMap<Identifier, OpaqueTyId<ChalkIr>>,
 
@@ -96,6 +101,9 @@ pub struct Program {
 
     /// For each associated ty declaration `type Foo` found in a trait:
     pub associated_ty_data: BTreeMap<AssocTypeId<ChalkIr>, Arc<AssociatedTyDatum<ChalkIr>>>,
+
+    /// For each associated const declaration `const C: T` found in a trait:
+    pub associated_const_data: BTreeMap<AssocConstId<ChalkIr>, Arc<AssociatedConstDatum<ChalkIr>>>,
 
     /// For each user-specified clause
     pub custom_clauses: Vec<ProgramClause<ChalkIr>>,
@@ -157,6 +165,20 @@ impl tls::DebugContext for Program {
         } else {
             fmt.debug_struct("InvalidAssocTypeId")
                 .field("index", &assoc_type_id.0)
+                .finish()
+        }
+    }
+
+    fn debug_assoc_const_id(
+        &self,
+        assoc_const_id: AssocConstId<ChalkIr>,
+        fmt: &mut fmt::Formatter<'_>,
+    ) -> Result<(), fmt::Error> {
+        if let Some(d) = self.associated_const_data.get(&assoc_const_id) {
+            write!(fmt, "({:?}::{})", d.trait_id, d.name)
+        } else {
+            fmt.debug_struct("InvalidAssocConstId")
+                .field("index", &assoc_const_id.0)
                 .finish()
         }
     }
@@ -388,6 +410,13 @@ impl RustIrDatabase<ChalkIr> for Program {
         self.associated_ty_data[&ty].clone()
     }
 
+    fn associated_const_data(
+        &self,
+        ty: AssocConstId<ChalkIr>,
+    ) -> Arc<AssociatedConstDatum<ChalkIr>> {
+        self.associated_const_data[&ty].clone()
+    }
+
     fn trait_datum(&self, id: TraitId<ChalkIr>) -> Arc<TraitDatum<ChalkIr>> {
         self.trait_data[&id].clone()
     }
@@ -401,6 +430,13 @@ impl RustIrDatabase<ChalkIr> for Program {
         id: AssociatedTyValueId<ChalkIr>,
     ) -> Arc<AssociatedTyValue<ChalkIr>> {
         self.associated_ty_values[&id].clone()
+    }
+
+    fn associated_const_value(
+        &self,
+        id: AssociatedConstValueId<ChalkIr>,
+    ) -> Arc<AssociatedConstValue<ChalkIr>> {
+        self.associated_const_values[&id].clone()
     }
 
     fn opaque_ty_data(&self, id: OpaqueTyId<ChalkIr>) -> Arc<OpaqueTyDatum<ChalkIr>> {
@@ -585,6 +621,14 @@ impl RustIrDatabase<ChalkIr> for Program {
     fn assoc_type_name(&self, assoc_type_id: AssocTypeId<ChalkIr>) -> String {
         self.associated_ty_data
             .get(&assoc_type_id)
+            .unwrap()
+            .name
+            .to_string()
+    }
+
+    fn assoc_const_name(&self, assoc_const_id: AssocConstId<ChalkIr>) -> String {
+        self.associated_const_data
+            .get(&assoc_const_id)
             .unwrap()
             .name
             .to_string()

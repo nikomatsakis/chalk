@@ -7,15 +7,16 @@ use crate::{
     tls, SolverChoice,
 };
 use chalk_ir::{
-    AdtId, AssocTypeId, Binders, Canonical, CanonicalVarKinds, ClosureId, ConstrainedSubst,
-    Environment, FnDefId, GeneratorId, GenericArg, Goal, ImplId, InEnvironment, OpaqueTyId,
-    ProgramClause, ProgramClauses, Substitution, TraitId, Ty, TyKind, UCanonical,
+    AdtId, AssocConstId, AssocTypeId, Binders, Canonical, CanonicalVarKinds, ClosureId,
+    ConstrainedSubst, Environment, FnDefId, GeneratorId, GenericArg, Goal, ImplId, InEnvironment,
+    OpaqueTyId, ProgramClause, ProgramClauses, Substitution, TraitId, Ty, TyKind, UCanonical,
     UnificationDatabase, Variances,
 };
 use chalk_solve::rust_ir::{
-    AdtDatum, AdtRepr, AssociatedTyDatum, AssociatedTyValue, AssociatedTyValueId, ClosureKind,
-    FnDefDatum, FnDefInputsAndOutputDatum, GeneratorDatum, GeneratorWitnessDatum, ImplDatum,
-    OpaqueTyDatum, TraitDatum, WellKnownTrait,
+    AdtDatum, AdtRepr, AssociatedConstDatum, AssociatedConstValue, AssociatedConstValueId,
+    AssociatedTyDatum, AssociatedTyValue, AssociatedTyValueId, ClosureKind, FnDefDatum,
+    FnDefInputsAndOutputDatum, GeneratorDatum, GeneratorWitnessDatum, ImplDatum, OpaqueTyDatum,
+    TraitDatum, WellKnownTrait,
 };
 use chalk_solve::{RustIrDatabase, Solution, SubstitutionResult};
 use salsa::Database;
@@ -91,6 +92,13 @@ impl RustIrDatabase<ChalkIr> for ChalkDatabase {
         self.program_ir().unwrap().associated_ty_data(ty)
     }
 
+    fn associated_const_data(
+        &self,
+        ty: AssocConstId<ChalkIr>,
+    ) -> Arc<AssociatedConstDatum<ChalkIr>> {
+        self.program_ir().unwrap().associated_const_data(ty)
+    }
+
     fn trait_datum(&self, id: TraitId<ChalkIr>) -> Arc<TraitDatum<ChalkIr>> {
         self.program_ir().unwrap().trait_datum(id)
     }
@@ -104,6 +112,13 @@ impl RustIrDatabase<ChalkIr> for ChalkDatabase {
         id: AssociatedTyValueId<ChalkIr>,
     ) -> Arc<AssociatedTyValue<ChalkIr>> {
         self.program_ir().unwrap().associated_ty_values[&id].clone()
+    }
+
+    fn associated_const_value(
+        &self,
+        id: AssociatedConstValueId<ChalkIr>,
+    ) -> Arc<AssociatedConstValue<ChalkIr>> {
+        self.program_ir().unwrap().associated_const_values[&id].clone()
     }
 
     fn opaque_ty_data(&self, id: OpaqueTyId<ChalkIr>) -> Arc<OpaqueTyDatum<ChalkIr>> {
@@ -233,6 +248,10 @@ impl RustIrDatabase<ChalkIr> for ChalkDatabase {
 
     fn assoc_type_name(&self, assoc_ty_id: AssocTypeId<ChalkIr>) -> String {
         self.program_ir().unwrap().assoc_type_name(assoc_ty_id)
+    }
+
+    fn assoc_const_name(&self, assoc_const_id: AssocConstId<ChalkIr>) -> String {
+        self.program_ir().unwrap().assoc_const_name(assoc_const_id)
     }
 
     fn opaque_type_name(&self, opaque_ty_id: OpaqueTyId<ChalkIr>) -> String {

@@ -252,12 +252,12 @@ ClosureArgs: Vec<Ty> = {
 
 TraitDefn: TraitDefn = {
     <auto:AutoKeyword?> <marker:MarkerKeyword?> <upstream:UpstreamKeyword?> <fundamental:FundamentalKeyword?> <non_enumerable:NonEnumerableKeyword?> <coinductive:CoinductiveKeyword?> <object_safe:ObjectSafeKeyword?> <well_known:WellKnownTrait?> "trait" <n:Id><p:Angle<VariableKind>>
-        <w:QuantifiedWhereClauses> "{" <a:AssocTyDefn*> "}" => TraitDefn
+        <w:QuantifiedWhereClauses> "{" <a:AssocItemDefn*> "}" => TraitDefn
     {
         name: n,
         variable_kinds: p,
         where_clauses: w,
-        assoc_ty_defns: a,
+        assoc_item_defns: a,
         well_known,
         flags: TraitFlags {
             auto: auto.is_some(),
@@ -271,6 +271,11 @@ TraitDefn: TraitDefn = {
     }
 };
 
+AssocItemDefn: AssocItemDefn = {
+    <ty:AssocTyDefn> => AssocItemDefn::Ty(ty),
+    <c:AssocConstDefn> => AssocItemDefn::Const(c),
+}
+
 AssocTyDefn: AssocTyDefn = {
     "type" <name:Id> <p:Angle<VariableKind>> <b:(":" <Plus<QuantifiedInlineBound>>)?>
         <w:QuantifiedWhereClauses> ";" =>
@@ -283,6 +288,17 @@ AssocTyDefn: AssocTyDefn = {
         }
     }
 };
+
+AssocConstDefn: AssocConstDefn = {
+    "const" <name:Id> ":" <ty:Ty> <value:("=" <Const>)?> ";" =>
+    {
+        AssocConstDefn {
+            name,
+            ty,
+            value
+        }
+    }
+}
 
 OpaqueTyDefn: OpaqueTyDefn = {
     "opaque" "type" <name:Id> <p:Angle<VariableKind>> <b:(":" <Plus<QuantifiedInlineBound>>)?>
@@ -339,7 +355,7 @@ QuantifiedInlineBound: QuantifiedInlineBound = {
 
 Impl: Impl = {
     <external:UpstreamKeyword?> "impl" <p:Angle<VariableKind>> <mark:"!"?> <t:Id> <a:Angle<GenericArg>> "for" <s:Ty>
-        <w:QuantifiedWhereClauses> "{" <assoc:AssocTyValue*> "}" =>
+        <w:QuantifiedWhereClauses> "{" <assoc:AssocItemValue*> "}" =>
     {
         let mut args = vec![GenericArg::Ty(s)];
         args.extend(a);
@@ -351,7 +367,7 @@ Impl: Impl = {
                 args: args,
             },
             where_clauses: w,
-            assoc_ty_values: assoc,
+            assoc_item_values: assoc,
             impl_type: external.map(|_| ImplType::External).unwrap_or(ImplType::Local),
         }
     },
@@ -373,6 +389,11 @@ RawVariance: Variance = {
 
 Variances: Vec<Variance> = "#" "[" "variance" "(" <Comma<RawVariance>> ")" "]";
 
+AssocItemValue: AssocItemValue = {
+    <ty:AssocTyValue> => AssocItemValue::Ty(ty),
+    <c:AssocConstValue> => AssocItemValue::Const(c),
+}
+
 AssocTyValue: AssocTyValue = {
     <default:"default"?> "type" <n:Id> <a:Angle<VariableKind>> "=" <v:Ty> ";" => AssocTyValue {
         name: n,
@@ -380,6 +401,17 @@ AssocTyValue: AssocTyValue = {
         value: v,
         default: default.is_some(),
     },
+};
+
+AssocConstValue: AssocConstValue = {
+    "const" <name:Id> ":" <ty:Ty> "=" <value: Const> ";" =>
+    {
+        AssocConstValue {
+            name,
+            ty,
+            value,
+        }
+    }
 };
 
 pub Ty: Ty = {

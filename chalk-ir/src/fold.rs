@@ -583,6 +583,7 @@ where
                 }),
             }
             .intern(folder.interner())),
+            ConstValue::ConstProjection(_) => todo!(),
         }
     }
 }

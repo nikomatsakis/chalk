@@ -42,6 +42,17 @@ impl<I: Interner> RenderAsRust<I> for AssocTypeId<I> {
     }
 }
 
+impl<I: Interner> RenderAsRust<I> for AssocConstId<I> {
+    fn fmt(&self, s: &InternalWriterState<'_, I>, f: &'_ mut Formatter<'_>) -> Result {
+        // TODO: use debug methods?
+        write!(
+            f,
+            "{}",
+            s.alias_for_id_name(self.0, s.db().assoc_const_name(*self))
+        )
+    }
+}
+
 impl<I: Interner> RenderAsRust<I> for OpaqueTyId<I> {
     fn fmt(&self, s: &InternalWriterState<'_, I>, f: &'_ mut Formatter<'_>) -> Result {
         // TODO: use debug methods?

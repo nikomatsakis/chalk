@@ -56,6 +56,14 @@ impl<I: Interner, DB: RustIrDatabase<I>> RustIrDatabase<I> for StubWrapper<'_, D
         Arc::new(v)
     }
 
+    fn associated_const_data(
+        &self,
+        ty: chalk_ir::AssocConstId<I>,
+    ) -> std::sync::Arc<crate::rust_ir::AssociatedConstDatum<I>> {
+        let v = (*self.db.associated_const_data(ty)).clone();
+        Arc::new(v)
+    }
+
     fn trait_datum(
         &self,
         trait_id: chalk_ir::TraitId<I>,
@@ -117,6 +125,13 @@ impl<I: Interner, DB: RustIrDatabase<I>> RustIrDatabase<I> for StubWrapper<'_, D
         _id: crate::rust_ir::AssociatedTyValueId<I>,
     ) -> std::sync::Arc<crate::rust_ir::AssociatedTyValue<I>> {
         unreachable!("associated type values should never be stubbed")
+    }
+
+    fn associated_const_value(
+        &self,
+        _id: crate::rust_ir::AssociatedConstValueId<I>,
+    ) -> std::sync::Arc<crate::rust_ir::AssociatedConstValue<I>> {
+        unreachable!("associated const values should never be stubbed")
     }
 
     fn opaque_ty_data(
@@ -248,6 +263,10 @@ impl<I: Interner, DB: RustIrDatabase<I>> RustIrDatabase<I> for StubWrapper<'_, D
 
     fn assoc_type_name(&self, assoc_ty_id: chalk_ir::AssocTypeId<I>) -> String {
         self.db.assoc_type_name(assoc_ty_id)
+    }
+
+    fn assoc_const_name(&self, assoc_const_id: chalk_ir::AssocConstId<I>) -> String {
+        self.db.assoc_const_name(assoc_const_id)
     }
 
     fn opaque_type_name(&self, opaque_ty_id: chalk_ir::OpaqueTyId<I>) -> String {

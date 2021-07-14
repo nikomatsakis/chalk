@@ -49,6 +49,9 @@ pub trait RustIrDatabase<I: Interner>: Debug {
     /// Returns the datum for the associated type with the given id.
     fn associated_ty_data(&self, ty: AssocTypeId<I>) -> Arc<AssociatedTyDatum<I>>;
 
+    /// Returns the datum for the associated conts with the given id.
+    fn associated_const_data(&self, ty: AssocConstId<I>) -> Arc<AssociatedConstDatum<I>>;
+
     /// Returns the datum for the definition with the given id.
     fn trait_datum(&self, trait_id: TraitId<I>) -> Arc<TraitDatum<I>>;
 
@@ -75,6 +78,10 @@ pub trait RustIrDatabase<I: Interner>: Debug {
 
     /// Returns the `AssociatedTyValue` with the given id.
     fn associated_ty_value(&self, id: AssociatedTyValueId<I>) -> Arc<AssociatedTyValue<I>>;
+
+    /// Returns the `AssociatedConstValue` with the given id.
+    fn associated_const_value(&self, id: AssociatedConstValueId<I>)
+        -> Arc<AssociatedConstValue<I>>;
 
     /// Returns the `OpaqueTyDatum` with the given id.
     fn opaque_ty_data(&self, id: OpaqueTyId<I>) -> Arc<OpaqueTyDatum<I>>;
@@ -164,31 +171,37 @@ pub trait RustIrDatabase<I: Interner>: Debug {
     fn unification_database(&self) -> &dyn UnificationDatabase<I>;
 
     /// Retrieves a trait's original name. No uniqueness guarantees, but must
-    /// a valid Rust identifier.
+    /// be a valid Rust identifier.
     fn trait_name(&self, trait_id: TraitId<I>) -> String {
         sanitize_debug_name(|f| I::debug_trait_id(trait_id, f))
     }
 
     /// Retrieves a struct's original name. No uniqueness guarantees, but must
-    /// a valid Rust identifier.
+    /// be a valid Rust identifier.
     fn adt_name(&self, adt_id: AdtId<I>) -> String {
         sanitize_debug_name(|f| I::debug_adt_id(adt_id, f))
     }
 
     /// Retrieves the name of an associated type. No uniqueness guarantees, but must
-    /// a valid Rust identifier.
+    /// be a valid Rust identifier.
     fn assoc_type_name(&self, assoc_ty_id: AssocTypeId<I>) -> String {
         sanitize_debug_name(|f| I::debug_assoc_type_id(assoc_ty_id, f))
     }
 
+    /// Retrieves the name of an associated constant. No uniqueness guarantees, but must
+    /// be a valid Rust identifier.
+    fn assoc_const_name(&self, assoc_const_id: AssocConstId<I>) -> String {
+        sanitize_debug_name(|f| I::debug_assoc_const_id(assoc_const_id, f))
+    }
+
     /// Retrieves the name of an opaque type. No uniqueness guarantees, but must
-    /// a valid Rust identifier.
+    /// be a valid Rust identifier.
     fn opaque_type_name(&self, opaque_ty_id: OpaqueTyId<I>) -> String {
         sanitize_debug_name(|f| I::debug_opaque_ty_id(opaque_ty_id, f))
     }
 
     /// Retrieves the name of a function definition. No uniqueness guarantees, but must
-    /// a valid Rust identifier.
+    /// be a valid Rust identifier.
     fn fn_def_name(&self, fn_def_id: FnDefId<I>) -> String {
         sanitize_debug_name(|f| I::debug_fn_def_id(fn_def_id, f))
     }

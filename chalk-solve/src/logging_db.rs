@@ -128,6 +128,15 @@ where
         ty_datum
     }
 
+    fn associated_const_data(
+        &self,
+        ty: chalk_ir::AssocConstId<I>,
+    ) -> Arc<crate::rust_ir::AssociatedConstDatum<I>> {
+        let ty_datum = self.ws.db().associated_const_data(ty);
+        self.record(ty_datum.trait_id);
+        ty_datum
+    }
+
     fn trait_datum(&self, trait_id: TraitId<I>) -> Arc<TraitDatum<I>> {
         self.record(trait_id);
         self.ws.db().trait_datum(trait_id)
@@ -171,6 +180,15 @@ where
         id: crate::rust_ir::AssociatedTyValueId<I>,
     ) -> Arc<crate::rust_ir::AssociatedTyValue<I>> {
         let value = self.ws.db().associated_ty_value(id);
+        self.record(value.impl_id);
+        value
+    }
+
+    fn associated_const_value(
+        &self,
+        id: crate::rust_ir::AssociatedConstValueId<I>,
+    ) -> Arc<crate::rust_ir::AssociatedConstValue<I>> {
+        let value = self.ws.db().associated_const_value(id);
         self.record(value.impl_id);
         value
     }
@@ -235,6 +253,10 @@ where
 
     fn assoc_type_name(&self, assoc_ty_id: AssocTypeId<I>) -> String {
         self.ws.db().assoc_type_name(assoc_ty_id)
+    }
+
+    fn assoc_const_name(&self, assoc_const_id: AssocConstId<I>) -> String {
+        self.ws.db().assoc_const_name(assoc_const_id)
     }
 
     fn opaque_type_name(&self, opaque_ty_id: OpaqueTyId<I>) -> String {
@@ -395,6 +417,13 @@ where
         self.db.associated_ty_data(ty)
     }
 
+    fn associated_const_data(
+        &self,
+        ty: chalk_ir::AssocConstId<I>,
+    ) -> Arc<crate::rust_ir::AssociatedConstDatum<I>> {
+        self.db.associated_const_data(ty)
+    }
+
     fn trait_datum(&self, trait_id: TraitId<I>) -> Arc<TraitDatum<I>> {
         self.db.trait_datum(trait_id)
     }
@@ -428,6 +457,13 @@ where
         id: crate::rust_ir::AssociatedTyValueId<I>,
     ) -> Arc<crate::rust_ir::AssociatedTyValue<I>> {
         self.db.associated_ty_value(id)
+    }
+
+    fn associated_const_value(
+        &self,
+        id: crate::rust_ir::AssociatedConstValueId<I>,
+    ) -> Arc<crate::rust_ir::AssociatedConstValue<I>> {
+        self.db.associated_const_value(id)
     }
 
     fn opaque_ty_data(&self, id: OpaqueTyId<I>) -> Arc<OpaqueTyDatum<I>> {
@@ -491,6 +527,10 @@ where
 
     fn assoc_type_name(&self, assoc_ty_id: AssocTypeId<I>) -> String {
         self.db.assoc_type_name(assoc_ty_id)
+    }
+
+    fn assoc_const_name(&self, assoc_const_id: AssocConstId<I>) -> String {
+        self.db.assoc_const_name(assoc_const_id)
     }
 
     fn opaque_type_name(&self, opaque_ty_id: OpaqueTyId<I>) -> String {

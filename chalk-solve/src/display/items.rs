@@ -232,6 +232,17 @@ impl<I: Interner> RenderAsRust<I> for TraitDatum<I> {
             }),
             "\n"
         )?;
+
+        write_joined_non_empty_list!(
+            f,
+            "\n{}\n",
+            self.associated_const_ids.iter().map(|assoc_const_id| {
+                let assoc_const_data = s.db().associated_const_data(*assoc_const_id);
+                format!("{}{}", s.indent(), (*assoc_const_data).display(s))
+            }),
+            "\n"
+        )?;
+
         write!(f, "}}")?;
         Ok(())
     }
@@ -304,6 +315,17 @@ impl<I: Interner> RenderAsRust<I> for ImplDatum<I> {
                     .to_string()
             });
             write_joined_non_empty_list!(f, "\n{}\n", assoc_ty_values, "\n")?;
+
+            let assoc_const_values =
+                self.associated_const_value_ids
+                    .iter()
+                    .map(|assoc_const_value| {
+                        s.db()
+                            .associated_const_value(*assoc_const_value)
+                            .display(s)
+                            .to_string()
+                    });
+            write_joined_non_empty_list!(f, "\n{}\n", assoc_const_values, "\n")?;
         }
         write!(f, "}}")?;
         Ok(())
@@ -443,6 +465,27 @@ impl<I: Interner> RenderAsRust<I> for AssociatedTyValue<I> {
         write!(f, "{}type {}", s.indent(), assoc_ty_data.id.display(s))?;
         write_joined_non_empty_list!(f, "<{}>", &assoc_ty_value_display, ", ")?;
         write!(f, " = {};", value.ty.display(s))?;
+        Ok(())
+    }
+}
+
+impl<I: Interner> RenderAsRust<I> for AssociatedConstDatum<I> {
+    fn fmt(&self, s: &InternalWriterState<'_, I>, f: &mut Formatter<'_>) -> Result {
+        let assoc_const_data = s.db().associated_const_data(self.id);
+
+        write!(f, "{}const {}", s.indent(), assoc_const_data.id.display(s))?;
+        write!(f, ": {};", assoc_const_data.ty.display(s))?;
+        Ok(())
+    }
+}
+
+impl<I: Interner> RenderAsRust<I> for AssociatedConstValue<I> {
+    fn fmt(&self, s: &InternalWriterState<'_, I>, f: &mut Formatter<'_>) -> Result {
+        let assoc_const_data = s.db().associated_const_data(self.associated_const_id);
+
+        write!(f, "{}const {}", s.indent(), assoc_const_data.id.display(s))?;
+        write!(f, ": {}", assoc_const_data.ty.display(s))?;
+        write!(f, " = {};", self.value.skip_binders().display(s))?;
         Ok(())
     }
 }

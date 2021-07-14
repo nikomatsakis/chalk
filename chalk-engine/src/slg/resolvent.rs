@@ -698,6 +698,8 @@ impl<'i, I: Interner> Zipper<'i, I> for AnswerSubstitutor<'i, I> {
                 "structural mismatch between answer `{:?}` and pending goal `{:?}`",
                 answer, pending,
             ),
+
+            (ConstValue::ConstProjection(_), _) => todo!(),
         }
     }
 

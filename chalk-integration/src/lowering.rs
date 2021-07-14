@@ -884,18 +884,30 @@ impl LowerWithEnv for Lifetime {
     }
 }
 
-impl LowerWithEnv for (&Impl, ImplId<ChalkIr>, &AssociatedTyValueIds) {
+impl LowerWithEnv
+    for (
+        &Impl,
+        ImplId<ChalkIr>,
+        &AssociatedTyValueIds,
+        &AssociatedConstValueIds,
+    )
+{
     type Lowered = rust_ir::ImplDatum<ChalkIr>;
 
     fn lower(&self, env: &Env) -> LowerResult<Self::Lowered> {
-        let (impl_, impl_id, associated_ty_value_ids) = self;
+        let (impl_, impl_id, associated_ty_value_ids, associated_const_value_ids) = self;
 
         let polarity = impl_.polarity.lower();
         let binders = env.in_binders(impl_.all_parameters(), |env| {
             let trait_ref = impl_.trait_ref.lower(env)?;
             debug!(?trait_ref);
 
-            if !polarity.is_positive() && !impl_.assoc_ty_values.is_empty() {
+            if !polarity.is_positive()
+                && impl_
+                    .assoc_item_values
+                    .iter()
+                    .any(|item| item.ty().is_some())
+            {
                 Err(RustIrError::NegativeImplAssociatedValues(
                     impl_.trait_ref.trait_name.clone(),
                 ))?;
@@ -913,18 +925,29 @@ impl LowerWithEnv for (&Impl, ImplId<ChalkIr>, &AssociatedTyValueIds) {
         // within the impl, which should have already assigned and
         // stored in the map
         let associated_ty_value_ids = impl_
-            .assoc_ty_values
+            .assoc_item_values
             .iter()
+            .filter_map(|item| item.ty())
             .map(|atv| associated_ty_value_ids[&(*impl_id, atv.name.str.clone())])
             .collect();
 
         debug!(?associated_ty_value_ids);
+
+        let associated_const_value_ids = impl_
+            .assoc_item_values
+            .iter()
+            .filter_map(|item| item.const_())
+            .map(|acv| associated_const_value_ids[&(*impl_id, acv.name.str.clone())])
+            .collect();
+
+        debug!(?associated_const_value_ids);
 
         Ok(rust_ir::ImplDatum {
             polarity,
             binders,
             impl_type: impl_.impl_type.lower(),
             associated_ty_value_ids,
+            associated_const_value_ids,
         })
     }
 }
@@ -993,9 +1016,21 @@ impl LowerWithEnv for (&TraitDefn, chalk_ir::TraitId<ChalkIr>) {
         })?;
 
         let associated_ty_ids: Vec<_> = trait_defn
-            .assoc_ty_defns
+            .assoc_item_defns
             .iter()
+            .filter_map(|item| item.ty())
             .map(|defn| env.lookup_associated_ty(*trait_id, &defn.name).unwrap().id)
+            .collect();
+
+        let associated_const_ids: Vec<_> = trait_defn
+            .assoc_item_defns
+            .iter()
+            .filter_map(|item| item.const_())
+            .map(|defn| {
+                env.lookup_associated_const(*trait_id, &defn.name)
+                    .unwrap()
+                    .id
+            })
             .collect();
 
         let trait_datum = rust_ir::TraitDatum {
@@ -1003,6 +1038,7 @@ impl LowerWithEnv for (&TraitDefn, chalk_ir::TraitId<ChalkIr>) {
             binders,
             flags: trait_defn.flags.lower(),
             associated_ty_ids,
+            associated_const_ids,
             well_known: trait_defn.well_known.map(|def| def.lower()),
         };
 
@@ -1030,6 +1066,16 @@ pub fn lower_goal(goal: &Goal, program: &LoweredProgram) -> LowerResult<chalk_ir
             ((datum.trait_id, datum.name.clone()), lookup)
         })
         .collect();
+    let associated_const_lookups: BTreeMap<_, _> = program
+        .associated_const_data
+        .iter()
+        .map(|(&associated_const_id, datum)| {
+            let lookup = AssociatedConstLookup {
+                id: associated_const_id,
+            };
+            ((datum.trait_id, datum.name.clone()), lookup)
+        })
+        .collect();
 
     let auto_traits = program
         .trait_data
@@ -1051,6 +1097,7 @@ pub fn lower_goal(goal: &Goal, program: &LoweredProgram) -> LowerResult<chalk_ir
         trait_kinds: &program.trait_kinds,
         opaque_ty_kinds: &program.opaque_ty_kinds,
         associated_ty_lookups: &associated_ty_lookups,
+        associated_const_lookups: &associated_const_lookups,
         foreign_ty_ids: &program.foreign_ty_ids,
         parameter_map: BTreeMap::new(),
         auto_traits: &auto_traits,

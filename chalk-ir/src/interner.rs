@@ -1,5 +1,4 @@
 //! Encapsulates the concrete representation of core types such as types and goals.
-use crate::AliasTy;
 use crate::AssocTypeId;
 use crate::CanonicalVarKind;
 use crate::CanonicalVarKinds;
@@ -36,6 +35,7 @@ use crate::VariableKinds;
 use crate::Variance;
 use crate::Variances;
 use crate::{AdtId, TyKind};
+use crate::{AliasTy, AssocConstId};
 use crate::{Const, ConstData};
 use std::fmt::{self, Debug};
 use std::hash::Hash;
@@ -206,7 +206,7 @@ pub trait Interner: Debug + Copy + Eq + Ord + Hash {
         None
     }
 
-    /// Prints the debug representation of a type-kind-id.
+    /// Prints the debug representation of a trait id.
     /// Returns `None` to fallback to the default debug output (e.g.,
     /// if no info about current program is available from TLS).
     #[allow(unused_variables)]
@@ -217,11 +217,21 @@ pub trait Interner: Debug + Copy + Eq + Ord + Hash {
         None
     }
 
-    /// Prints the debug representation of a type-kind-id.
+    /// Prints the debug representation of an associated-type-id.
     /// Returns `None` to fallback to the default debug output.
     #[allow(unused_variables)]
     fn debug_assoc_type_id(
         type_id: AssocTypeId<Self>,
+        fmt: &mut fmt::Formatter<'_>,
+    ) -> Option<fmt::Result> {
+        None
+    }
+
+    /// Prints the debug representation of an associated-const-id.
+    /// Returns `None` to fallback to the default debug output.
+    #[allow(unused_variables)]
+    fn debug_assoc_const_id(
+        type_id: AssocConstId<Self>,
         fmt: &mut fmt::Formatter<'_>,
     ) -> Option<fmt::Result> {
         None

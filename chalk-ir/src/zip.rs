@@ -321,6 +321,7 @@ macro_rules! eq_zip {
 eq_zip!(I => AdtId<I>);
 eq_zip!(I => TraitId<I>);
 eq_zip!(I => AssocTypeId<I>);
+eq_zip!(I => AssocConstId<I>);
 eq_zip!(I => OpaqueTyId<I>);
 eq_zip!(I => GeneratorId<I>);
 eq_zip!(I => ForeignDefId<I>);

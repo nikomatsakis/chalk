@@ -23,6 +23,13 @@ impl<I: Interner> Debug for AssocTypeId<I> {
     }
 }
 
+impl<I: Interner> Debug for AssocConstId<I> {
+    fn fmt(&self, fmt: &mut Formatter<'_>) -> Result<(), Error> {
+        I::debug_assoc_const_id(*self, fmt)
+            .unwrap_or_else(|| write!(fmt, "AssocConstId({:?})", self.0))
+    }
+}
+
 impl<I: Interner> Debug for FnDefId<I> {
     fn fmt(&self, fmt: &mut Formatter<'_>) -> std::fmt::Result {
         I::debug_fn_def_id(*self, fmt).unwrap_or_else(|| write!(fmt, "FnDefId({:?})", self.0))
@@ -359,6 +366,7 @@ impl<I: Interner> Debug for ConstData<I> {
             ConstValue::InferenceVar(var) => write!(fmt, "{:?}", var),
             ConstValue::Placeholder(index) => write!(fmt, "{:?}", index),
             ConstValue::Concrete(evaluated) => write!(fmt, "{:?}", evaluated),
+            ConstValue::ConstProjection(_) => todo!(),
         }
     }
 }

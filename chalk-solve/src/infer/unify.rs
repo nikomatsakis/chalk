@@ -1128,6 +1128,8 @@ impl<'t, I: Interner> Unifier<'t, I> {
                 "unification encountered bound variable: a={:?} b={:?}",
                 a, b
             ),
+
+            (&ConstValue::ConstProjection(_), _) | (_, &ConstValue::ConstProjection(_)) => todo!(),
         }
     }
 

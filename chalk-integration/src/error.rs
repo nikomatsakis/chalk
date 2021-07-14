@@ -66,6 +66,7 @@ pub enum RustIrError {
     InvalidFundamentalTypesParameters(Identifier),
     NegativeImplAssociatedValues(Identifier),
     MissingAssociatedType(Identifier),
+    MissingAssociatedConst(Identifier),
     IncorrectNumberOfVarianceParameters {
         identifier: Identifier,
         expected: usize,
@@ -141,6 +142,9 @@ impl std::fmt::Display for RustIrError {
             ),
             RustIrError::MissingAssociatedType(name) => {
                 write!(f, "no associated type `{}` defined in trait", name)
+            }
+            RustIrError::MissingAssociatedConst(name) => {
+                write!(f, "no associated constant `{}` defined in trait", name)
             }
             RustIrError::IncorrectNumberOfVarianceParameters {
                 identifier,

@@ -49,6 +49,9 @@ where
     fn assoc_type_name(&self, _assoc_ty_id: chalk_ir::AssocTypeId<I>) -> String {
         "Foo".to_owned()
     }
+    fn assoc_const_name(&self, _assoc_const_id: chalk_ir::AssocConstId<I>) -> String {
+        "Foo".to_owned()
+    }
     fn opaque_type_name(&self, _opaque_ty_id: chalk_ir::OpaqueTyId<I>) -> String {
         "Foo".to_owned()
     }
@@ -63,6 +66,12 @@ where
         ty: chalk_ir::AssocTypeId<I>,
     ) -> std::sync::Arc<chalk_solve::rust_ir::AssociatedTyDatum<I>> {
         self.db.associated_ty_data(ty)
+    }
+    fn associated_const_data(
+        &self,
+        ty: chalk_ir::AssocConstId<I>,
+    ) -> std::sync::Arc<chalk_solve::rust_ir::AssociatedConstDatum<I>> {
+        self.db.associated_const_data(ty)
     }
     fn trait_datum(
         &self,
@@ -96,6 +105,12 @@ where
         id: chalk_solve::rust_ir::AssociatedTyValueId<I>,
     ) -> std::sync::Arc<chalk_solve::rust_ir::AssociatedTyValue<I>> {
         self.db.associated_ty_value(id)
+    }
+    fn associated_const_value(
+        &self,
+        id: chalk_solve::rust_ir::AssociatedConstValueId<I>,
+    ) -> std::sync::Arc<chalk_solve::rust_ir::AssociatedConstValue<I>> {
+        self.db.associated_const_value(id)
     }
     fn generator_datum(
         &self,

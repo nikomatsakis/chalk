@@ -5,7 +5,7 @@ use chalk_ir::{
 };
 use chalk_ir::{cast::Cast, ForeignDefId, WithKind};
 use chalk_parse::ast::*;
-use chalk_solve::rust_ir::AssociatedTyValueId;
+use chalk_solve::rust_ir::{AssociatedConstValueId, AssociatedTyValueId};
 use std::collections::BTreeMap;
 
 use crate::error::RustIrError;
@@ -26,8 +26,12 @@ pub type AutoTraits = BTreeMap<chalk_ir::TraitId<ChalkIr>, bool>;
 pub type OpaqueTyVariableKinds = BTreeMap<chalk_ir::OpaqueTyId<ChalkIr>, TypeKind>;
 pub type GeneratorKinds = BTreeMap<chalk_ir::GeneratorId<ChalkIr>, TypeKind>;
 pub type AssociatedTyLookups = BTreeMap<(chalk_ir::TraitId<ChalkIr>, Ident), AssociatedTyLookup>;
+pub type AssociatedConstLookups =
+    BTreeMap<(chalk_ir::TraitId<ChalkIr>, Ident), AssociatedConstLookup>;
 pub type AssociatedTyValueIds =
     BTreeMap<(chalk_ir::ImplId<ChalkIr>, Ident), AssociatedTyValueId<ChalkIr>>;
+pub type AssociatedConstValueIds =
+    BTreeMap<(chalk_ir::ImplId<ChalkIr>, Ident), AssociatedConstValueId<ChalkIr>>;
 pub type ForeignIds = BTreeMap<Ident, chalk_ir::ForeignDefId<ChalkIr>>;
 
 pub type ParameterMap = BTreeMap<Ident, chalk_ir::WithKind<ChalkIr, BoundVar>>;
@@ -47,6 +51,7 @@ pub struct Env<'k> {
     pub opaque_ty_ids: &'k OpaqueTyIds,
     pub opaque_ty_kinds: &'k OpaqueTyVariableKinds,
     pub associated_ty_lookups: &'k AssociatedTyLookups,
+    pub associated_const_lookups: &'k AssociatedConstLookups,
     pub auto_traits: &'k AutoTraits,
     pub foreign_ty_ids: &'k ForeignIds,
     pub generator_ids: &'k GeneratorIds,
@@ -73,6 +78,11 @@ pub struct Env<'k> {
 pub struct AssociatedTyLookup {
     pub id: chalk_ir::AssocTypeId<ChalkIr>,
     pub addl_variable_kinds: Vec<chalk_ir::VariableKind<ChalkIr>>,
+}
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct AssociatedConstLookup {
+    pub id: chalk_ir::AssocConstId<ChalkIr>,
 }
 
 pub enum TypeLookup<'k> {
@@ -220,6 +230,16 @@ impl Env<'_> {
         self.associated_ty_lookups
             .get(&(trait_id, ident.str.clone()))
             .ok_or(RustIrError::MissingAssociatedType(ident.clone()))
+    }
+
+    pub fn lookup_associated_const(
+        &self,
+        trait_id: TraitId<ChalkIr>,
+        ident: &Identifier,
+    ) -> LowerResult<&AssociatedConstLookup> {
+        self.associated_const_lookups
+            .get(&(trait_id, ident.str.clone()))
+            .ok_or(RustIrError::MissingAssociatedConst(ident.clone()))
     }
 
     /// Introduces new parameters, shifting the indices of existing

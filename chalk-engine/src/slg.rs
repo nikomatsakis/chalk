@@ -293,6 +293,8 @@ impl<I: Interner> MayInvalidate<'_, I> {
 
             // Only variants left are placeholder = concrete, which always fails
             (ConstValue::Placeholder(_), _) | (ConstValue::Concrete(_), _) => true,
+
+            (ConstValue::ConstProjection(_), _) => todo!(),
         }
     }
 
