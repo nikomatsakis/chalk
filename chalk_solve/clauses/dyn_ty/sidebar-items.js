@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["build_dyn_self_ty_clauses","If the self type `S` of an `Implemented` goal is a `dyn trait` type, we wish to generate program-clauses that indicates that it implements its own traits. For example, a `dyn Write` type implements `Write` and so on."]]});

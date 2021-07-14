@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["push_trait_super_clauses","Generate `Implemented` clauses for `dyn Trait` and opaque types. We need to generate `Implemented` clauses for all super traits, and for each trait we require its where clauses. (See #203.)"],["super_traits",""]]});

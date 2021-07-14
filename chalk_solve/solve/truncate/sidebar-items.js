@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["needs_truncation","“Truncation” (called “abstraction” in the papers referenced below) refers to the act of modifying a goal or answer that has become too large in order to guarantee termination."]],"struct":[["TySizeVisitor",""]]});

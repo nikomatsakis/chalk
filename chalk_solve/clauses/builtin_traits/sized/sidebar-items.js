@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["add_sized_program_clauses",""],["push_adt_sized_conditions",""],["push_tuple_sized_conditions",""]]});

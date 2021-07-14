@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["DisplayRenderAsRust","Displays `RenderAsRust` data."]],"trait":[["RenderAsRust",""]]});

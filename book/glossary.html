@@ -1,0 +1,425 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Appendix A: Glossary and terminology</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="mermaid.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="what_is_chalk.html"><strong aria-hidden="true">1.</strong> What is Chalk?</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="what_is_chalk/walkthrough.html"><strong aria-hidden="true">1.1.</strong> Walkthrough</a></li><li class="chapter-item expanded "><a href="what_is_chalk/crates.html"><strong aria-hidden="true">1.2.</strong> Crates</a></li><li class="chapter-item expanded "><a href="what_is_chalk/repl.html"><strong aria-hidden="true">1.3.</strong> REPL</a></li></ol></li><li class="chapter-item expanded "><a href="contribution_guide.html"><strong aria-hidden="true">2.</strong> Contribution guide</a></li><li class="chapter-item expanded "><a href="types.html"><strong aria-hidden="true">3.</strong> Representing and manipulating types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types/role_of_interner.html"><strong aria-hidden="true">3.1.</strong> The Interner</a></li><li class="chapter-item expanded "><a href="types/rust_types.html"><strong aria-hidden="true">3.2.</strong> Rust types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types/rust_types/alias.html"><strong aria-hidden="true">3.2.1.</strong> Alias types</a></li><li class="chapter-item expanded "><a href="types/rust_types/application_ty.html"><strong aria-hidden="true">3.2.2.</strong> Application types</a></li></ol></li><li class="chapter-item expanded "><a href="types/rust_lifetimes.html"><strong aria-hidden="true">3.3.</strong> Rust lifetimes</a></li><li class="chapter-item expanded "><a href="types/operations.html"><strong aria-hidden="true">3.4.</strong> Operations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types/operations/fold.html"><strong aria-hidden="true">3.4.1.</strong> Fold and the Folder trait</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="clauses.html"><strong aria-hidden="true">4.</strong> Lowering Rust IR to logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="clauses/goals_and_clauses.html"><strong aria-hidden="true">4.1.</strong> Goals and clauses</a></li><li class="chapter-item expanded "><a href="clauses/type_equality.html"><strong aria-hidden="true">4.2.</strong> Type equality and unification</a></li><li class="chapter-item expanded "><a href="clauses/implied_bounds.html"><strong aria-hidden="true">4.3.</strong> Implied bounds</a></li><li class="chapter-item expanded "><a href="clauses/lowering_rules.html"><strong aria-hidden="true">4.4.</strong> Lowering rules</a></li><li class="chapter-item expanded "><a href="clauses/opaque_types.html"><strong aria-hidden="true">4.5.</strong> Opaque types (impl Trait)</a></li><li class="chapter-item expanded "><a href="clauses/well_known_traits.html"><strong aria-hidden="true">4.6.</strong> Well known traits</a></li><li class="chapter-item expanded "><a href="clauses/wf.html"><strong aria-hidden="true">4.7.</strong> Well-formedness checking</a></li><li class="chapter-item expanded "><a href="clauses/coherence.html"><strong aria-hidden="true">4.8.</strong> Coherence</a></li></ol></li><li class="chapter-item expanded "><a href="canonical_queries.html"><strong aria-hidden="true">5.</strong> Canonical queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="canonical_queries/canonicalization.html"><strong aria-hidden="true">5.1.</strong> Canonicalization</a></li></ol></li><li class="chapter-item expanded "><a href="engine.html"><strong aria-hidden="true">6.</strong> Chalk engine</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="engine/major_concepts.html"><strong aria-hidden="true">6.1.</strong> Major concepts</a></li><li class="chapter-item expanded "><a href="engine/logic.html"><strong aria-hidden="true">6.2.</strong> Logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="engine/logic/coinduction.html"><strong aria-hidden="true">6.2.1.</strong> Coinduction</a></li></ol></li><li class="chapter-item expanded "><a href="engine/slg.html"><strong aria-hidden="true">6.3.</strong> SLG Solver</a></li></ol></li><li class="chapter-item expanded "><a href="recursive.html"><strong aria-hidden="true">7.</strong> Chalk recursive solver</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="recursive/stack.html"><strong aria-hidden="true">7.1.</strong> The stack</a></li><li class="chapter-item expanded "><a href="recursive/inductive_cycles.html"><strong aria-hidden="true">7.2.</strong> Inductive cycles</a></li><li class="chapter-item expanded "><a href="recursive/search_graph.html"><strong aria-hidden="true">7.3.</strong> The search graph and caching</a></li><li class="chapter-item expanded "><a href="recursive/coinduction.html"><strong aria-hidden="true">7.4.</strong> Coinduction</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="glossary.html" class="active">Appendix A: Glossary and terminology</a></li><li class="chapter-item expanded affix "><a href="bibliography.html">Appendix B: Bibliography</a></li><li class="chapter-item expanded affix "><a href="todo.html">Appendix C: Incomplete chapters</a></li><li class="chapter-item expanded affix "><a href="publishing.html">Appendix D: Publishing Chalk</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#glossary-and-terminology" id="glossary-and-terminology">Glossary and terminology</a></h1>
+<p>This is a glossary of terminology (possibly) used in the chalk crate.</p>
+<h2><a class="header" href="#notation" id="notation">Notation</a></h2>
+<h3><a class="header" href="#basic-notation" id="basic-notation">Basic notation</a></h3>
+<table><thead><tr><th>Notation</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><code>?0</code></td><td><a href="./types/rust_types.html#inference-variables">Type inference variable</a></td></tr>
+<tr><td><code>^0</code>, <code>^1.0</code></td><td><a href="./types/rust_types.html#bound-variables">Bound variable</a>; bound in a <a href="#debruijn-index"><code>forall</code></a></td></tr>
+<tr><td><code>!0</code>, <code>!1.0</code></td><td><a href="./types/rust_types.html#placeholders">Placeholder</a></td></tr>
+<tr><td><code>A :- B</code></td><td><a href="./clauses/goals_and_clauses.html">Clause</a>; A is true if B is true</td></tr>
+</tbody></table>
+<h3><a class="header" href="#rules" id="rules">Rules</a></h3>
+<ul>
+<li><code>forall&lt;T&gt; { (Vec&lt;T&gt;: Clone) :- (T: Clone)</code>: for every <code>T</code>, <code>Vec&lt;T&gt;</code>
+implements <code>Clone</code> if <code>T</code> implements <code>Clone</code></li>
+</ul>
+<h3><a class="header" href="#queries" id="queries">Queries</a></h3>
+<ul>
+<li><code>Vec&lt;i32&gt;: Clone</code>: does <code>Vec&lt;i32&gt;</code> implement <code>Clone</code>?</li>
+<li><code>exists&lt;T&gt; { Vec&lt;T&gt;: Clone }</code>: does there exist a <code>T</code> such that <code>Vec&lt;T&gt;</code>
+implements <code>Clone</code>?</li>
+</ul>
+<h2><a class="header" href="#binary-connective" id="binary-connective">Binary connective</a></h2>
+<p>There are sixteen logical connectives on two boolean variables. The most
+interesting in this context are listed below. There is also a truth table given
+which encodes the possible results of the operations like this</p>
+<pre><code class="language-notrust">f(false, false) f(false, true) f(true, false) f(true, true).
+</code></pre>
+<p>As a shorthand the resulting truth table is encoded with <code>true = 1</code> and <code>false = 0</code>.</p>
+<table><thead><tr><th>Truth table</th><th>Operator symbol</th><th>Common name</th></tr></thead><tbody>
+<tr><td>0001</td><td>&amp;&amp;</td><td>Conjunction; and</td></tr>
+<tr><td>1001</td><td>&lt;=&gt;</td><td>Equivalence; if and only if; iff</td></tr>
+<tr><td>1101</td><td>=&gt;</td><td>Implication; if ... then</td></tr>
+</tbody></table>
+<h2><a class="header" href="#binder" id="binder">Binder</a></h2>
+<p>A binder is an expression that binds a literal to a certain expression.
+Examples for binders:</p>
+<ul>
+<li>The universal quantifier <code>forall(a)</code> states that a certain condition holds for
+all allowed values for <code>a</code>.</li>
+<li>A function definition <code>f(x) = a * x</code> is a binder for the variable <code>x</code> whereas
+<code>a</code> is a free variable.</li>
+<li>A sum <code>\sum_n x_n</code> binds the index variable <code>n</code>.</li>
+</ul>
+<h2><a class="header" href="#canonical-form" id="canonical-form">Canonical Form</a></h2>
+<p>A formula in canonical form has the property that its De Bruijn indices are
+minimized. For example when the formula <code>forall&lt;0, 1&gt; { 0: A &amp;&amp; 1: B }</code> is
+processed, both &quot;branches&quot; <code>0: A</code> and <code>1: B</code> are processed individually. The
+first branch would be in canonical form, the second branch not since the
+occurring De Bruijn index <code>1</code> could be replaced with <code>0</code>.</p>
+<h2><a class="header" href="#clause" id="clause">Clause</a></h2>
+<p>A clause is the disjunction of several expressions. For example the clause
+<code>condition_1 || condition_2 || ...</code> states that at least one of the conditions
+holds.</p>
+<p>There are two notable special cases of clauses. A <em>Horn clause</em> has at most one
+positive literal. A <em>Definite clause</em> has exactly one positive literal.</p>
+<p><em>Horn clauses</em> can be written in the form <code>A || !B || !C || ...</code> with <code>A</code> being
+the optional positive literal. Due to the equivalence <code>(P =&gt; Q) &lt;=&gt; (!P || Q)</code>
+the clause can be expressed as <code>B &amp;&amp; C &amp;&amp; ... =&gt; A</code> which means that A is true
+if <code>B</code>, <code>C</code>, etc. are all true. All rules in chalk are in this form. For example</p>
+<pre><code class="language-rust ignore">struct A&lt;T&gt; {}
+impl&lt;T&gt; B for A&lt;T&gt; where T: C + D {}
+</code></pre>
+<p>is expressed as the <em>Horn clause</em> <code>(T: C) &amp;&amp; (T: D) =&gt; (A&lt;T&gt;: B)</code>. This formula
+has to hold for all values of <code>T</code>. The second example</p>
+<pre><code class="language-rust ignore">struct A {}
+impl B for A {}
+impl C for A {}
+</code></pre>
+<p>is expressed as the <em>Horn clause</em> <code>(A: B) &amp;&amp; (A: C)</code>. Note the missing
+consequence.</p>
+<h2><a class="header" href="#de-bruijn-index" id="de-bruijn-index">De Bruijn Index</a></h2>
+<p>De Bruijn indices numerate literals that are bound in an unambiguous way. The
+literal is given the number of its binder. The indices start at zero from the
+innermost binder increasing from the inside out.</p>
+<p>Given the example <code>forall&lt;T&gt; { exists&lt;U&gt; { T: Foo&lt;Item=U&gt; } }</code> the
+literal names <code>U</code> and <code>T</code> are replaced with <code>0</code> and <code>1</code> respectively and the names are erased from the binders: <code>forall&lt;_&gt; { exists&lt;_&gt; { 1: Foo&lt;Item=0&gt; } }</code>.</p>
+<p>As another example, in <code>forall&lt;X, Y&gt; { forall &lt;Z&gt; { X } }</code>, <code>X</code> is represented
+as <code>^1.0</code>. The <code>1</code> represents the De Bruijn index of the variable and the <code>0</code>
+represents the index in that scope: <code>X</code> is bound in the second scope counting
+from where it is referenced, and it is the first variable bound in that scope.</p>
+<h2><a class="header" href="#formula" id="formula">Formula</a></h2>
+<p>A formula is a logical expression consisting of literals and constants connected
+by logical operators.</p>
+<h2><a class="header" href="#goal" id="goal">Goal</a></h2>
+<p>With a set of type variables, given types, traits and impls, a goal specifies a
+problem which is solved by finding types for the type variables that satisfy the
+formula. For example the goal <code>exists&lt;T&gt; { T: u32 }</code> can be solved with <code>T = u32</code>.</p>
+<h2><a class="header" href="#literal" id="literal">Literal</a></h2>
+<p>A literal is an atomic element of a formula together with the constants <code>true</code>
+and <code>false</code>. It is equivalent to a variable in an algebraic expressions. Note
+that literals are <em>not</em> the same as the type variables used in specifying a
+goal.</p>
+<h2><a class="header" href="#normal-form" id="normal-form">Normal form</a></h2>
+<p>To say that a statement is in a certain <em>normal form</em> means that the pattern in
+which the subformulas are arranged fulfill certain rules. The individual patterns
+have different advantages for their manipulation.</p>
+<h3><a class="header" href="#conjunctive-normal-form-cnf" id="conjunctive-normal-form-cnf">Conjunctive normal form (CNF)</a></h3>
+<p>A formula in CNF is a conjunction of disjunctions. For example <code>(x1 || x2 || x3) &amp;&amp; (x4 || x5 || x6)</code> is in CNF.</p>
+<h3><a class="header" href="#disjunctive-normal-form-dnf" id="disjunctive-normal-form-dnf">Disjunctive normal form (DNF)</a></h3>
+<p>A formula in DNF is a disjunction of conjunctions. For example <code>(x1 &amp;&amp; x2 &amp;&amp; x3) || (x4 &amp;&amp; x5 &amp;&amp; x6)</code> is in DNF.</p>
+<h3><a class="header" href="#negation-normal-form-nnf" id="negation-normal-form-nnf">Negation normal form (NNF)</a></h3>
+<p>A formula in NNF consists only of literals, the connectives <code>&amp;&amp;</code> and <code>||</code> and
+<code>true</code> and <code>false</code>.</p>
+<h3><a class="header" href="#prenex-normal-form-pnf" id="prenex-normal-form-pnf">Prenex normal form (PNF)</a></h3>
+<p>All quantifiers are on the highest level of a formula and do not occur inside
+the subformulas of the expression.</p>
+<ul>
+<li><code>forall(x). exists(y). forall(z). P(x) &amp;&amp; P(y) =&gt; P(z)</code> is in PNF.</li>
+<li><code>(exists(x). P(x)) =&gt; exists(y). P(y) &amp;&amp; forall(z). P(z)</code> is <em>not</em> in PNF.</li>
+</ul>
+<h2><a class="header" href="#normalization" id="normalization">Normalization</a></h2>
+<p>Normalization is the process of converting an associated type to a concrete
+type. In the case of an iterator this would mean that the associated <code>Item</code> type
+is replaced with something more meaningful with respect to the individual
+context (e.g. <code>u32</code>).</p>
+<h2><a class="header" href="#projection" id="projection">Projection</a></h2>
+<p>Projection is the reference to a field or (in the context of Rust) to a type
+from another type.</p>
+<h2><a class="header" href="#satisfiability" id="satisfiability">Satisfiability</a></h2>
+<p>A formula is satisfiable iff there is a valuation for the atoms inside the
+formula that makes it true.</p>
+<h2><a class="header" href="#unification" id="unification">Unification</a></h2>
+<p>Unification is the process of solving a formula. That means unification finds
+values for all the free literals of the formula that satisfy it. In the context
+of chalk the values refer to types.</p>
+<h2><a class="header" href="#universe" id="universe">Universe</a></h2>
+<p>A universe sets the scope in which a particular variable name is bound. (See
+<em>Binder</em>.) A universe can encapsulate other universes. A universe can
+be contained by only one parent universe. Universes have therefore a tree-like
+structure. A universe can access the variable names of itself and the parent
+universes but not of the sibling universes.</p>
+<h2><a class="header" href="#well-formed" id="well-formed">Well-formed</a></h2>
+<p>A formula is well-formed if it is constructed according to a predefined set of
+syntactic rules.</p>
+<p>In the context of the Rust type system this means that basic rules for type
+construction have to be met. Two examples: 1) Given a struct definition</p>
+<pre><code class="language-rust ignore">struct HashSet&lt;T: Hash&gt;
+</code></pre>
+<p>then a type <code>HashSet&lt;i32&gt;</code> is well-formed since <code>i32</code> implements <code>Hash</code>. A type
+<code>HashSet&lt;NoHash&gt;</code> with a type <code>NoHash</code> that does not implement the <code>Hash</code> trait
+is not well-formed.</p>
+<ol start="2">
+<li>If a trait demands by its definition the implementation of further traits
+for a certain type then these secondary traits have to be implemented as well.
+If a type <code>Foo</code> implements <code>trait Eq: PartialEq</code> then this type has to implement
+<code>trait PartialEq</code> as well. If it does not, then the type <code>Foo: Eq</code> is not well
+formed according to Rust type building rules.</li>
+</ol>
+<h2><a class="header" href="#quantifier" id="quantifier">Quantifier</a></h2>
+<h3><a class="header" href="#existential-quantifier" id="existential-quantifier">Existential quantifier</a></h3>
+<p>A formula with the existential quantifier <code>exists(x). P(x)</code> is satisfiable if
+and only if there exists at least one value for all possible values of x which
+satisfies the subformula <code>P(x)</code>.</p>
+<p>In the context of chalk, the existential quantifier usually demands the
+existence of exactly one instance (i.e. type) that satisfies the formula (i.e.
+type constraints). More than one instance means that the result is ambiguous.</p>
+<h3><a class="header" href="#universal-quantifier" id="universal-quantifier">Universal quantifier</a></h3>
+<p>A formula with the universal quantifier <code>forall(x). P(x)</code> is satisfiable
+if and only if the subformula <code>P(x)</code> is true for all possible values for x.</p>
+<h3><a class="header" href="#helpful-equivalences" id="helpful-equivalences">Helpful equivalences</a></h3>
+<ul>
+<li><code>not(forall(x). P(x)) &lt;=&gt; exists(x). not(P(x))</code></li>
+<li><code>not(exists(x). P(x)) &lt;=&gt; forall(x). not(P(x))</code></li>
+</ul>
+<h2><a class="header" href="#skolemization" id="skolemization">Skolemization</a></h2>
+<p>Skolemization is a technique of transferring a logical formula with existential
+quantifiers to a statement without them. The resulting statement is in general
+not equivalent to the original statement but equisatisfiable.</p>
+<h2><a class="header" href="#validity" id="validity">Validity</a></h2>
+<p>An argument (<em>premise</em> therefore <em>conclusion</em>) is valid iff there is no
+valuation which makes the premise true and the conclusion false.</p>
+<p>Valid: <code>A &amp;&amp; B therefore A || B</code>. Invalid: <code>A || B therefore A &amp;&amp; B</code> because the
+valuation <code>A = true, B = false</code> makes the premise true and the conclusion false.</p>
+<h2><a class="header" href="#valuation" id="valuation">Valuation</a></h2>
+<p>A valuation is an assignment of values to all variables inside a logical
+formula.</p>
+<h2><a class="header" href="#fixed-points" id="fixed-points">Fixed-Points</a></h2>
+<p>A fixed-point of a function <code>f</code> is a value <code>x</code> for which <code>f(x)=x</code>.
+Similarly a pre-fixed-point is defined as <code>x ≤ f(x)</code>, whereas for a post-fixed-point it holds that <code>f(x) ≤ x</code>.</p>
+<p>A least fixed-point (lfp) of <code>f</code> is the fixed-point <code>x</code> of <code>f</code> for which all other fixed-points <code>y</code> are greater or equal (i.e. if <code>f(y)=y</code> then <code>x ≤ y</code>).
+Similarly, a greatest fixed-point (gfp) is greater or equal than all other fixed-points.
+If <code>f</code> is a function on sets, the least fixed-point is defined as the intersection of all pre-fixed-points, which are then defined as sets <code>x</code> for which <code>x ⊆ f(x)</code>.
+The greatest fixed-point is in this case the union of all post-fixed-points, respectively.</p>
+<p>This simple definition of lfp and gfp can also be lifted to general lattices.
+The results for Chalk goals form such a lattice and, thus, every solver for such goals tries to find such fixed-points.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="recursive/coinduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="bibliography.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="recursive/coinduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="bibliography.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>

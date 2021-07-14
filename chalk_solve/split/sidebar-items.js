@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["Split","Methods for splitting up the projections for associated types from the surrounding context."]]});

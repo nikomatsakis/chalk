@@ -1,0 +1,656 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Implied bounds</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../mermaid.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../what_is_chalk.html"><strong aria-hidden="true">1.</strong> What is Chalk?</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../what_is_chalk/walkthrough.html"><strong aria-hidden="true">1.1.</strong> Walkthrough</a></li><li class="chapter-item expanded "><a href="../what_is_chalk/crates.html"><strong aria-hidden="true">1.2.</strong> Crates</a></li><li class="chapter-item expanded "><a href="../what_is_chalk/repl.html"><strong aria-hidden="true">1.3.</strong> REPL</a></li></ol></li><li class="chapter-item expanded "><a href="../contribution_guide.html"><strong aria-hidden="true">2.</strong> Contribution guide</a></li><li class="chapter-item expanded "><a href="../types.html"><strong aria-hidden="true">3.</strong> Representing and manipulating types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/role_of_interner.html"><strong aria-hidden="true">3.1.</strong> The Interner</a></li><li class="chapter-item expanded "><a href="../types/rust_types.html"><strong aria-hidden="true">3.2.</strong> Rust types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/rust_types/alias.html"><strong aria-hidden="true">3.2.1.</strong> Alias types</a></li><li class="chapter-item expanded "><a href="../types/rust_types/application_ty.html"><strong aria-hidden="true">3.2.2.</strong> Application types</a></li></ol></li><li class="chapter-item expanded "><a href="../types/rust_lifetimes.html"><strong aria-hidden="true">3.3.</strong> Rust lifetimes</a></li><li class="chapter-item expanded "><a href="../types/operations.html"><strong aria-hidden="true">3.4.</strong> Operations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/operations/fold.html"><strong aria-hidden="true">3.4.1.</strong> Fold and the Folder trait</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../clauses.html"><strong aria-hidden="true">4.</strong> Lowering Rust IR to logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../clauses/goals_and_clauses.html"><strong aria-hidden="true">4.1.</strong> Goals and clauses</a></li><li class="chapter-item expanded "><a href="../clauses/type_equality.html"><strong aria-hidden="true">4.2.</strong> Type equality and unification</a></li><li class="chapter-item expanded "><a href="../clauses/implied_bounds.html" class="active"><strong aria-hidden="true">4.3.</strong> Implied bounds</a></li><li class="chapter-item expanded "><a href="../clauses/lowering_rules.html"><strong aria-hidden="true">4.4.</strong> Lowering rules</a></li><li class="chapter-item expanded "><a href="../clauses/opaque_types.html"><strong aria-hidden="true">4.5.</strong> Opaque types (impl Trait)</a></li><li class="chapter-item expanded "><a href="../clauses/well_known_traits.html"><strong aria-hidden="true">4.6.</strong> Well known traits</a></li><li class="chapter-item expanded "><a href="../clauses/wf.html"><strong aria-hidden="true">4.7.</strong> Well-formedness checking</a></li><li class="chapter-item expanded "><a href="../clauses/coherence.html"><strong aria-hidden="true">4.8.</strong> Coherence</a></li></ol></li><li class="chapter-item expanded "><a href="../canonical_queries.html"><strong aria-hidden="true">5.</strong> Canonical queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../canonical_queries/canonicalization.html"><strong aria-hidden="true">5.1.</strong> Canonicalization</a></li></ol></li><li class="chapter-item expanded "><a href="../engine.html"><strong aria-hidden="true">6.</strong> Chalk engine</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../engine/major_concepts.html"><strong aria-hidden="true">6.1.</strong> Major concepts</a></li><li class="chapter-item expanded "><a href="../engine/logic.html"><strong aria-hidden="true">6.2.</strong> Logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../engine/logic/coinduction.html"><strong aria-hidden="true">6.2.1.</strong> Coinduction</a></li></ol></li><li class="chapter-item expanded "><a href="../engine/slg.html"><strong aria-hidden="true">6.3.</strong> SLG Solver</a></li></ol></li><li class="chapter-item expanded "><a href="../recursive.html"><strong aria-hidden="true">7.</strong> Chalk recursive solver</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../recursive/stack.html"><strong aria-hidden="true">7.1.</strong> The stack</a></li><li class="chapter-item expanded "><a href="../recursive/inductive_cycles.html"><strong aria-hidden="true">7.2.</strong> Inductive cycles</a></li><li class="chapter-item expanded "><a href="../recursive/search_graph.html"><strong aria-hidden="true">7.3.</strong> The search graph and caching</a></li><li class="chapter-item expanded "><a href="../recursive/coinduction.html"><strong aria-hidden="true">7.4.</strong> Coinduction</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../glossary.html">Appendix A: Glossary and terminology</a></li><li class="chapter-item expanded affix "><a href="../bibliography.html">Appendix B: Bibliography</a></li><li class="chapter-item expanded affix "><a href="../todo.html">Appendix C: Incomplete chapters</a></li><li class="chapter-item expanded affix "><a href="../publishing.html">Appendix D: Publishing Chalk</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#implied-bounds" id="implied-bounds">Implied Bounds</a></h1>
+<p>Implied bounds remove the need to repeat where clauses written on
+a type declaration or a trait declaration. For example, say we have the
+following type declaration:</p>
+<pre><code class="language-rust ignore">struct HashSet&lt;K: Hash&gt; {
+    ...
+}
+</code></pre>
+<p>then everywhere we use <code>HashSet&lt;K&gt;</code> as an &quot;input&quot; type, that is appearing in
+the receiver type of an <code>impl</code> or in the arguments of a function, we don't
+want to have to repeat the <code>where K: Hash</code> bound, as in:</p>
+<pre><code class="language-rust ignore">// I don't want to have to repeat `where K: Hash` here.
+impl&lt;K&gt; HashSet&lt;K&gt; {
+    ...
+}
+
+// Same here.
+fn loud_insert&lt;K&gt;(set: &amp;mut HashSet&lt;K&gt;, item: K) {
+    println!(&quot;inserting!&quot;);
+    set.insert(item);
+}
+</code></pre>
+<p>Note that in the <code>loud_insert</code> example, <code>HashSet&lt;K&gt;</code> is not the type
+of the <code>set</code> argument of <code>loud_insert</code>, it only <em>appears</em> in the
+argument type <code>&amp;mut HashSet&lt;K&gt;</code>: we care about every type appearing
+in the function's header (the header is the signature without the return type),
+not only types of the function's arguments.</p>
+<p>The rationale for applying implied bounds to input types is that, for example,
+in order to call the <code>loud_insert</code> function above, the programmer must have
+<em>produced</em> the type <code>HashSet&lt;K&gt;</code> already, hence the compiler already verified
+that <code>HashSet&lt;K&gt;</code> was well-formed, i.e. that <code>K</code> effectively implemented
+<code>Hash</code>, as in the following example:</p>
+<pre><code class="language-rust ignore">fn main() {
+    // I am producing a value of type `HashSet&lt;i32&gt;`.
+    // If `i32` was not `Hash`, the compiler would report an error here.
+    let set: HashSet&lt;i32&gt; = HashSet::new();
+    loud_insert(&amp;mut set, 5);
+}
+</code></pre>
+<p>Hence, we don't want to repeat where clauses for input types because that would
+sort of duplicate the work of the programmer, having to verify that their types
+are well-formed both when calling the function and when using them in the
+arguments of their function. The same reasoning applies when using an <code>impl</code>.</p>
+<p>Similarly, given the following trait declaration:</p>
+<pre><code class="language-rust ignore">trait Copy where Self: Clone { // desugared version of `Copy: Clone`
+    ...
+}
+</code></pre>
+<p>then everywhere we bound over <code>SomeType: Copy</code>, we would like to be able to
+use the fact that <code>SomeType: Clone</code> without having to write it explicitly,
+as in:</p>
+<pre><code class="language-rust ignore">fn loud_clone&lt;T: Clone&gt;(x: T) {
+    println!(&quot;cloning!&quot;);
+    x.clone();
+}
+
+fn fun_with_copy&lt;T: Copy&gt;(x: T) {
+    println!(&quot;will clone a `Copy` type soon...&quot;);
+
+    // I'm using `loud_clone&lt;T: Clone&gt;` with `T: Copy`, I know this
+    // implies `T: Clone` so I don't want to have to write it explicitly.
+    loud_clone(x);
+}
+</code></pre>
+<p>The rationale for implied bounds for traits is that if a type implements
+<code>Copy</code>, that is, if there exists an <code>impl Copy</code> for that type, there <em>ought</em>
+to exist an <code>impl Clone</code> for that type, otherwise the compiler would have
+reported an error in the first place. So again, if we were forced to repeat the
+additional <code>where SomeType: Clone</code> everywhere whereas we already know that
+<code>SomeType: Copy</code> hold, we would kind of duplicate the verification work.</p>
+<p>Implied bounds are not yet completely enforced in rustc, at the moment it only
+works for outlive requirements, super trait bounds, and bounds on associated
+types. The full RFC can be found <a href="https://github.com/rust-lang/rfcs/blob/master/text/2089-implied-bounds.md">here</a>. We'll give here a brief view
+of how implied bounds work and why we chose to implement it that way. The
+complete set of lowering rules can be found in the corresponding
+<a href="./lowering_rules.html">chapter</a>.</p>
+<h2><a class="header" href="#implied-bounds-and-lowering-rules" id="implied-bounds-and-lowering-rules">Implied bounds and lowering rules</a></h2>
+<p>Now we need to express implied bounds in terms of logical rules. We will start
+with exposing a naive way to do it. Suppose that we have the following traits:</p>
+<pre><code class="language-rust ignore">trait Foo {
+    ...
+}
+
+trait Bar where Self: Foo { } {
+    ...
+}
+</code></pre>
+<p>So we would like to say that if a type implements <code>Bar</code>, then necessarily
+it must also implement <code>Foo</code>. We might think that a clause like this would
+work:</p>
+<pre><code class="language-text">forall&lt;Type&gt; {
+    Implemented(Type: Foo) :- Implemented(Type: Bar).
+}
+</code></pre>
+<p>Now suppose that we just write this impl:</p>
+<pre><code class="language-rust ignore">struct X;
+
+impl Bar for X { }
+</code></pre>
+<p>Clearly this should not be allowed: indeed, we wrote a <code>Bar</code> impl for <code>X</code>, but
+the <code>Bar</code> trait requires that we also implement <code>Foo</code> for <code>X</code>, which we never
+did. In terms of what the compiler does, this would look like this:</p>
+<pre><code class="language-rust ignore">struct X;
+
+impl Bar for X {
+    // We are in a `Bar` impl for the type `X`.
+    // There is a `where Self: Foo` bound on the `Bar` trait declaration.
+    // Hence I need to prove that `X` also implements `Foo` for that impl
+    // to be legal.
+}
+</code></pre>
+<p>So the compiler would try to prove <code>Implemented(X: Foo)</code>. Of course it will
+not find any <code>impl Foo for X</code> since we did not write any. However, it
+will see our implied bound clause:</p>
+<pre><code class="language-text">forall&lt;Type&gt; {
+    Implemented(Type: Foo) :- Implemented(Type: Bar).
+}
+</code></pre>
+<p>so that it may be able to prove <code>Implemented(X: Foo)</code> if <code>Implemented(X: Bar)</code>
+holds. And it turns out that <code>Implemented(X: Bar)</code> does hold since we wrote
+a <code>Bar</code> impl for <code>X</code>! Hence the compiler will accept the <code>Bar</code> impl while it
+should not.</p>
+<h2><a class="header" href="#implied-bounds-coming-from-the-environment" id="implied-bounds-coming-from-the-environment">Implied bounds coming from the environment</a></h2>
+<p>So the naive approach does not work. What we need to do is to somehow decouple
+implied bounds from impls. Suppose we know that a type <code>SomeType&lt;...&gt;</code>
+implements <code>Bar</code> and we want to deduce that <code>SomeType&lt;...&gt;</code> must also implement
+<code>Foo</code>.</p>
+<p>There are two possibilities: first, we have enough information about
+<code>SomeType&lt;...&gt;</code> to see that there exists a <code>Bar</code> impl in the program which
+covers <code>SomeType&lt;...&gt;</code>, for example a plain <code>impl&lt;...&gt; Bar for SomeType&lt;...&gt;</code>.
+Then if the compiler has done its job correctly, there <em>must</em> exist a <code>Foo</code>
+impl which covers <code>SomeType&lt;...&gt;</code>, e.g. another plain
+<code>impl&lt;...&gt; Foo for SomeType&lt;...&gt;</code>. In that case then, we can just use this
+impl and we do not need implied bounds at all.</p>
+<p>Second possibility: we do not know enough about <code>SomeType&lt;...&gt;</code> in order to
+find a <code>Bar</code> impl which covers it, for example if <code>SomeType&lt;...&gt;</code> is just
+a type parameter in a function:</p>
+<pre><code class="language-rust ignore">fn foo&lt;T: Bar&gt;() {
+    // We'd like to deduce `Implemented(T: Foo)`.
+}
+</code></pre>
+<p>That is, the information that <code>T</code> implements <code>Bar</code> here comes from the
+<em>environment</em>. The environment is the set of things that we assume to be true
+when we type check some Rust declaration. In that case, what we assume is that
+<code>T: Bar</code>. Then at that point, we might authorize ourselves to have some kind
+of  &quot;local&quot; implied bound reasoning which would say
+<code>Implemented(T: Foo) :- Implemented(T: Bar)</code>. This reasoning would
+only be done within our <code>foo</code> function in order to avoid the earlier
+problem where we had a global clause.</p>
+<p>We can apply this local reasoning everywhere we can have an environment
+-- i.e. when we can write where clauses -- that is, inside impls,
+trait declarations, and type declarations.</p>
+<h2><a class="header" href="#computing-implied-bounds-with-fromenv" id="computing-implied-bounds-with-fromenv">Computing implied bounds with <code>FromEnv</code></a></h2>
+<p>The previous subsection showed that it was only useful to compute implied
+bounds for facts coming from the environment.
+We talked about &quot;local&quot; rules, but there are multiple possible strategies to
+indeed implement the locality of implied bounds.</p>
+<p>In rustc, the current strategy is to <em>elaborate</em> bounds: that is, each time
+we have a fact in the environment, we recursively derive all the other things
+that are implied by this fact until we reach a fixed point. For example, if
+we have the following declarations:</p>
+<pre><code class="language-rust ignore">trait A { }
+trait B where Self: A { }
+trait C where Self: B { }
+
+fn foo&lt;T: C&gt;() {
+    ...
+}
+</code></pre>
+<p>then inside the <code>foo</code> function, we start with an environment containing only
+<code>Implemented(T: C)</code>. Then because of implied bounds for the <code>C</code> trait, we
+elaborate <code>Implemented(T: B)</code> and add it to our environment. Because of
+implied bounds for the <code>B</code> trait, we elaborate <code>Implemented(T: A)</code>and add it
+to our environment as well. We cannot elaborate anything else, so we conclude
+that our final environment consists of <code>Implemented(T: A + B + C)</code>.</p>
+<p>In the new-style trait system, we like to encode as many things as possible
+with logical rules. So rather than &quot;elaborating&quot;, we have a set of <em>global</em>
+program clauses defined like so:</p>
+<pre><code class="language-text">forall&lt;T&gt; { Implemented(T: A) :- FromEnv(T: A). }
+
+forall&lt;T&gt; { Implemented(T: B) :- FromEnv(T: B). }
+forall&lt;T&gt; { FromEnv(T: A) :- FromEnv(T: B). }
+
+forall&lt;T&gt; { Implemented(T: C) :- FromEnv(T: C). }
+forall&lt;T&gt; { FromEnv(T: B) :- FromEnv(T: C). }
+</code></pre>
+<p>So these clauses are defined globally (that is, they are available from
+everywhere in the program) but they cannot be used because the hypothesis
+is always of the form <code>FromEnv(...)</code> which is a bit special. Indeed, as
+indicated by the name, <code>FromEnv(...)</code> facts can <strong>only</strong> come from the
+environment.
+How it works is that in the <code>foo</code> function, instead of having an environment
+containing <code>Implemented(T: C)</code>, we replace this environment with
+<code>FromEnv(T: C)</code>. From here and thanks to the above clauses, we see that we
+are able to reach any of <code>Implemented(T: A)</code>, <code>Implemented(T: B)</code> or
+<code>Implemented(T: C)</code>, which is what we wanted.</p>
+<h2><a class="header" href="#implied-bounds-and-well-formedness-checking" id="implied-bounds-and-well-formedness-checking">Implied bounds and well-formedness checking</a></h2>
+<p>Implied bounds are tightly related with well-formedness checking.
+Well-formedness checking is the process of checking that the impls the
+programmer wrote are legal, what we referred to earlier as &quot;the compiler doing
+its job correctly&quot;.</p>
+<p>We already saw examples of illegal and legal impls:</p>
+<pre><code class="language-rust ignore">trait Foo { }
+trait Bar where Self: Foo { }
+
+struct X;
+struct Y;
+
+impl Bar for X {
+    // This impl is not legal: the `Bar` trait requires that we also
+    // implement `Foo`, and we didn't.
+}
+
+impl Foo for Y {
+    // This impl is legal: there is nothing to check as there are no where
+    // clauses on the `Foo` trait.
+}
+
+impl Bar for Y {
+    // This impl is legal: we have a `Foo` impl for `Y`.
+}
+</code></pre>
+<p>We must define what &quot;legal&quot; and &quot;illegal&quot; mean. For this, we introduce another
+predicate: <code>WellFormed(Type: Trait)</code>. We say that the trait reference
+<code>Type: Trait</code> is well-formed if <code>Type</code> meets the bounds written on the
+<code>Trait</code> declaration. For each impl we write, assuming that the where clauses
+declared on the impl hold, the compiler tries to prove that the corresponding
+trait reference is well-formed. The impl is legal if the compiler manages to do
+so.</p>
+<p>Coming to the definition of <code>WellFormed(Type: Trait)</code>, it would be tempting
+to define it as:</p>
+<pre><code class="language-rust ignore">trait Trait where WC1, WC2, ..., WCn {
+    ...
+}
+</code></pre>
+<pre><code class="language-text">forall&lt;Type&gt; {
+    WellFormed(Type: Trait) :- WC1 &amp;&amp; WC2 &amp;&amp; .. &amp;&amp; WCn.
+}
+</code></pre>
+<p>and indeed this was basically what was done in rustc until it was noticed that
+this mixed badly with implied bounds. The key thing is that implied bounds
+allows someone to derive all bounds implied by a fact in the environment, and
+this <em>transitively</em> as we've seen with the <code>A + B + C</code> traits example.
+However, the <code>WellFormed</code> predicate as defined above only checks that the
+<em>direct</em> superbounds hold. That is, if we come back to our <code>A + B + C</code>
+example:</p>
+<pre><code class="language-rust ignore">trait A { }
+// No where clauses, always well-formed.
+// forall&lt;Type&gt; { WellFormed(Type: A). }
+
+trait B where Self: A { }
+// We only check the direct superbound `Self: A`.
+// forall&lt;Type&gt; { WellFormed(Type: B) :- Implemented(Type: A). }
+
+trait C where Self: B { }
+// We only check the direct superbound `Self: B`. We do not check
+// the `Self: A` implied bound  coming from the `Self: B` superbound.
+// forall&lt;Type&gt; { WellFormed(Type: C) :- Implemented(Type: B). }
+</code></pre>
+<p>There is an asymmetry between the recursive power of implied bounds and
+the shallow checking of <code>WellFormed</code>. It turns out that this asymmetry
+can be <a href="https://github.com/rust-lang/rust/pull/43786">exploited</a>. Indeed, suppose that we define the following
+traits:</p>
+<pre><code class="language-rust ignore">trait Partial where Self: Copy { }
+// WellFormed(Self: Partial) :- Implemented(Self: Copy).
+
+trait Complete where Self: Partial { }
+// WellFormed(Self: Complete) :- Implemented(Self: Partial).
+
+impl&lt;T&gt; Partial for T where T: Complete { }
+
+impl&lt;T&gt; Complete for T { }
+</code></pre>
+<p>For the <code>Partial</code> impl, what the compiler must prove is:</p>
+<pre><code class="language-text">forall&lt;T&gt; {
+    if (T: Complete) { // assume that the where clauses hold
+        WellFormed(T: Partial) // show that the trait reference is well-formed
+    }
+}
+</code></pre>
+<p>Proving <code>WellFormed(T: Partial)</code> amounts to proving <code>Implemented(T: Copy)</code>.
+However, we have <code>Implemented(T: Complete)</code> in our environment: thanks to
+implied bounds, we can deduce <code>Implemented(T: Partial)</code>. Using implied bounds
+one level deeper, we can deduce <code>Implemented(T: Copy)</code>. Finally, the <code>Partial</code>
+impl is legal.</p>
+<p>For the <code>Complete</code> impl, what the compiler must prove is:</p>
+<pre><code class="language-text">forall&lt;T&gt; {
+    WellFormed(T: Complete) // show that the trait reference is well-formed
+}
+</code></pre>
+<p>Proving <code>WellFormed(T: Complete)</code> amounts to proving <code>Implemented(T: Partial)</code>.
+We see that the <code>impl Partial for T</code> applies if we can prove
+<code>Implemented(T: Complete)</code>, and it turns out we can prove this fact since our
+<code>impl&lt;T&gt; Complete for T</code> is a blanket impl without any where clauses.</p>
+<p>So both impls are legal and the compiler accepts the program. Moreover, thanks
+to the <code>Complete</code> blanket impl, all types implement <code>Complete</code>. So we could
+now use this impl like so:</p>
+<pre><code class="language-rust ignore">fn eat&lt;T&gt;(x: T) { }
+
+fn copy_everything&lt;T: Complete&gt;(x: T) {
+    eat(x);
+    eat(x);
+}
+
+fn main() {
+    let not_copiable = vec![1, 2, 3, 4];
+    copy_everything(not_copiable);
+}
+</code></pre>
+<p>In this program, we use the fact that <code>Vec&lt;i32&gt;</code> implements <code>Complete</code>, as any
+other type. Hence we can call <code>copy_everything</code> with an argument of type
+<code>Vec&lt;i32&gt;</code>. Inside the <code>copy_everything</code> function, we have the
+<code>Implemented(T: Complete)</code> bound in our environment. Thanks to implied bounds,
+we can deduce <code>Implemented(T: Partial)</code>. Using implied bounds again, we deduce
+<code>Implemented(T: Copy)</code> and we can indeed call the <code>eat</code> function which moves
+the argument twice since its argument is <code>Copy</code>. Problem: the <code>T</code> type was
+in fact <code>Vec&lt;i32&gt;</code> which is not copy at all, hence we will double-free the
+underlying vec storage so we have a memory unsoundness in safe Rust.</p>
+<p>Of course, disregarding the asymmetry between <code>WellFormed</code> and implied bounds,
+this bug was possible only because we had some kind of self-referencing impls.
+But self-referencing impls are very useful in practice and are not the real
+culprits in this affair.</p>
+<h2><a class="header" href="#co-inductiveness-of-wellformed" id="co-inductiveness-of-wellformed">Co-inductiveness of <code>WellFormed</code></a></h2>
+<p>So the solution is to fix this asymmetry between <code>WellFormed</code> and implied
+bounds. For that, we need for the <code>WellFormed</code> predicate to not only require
+that the direct superbounds hold, but also all the bounds transitively implied
+by the superbounds. What we can do is to have the following rules for the
+<code>WellFormed</code> predicate:</p>
+<pre><code class="language-rust ignore">trait A { }
+// WellFormed(Self: A) :- Implemented(Self: A).
+
+trait B where Self: A { }
+// WellFormed(Self: B) :- Implemented(Self: B) &amp;&amp; WellFormed(Self: A).
+
+trait C where Self: B { }
+// WellFormed(Self: C) :- Implemented(Self: C) &amp;&amp; WellFormed(Self: B).
+</code></pre>
+<p>Notice that we are now also requiring <code>Implemented(Self: Trait)</code> for
+<code>WellFormed(Self: Trait)</code> to be true: this is to simplify the process of
+traversing all the implied bounds transitively. This does not change anything
+when checking whether impls are legal, because since we assume
+that the where clauses hold inside the impl, we know that the corresponding
+trait reference does hold. Thanks to this setup, you can see that we indeed
+require to prove the set of all bounds transitively implied by the where
+clauses.</p>
+<p>However there is still a catch. Suppose that we have the following trait
+definition:</p>
+<pre><code class="language-rust ignore">trait Foo where &lt;Self as Foo&gt;::Item: Foo {
+    type Item;
+}
+</code></pre>
+<p>so this definition is a bit more involved than the ones we've seen already
+because it defines an associated item. However, the well-formedness rule
+would not be more complicated:</p>
+<pre><code class="language-text">WellFormed(Self: Foo) :-
+    Implemented(Self: Foo) &amp;&amp;
+    WellFormed(&lt;Self as Foo&gt;::Item: Foo).
+</code></pre>
+<p>Now we would like to write the following impl:</p>
+<pre><code class="language-rust ignore">impl Foo for i32 {
+    type Item = i32;
+}
+</code></pre>
+<p>The <code>Foo</code> trait definition and the <code>impl Foo for i32</code> are perfectly valid
+Rust: we're kind of recursively using our <code>Foo</code> impl in order to show that
+the associated value indeed implements <code>Foo</code>, but that's ok. But if we
+translate this to our well-formedness setting, the compiler proof process
+inside the <code>Foo</code> impl is the following: it starts with proving that the
+well-formedness goal <code>WellFormed(i32: Foo)</code> is true. In order to do that,
+it must prove the following goals: <code>Implemented(i32: Foo)</code> and
+<code>WellFormed(&lt;i32 as Foo&gt;::Item: Foo)</code>. <code>Implemented(i32: Foo)</code> holds because
+there is our impl and there are no where clauses on it so it's always true.
+However, because of the associated type value we used,
+<code>WellFormed(&lt;i32 as Foo&gt;::Item: Foo)</code> simplifies to just
+<code>WellFormed(i32: Foo)</code>. So in order to prove its original goal
+<code>WellFormed(i32: Foo)</code>, the compiler needs to prove <code>WellFormed(i32: Foo)</code>:
+this clearly is a cycle and cycles are usually rejected by the trait solver,
+unless...  if the <code>WellFormed</code> predicate was made to be co-inductive.</p>
+<p>A co-inductive predicate, as discussed in the chapter on
+<a href="./goals_and_clauses.html#coinductive-goals">goals and clauses</a>, are predicates
+for which the
+trait solver accepts cycles. In our setting, this would be a valid thing to do:
+indeed, the <code>WellFormed</code> predicate just serves as a way of enumerating all
+the implied bounds. Hence, it's like a fixed point algorithm: it tries to grow
+the set of implied bounds until there is nothing more to add. Here, a cycle
+in the chain of <code>WellFormed</code> predicates just means that there is no more bounds
+to add in that direction, so we can just accept this cycle and focus on other
+directions. It's easy to prove that under these co-inductive semantics, we
+are effectively visiting all the transitive implied bounds, and only these.</p>
+<h2><a class="header" href="#implied-bounds-on-types" id="implied-bounds-on-types">Implied bounds on types</a></h2>
+<p>We mainly talked about implied bounds for traits, but implied bounds on types
+are very similar. Suppose we have the following definition:</p>
+<pre><code class="language-rust ignore">struct Type&lt;...&gt; where WC1, ..., WCn {
+    ...
+}
+</code></pre>
+<p>To prove that <code>Type&lt;...&gt;</code> is well-formed, we would need to prove a goal of the
+form <code>WellFormed(Type&lt;...&gt;).</code>. The <code>WellFormed(Type&lt;...&gt;)</code> predicate is defined
+by the rule:</p>
+<pre><code class="language-text">forall&lt;...&gt; {
+    WellFormed(Type&lt;...&gt;) :- WellFormed(WC1), ..., WellFormed(WCn).
+}
+</code></pre>
+<p>Conversely, if we know a type is well-formed from our environment (for example
+because it appears as an argument of one of our functions), we can have implied
+bounds thanks to the below set of rules:</p>
+<pre><code class="language-text">forall&lt;...&gt; {
+    FromEnv(WC1) :- FromEnv(Type&lt;...&gt;).
+    ...
+    FromEnv(WCn) :- FromEnv(Type&lt;...&gt;).
+}
+</code></pre>
+<p>Looking at the above rules, we see that we can never encounter a chain of
+deductions of the form <code>WellFormed(Type&lt;...&gt;) :- ... :- WellFormed(Type&lt;...&gt;)</code>.
+So in contrast with traits, the <code>WellFormed(Type&lt;...&gt;)</code> predicate does not need
+to be co-inductive.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../clauses/type_equality.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../clauses/lowering_rules.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../clauses/type_equality.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../clauses/lowering_rules.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>

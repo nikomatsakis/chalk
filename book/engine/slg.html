@@ -1,0 +1,469 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>SLG Solver</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../mermaid.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../what_is_chalk.html"><strong aria-hidden="true">1.</strong> What is Chalk?</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../what_is_chalk/walkthrough.html"><strong aria-hidden="true">1.1.</strong> Walkthrough</a></li><li class="chapter-item expanded "><a href="../what_is_chalk/crates.html"><strong aria-hidden="true">1.2.</strong> Crates</a></li><li class="chapter-item expanded "><a href="../what_is_chalk/repl.html"><strong aria-hidden="true">1.3.</strong> REPL</a></li></ol></li><li class="chapter-item expanded "><a href="../contribution_guide.html"><strong aria-hidden="true">2.</strong> Contribution guide</a></li><li class="chapter-item expanded "><a href="../types.html"><strong aria-hidden="true">3.</strong> Representing and manipulating types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/role_of_interner.html"><strong aria-hidden="true">3.1.</strong> The Interner</a></li><li class="chapter-item expanded "><a href="../types/rust_types.html"><strong aria-hidden="true">3.2.</strong> Rust types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/rust_types/alias.html"><strong aria-hidden="true">3.2.1.</strong> Alias types</a></li><li class="chapter-item expanded "><a href="../types/rust_types/application_ty.html"><strong aria-hidden="true">3.2.2.</strong> Application types</a></li></ol></li><li class="chapter-item expanded "><a href="../types/rust_lifetimes.html"><strong aria-hidden="true">3.3.</strong> Rust lifetimes</a></li><li class="chapter-item expanded "><a href="../types/operations.html"><strong aria-hidden="true">3.4.</strong> Operations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/operations/fold.html"><strong aria-hidden="true">3.4.1.</strong> Fold and the Folder trait</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../clauses.html"><strong aria-hidden="true">4.</strong> Lowering Rust IR to logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../clauses/goals_and_clauses.html"><strong aria-hidden="true">4.1.</strong> Goals and clauses</a></li><li class="chapter-item expanded "><a href="../clauses/type_equality.html"><strong aria-hidden="true">4.2.</strong> Type equality and unification</a></li><li class="chapter-item expanded "><a href="../clauses/implied_bounds.html"><strong aria-hidden="true">4.3.</strong> Implied bounds</a></li><li class="chapter-item expanded "><a href="../clauses/lowering_rules.html"><strong aria-hidden="true">4.4.</strong> Lowering rules</a></li><li class="chapter-item expanded "><a href="../clauses/opaque_types.html"><strong aria-hidden="true">4.5.</strong> Opaque types (impl Trait)</a></li><li class="chapter-item expanded "><a href="../clauses/well_known_traits.html"><strong aria-hidden="true">4.6.</strong> Well known traits</a></li><li class="chapter-item expanded "><a href="../clauses/wf.html"><strong aria-hidden="true">4.7.</strong> Well-formedness checking</a></li><li class="chapter-item expanded "><a href="../clauses/coherence.html"><strong aria-hidden="true">4.8.</strong> Coherence</a></li></ol></li><li class="chapter-item expanded "><a href="../canonical_queries.html"><strong aria-hidden="true">5.</strong> Canonical queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../canonical_queries/canonicalization.html"><strong aria-hidden="true">5.1.</strong> Canonicalization</a></li></ol></li><li class="chapter-item expanded "><a href="../engine.html"><strong aria-hidden="true">6.</strong> Chalk engine</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../engine/major_concepts.html"><strong aria-hidden="true">6.1.</strong> Major concepts</a></li><li class="chapter-item expanded "><a href="../engine/logic.html"><strong aria-hidden="true">6.2.</strong> Logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../engine/logic/coinduction.html"><strong aria-hidden="true">6.2.1.</strong> Coinduction</a></li></ol></li><li class="chapter-item expanded "><a href="../engine/slg.html" class="active"><strong aria-hidden="true">6.3.</strong> SLG Solver</a></li></ol></li><li class="chapter-item expanded "><a href="../recursive.html"><strong aria-hidden="true">7.</strong> Chalk recursive solver</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../recursive/stack.html"><strong aria-hidden="true">7.1.</strong> The stack</a></li><li class="chapter-item expanded "><a href="../recursive/inductive_cycles.html"><strong aria-hidden="true">7.2.</strong> Inductive cycles</a></li><li class="chapter-item expanded "><a href="../recursive/search_graph.html"><strong aria-hidden="true">7.3.</strong> The search graph and caching</a></li><li class="chapter-item expanded "><a href="../recursive/coinduction.html"><strong aria-hidden="true">7.4.</strong> Coinduction</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../glossary.html">Appendix A: Glossary and terminology</a></li><li class="chapter-item expanded affix "><a href="../bibliography.html">Appendix B: Bibliography</a></li><li class="chapter-item expanded affix "><a href="../todo.html">Appendix C: Incomplete chapters</a></li><li class="chapter-item expanded affix "><a href="../publishing.html">Appendix D: Publishing Chalk</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#the-on-demand-slg-solver" id="the-on-demand-slg-solver">The On-Demand SLG solver</a></h1>
+<p>Given a set of program clauses (provided by our <a href="../clauses.html">lowering rules</a>)
+and a query, we need to return the result of the query and the value of any
+type variables we can determine. This is the job of the solver.</p>
+<p>For example, <code>exists&lt;T&gt; { Vec&lt;T&gt;: FromIterator&lt;u32&gt; }</code> has one solution, so
+its result is <code>Unique; substitution [?T := u32]</code>. A solution also comes with
+a set of region constraints, which we'll ignore in this introduction.</p>
+<h2><a class="header" href="#goals-of-the-solver" id="goals-of-the-solver">Goals of the Solver</a></h2>
+<h3><a class="header" href="#on-demand" id="on-demand">On demand</a></h3>
+<p>There are often many, or even infinitely many, solutions to a query. For
+example, say we want to prove that <code>exists&lt;T&gt; { Vec&lt;T&gt;: Debug }</code> for <em>some</em>
+type <code>?T</code>. Our solver should be capable of yielding one answer at a time, say
+<code>?T = u32</code>, then <code>?T = i32</code>, and so on, rather than iterating over every type
+in the type system. If we need more answers, we can request more until we are
+done. This is similar to how Prolog works.</p>
+<p><em>See also: <a href="../canonical_queries.html#the-traditional-interactive-prolog-query">The traditional, interactive Prolog query</a></em></p>
+<h3><a class="header" href="#breadth-first" id="breadth-first">Breadth-first</a></h3>
+<p><code>Vec&lt;?T&gt;: Debug</code> is true if <code>?T: Debug</code>. This leads to a cycle: <code>[Vec&lt;u32&gt;, Vec&lt;Vec&lt;u32&gt;&gt;, Vec&lt;Vec&lt;Vec&lt;u32&gt;&gt;&gt;]</code>, and so on all implement <code>Debug</code>. Our
+solver ought to be breadth first and consider answers like <code>[Vec&lt;u32&gt;: Debug, Vec&lt;i32&gt;: Debug, ...]</code> before it recurses, or we may never find the answer
+we're looking for.</p>
+<h3><a class="header" href="#cachable" id="cachable">Cachable</a></h3>
+<p>To speed up compilation, we need to cache results, including partial results
+left over from past solver queries.</p>
+<h2><a class="header" href="#description-of-how-it-works" id="description-of-how-it-works">Description of how it works</a></h2>
+<p>The basis of the solver is the <a href="https://rust-lang.github.io/chalk/chalk_engine/forest/struct.Forest.html"><code>Forest</code></a> type. A <em>forest</em> stores a
+collection of <em>tables</em> as well as a <em>stack</em>. Each <em>table</em> represents
+the stored results of a particular query that is being performed, as
+well as the various <em>strands</em>, which are basically suspended
+computations that may be used to find more answers. Tables are
+interdependent: solving one query may require solving others.</p>
+<h3><a class="header" href="#walkthrough" id="walkthrough">Walkthrough</a></h3>
+<p>Perhaps the easiest way to explain how the solver works is to walk
+through an example. Let's imagine that we have the following program:</p>
+<pre><code class="language-rust ignore">trait Debug { }
+
+struct u32 { }
+impl Debug for u32 { }
+
+struct Rc&lt;T&gt; { }
+impl&lt;T: Debug&gt; Debug for Rc&lt;T&gt; { }
+
+struct Vec&lt;T&gt; { }
+impl&lt;T: Debug&gt; Debug for Vec&lt;T&gt; { }
+</code></pre>
+<p>Now imagine that we want to find answers for the query <code>exists&lt;T&gt; { Rc&lt;T&gt;: Debug }</code>. The first step would be to u-canonicalize this query; this is the
+act of giving canonical names to all the unbound inference variables based on
+the order of their left-most appearance, as well as canonicalizing the
+universes of any universally bound names (e.g., the <code>T</code> in <code>forall&lt;T&gt; { ... }</code>). In this case, there are no universally bound names, but the canonical
+form Q of the query might look something like:</p>
+<pre><code class="language-text">Rc&lt;?0&gt;: Debug
+</code></pre>
+<p>where <code>?0</code> is a variable in the root universe U0. We would then go and
+look for a table with this canonical query as the key: since the forest is
+empty, this lookup will fail, and we will create a new table T0,
+corresponding to the u-canonical goal Q.</p>
+<p><strong>Ignoring negative reasoning and regions.</strong> To start, we'll ignore
+the possibility of negative goals like <code>not { Foo }</code>. We'll phase them
+in later, as they bring several complications.</p>
+<p><strong>Creating a table.</strong> When we first create a table, we also initialize
+it with a set of <em>initial strands</em>. A &quot;strand&quot; is kind of like a
+&quot;thread&quot; for the solver: it contains a particular way to produce an
+answer. The initial set of strands for a goal like <code>Rc&lt;?0&gt;: Debug</code>
+(i.e., a &quot;domain goal&quot;) is determined by looking for <em>clauses</em> in the
+environment. In Rust, these clauses derive from impls, but also from
+where-clauses that are in scope. In the case of our example, there
+would be three clauses, each coming from the program. Using a
+Prolog-like notation, these look like:</p>
+<pre><code class="language-text">(u32: Debug).
+(Rc&lt;T&gt;: Debug) :- (T: Debug).
+(Vec&lt;T&gt;: Debug) :- (T: Debug).
+</code></pre>
+<p>To create our initial strands, then, we will try to apply each of
+these clauses to our goal of <code>Rc&lt;?0&gt;: Debug</code>. The first and third
+clauses are inapplicable because <code>u32</code> and <code>Vec&lt;?0&gt;</code> cannot be unified
+with <code>Rc&lt;?0&gt;</code>. The second clause, however, will work.</p>
+<p><strong>What is a strand?</strong> Let's talk a bit more about what a strand <em>is</em>. In the code, a strand
+is the combination of an inference table, an <em>X-clause</em>, and (possibly)
+a selected subgoal from that X-clause. But what is an X-clause
+(<a href="https://rust-lang.github.io/chalk/chalk_engine/struct.ExClause.html"><code>ExClause</code></a>, in the code)? An X-clause pulls together a few things:</p>
+<ul>
+<li>The current state of the goal we are trying to prove;</li>
+<li>A set of subgoals that have yet to be proven;</li>
+<li>There are also a few things we're ignoring for now:
+<ul>
+<li>delayed literals, region constraints</li>
+</ul>
+</li>
+</ul>
+<p>The general form of an X-clause is written much like a Prolog clause,
+but with somewhat different semantics. Since we're ignoring delayed
+literals and region constraints, an X-clause just looks like this:</p>
+<pre><code class="language-text">G :- L
+</code></pre>
+<p>where G is a goal and L is a set of subgoals that must be proven.
+(The L stands for <em>literal</em> -- when we address negative reasoning, a
+literal will be either a positive or negative subgoal.) The idea is
+that if we are able to prove L then the goal G can be considered true.</p>
+<p>In the case of our example, we would wind up creating one strand, with
+an X-clause like so:</p>
+<pre><code class="language-text">(Rc&lt;?T&gt;: Debug) :- (?T: Debug)
+</code></pre>
+<p>Here, the <code>?T</code> refers to one of the inference variables created in the
+inference table that accompanies the strand. (I'll use named variables
+to refer to inference variables, and numbered variables like <code>?0</code> to
+refer to variables in a canonicalized goal; in the code, however, they
+are both represented with an index.)</p>
+<p>For each strand, we also optionally store a <em>selected subgoal</em>. This
+is the subgoal after the turnstile (<code>:-</code>) that we are currently trying
+to prove in this strand. Initially, when a strand is first created,
+there is no selected subgoal.</p>
+<p><strong>Activating a strand.</strong> Now that we have created the table T0 and
+initialized it with strands, we have to actually try and produce an answer.
+We do this by invoking the <a href="https://rust-lang.github.io/chalk/chalk_engine/forest/struct.Forest.html#method.ensure_root_answer"><code>ensure_root_answer</code></a> operation on the table:
+specifically, we say <code>ensure_root_answer(T0, A0)</code>, meaning &quot;ensure that there
+is a 0th answer A0 to query T0&quot;.</p>
+<p>Remember that tables store not only strands, but also a vector of cached
+answers. The first thing that <a href="https://rust-lang.github.io/chalk/chalk_engine/forest/struct.Forest.html#method.ensure_root_answer"><code>ensure_root_answer</code></a> does is to check whether
+answer A0 is in this vector. If so, we can just return immediately. In this
+case, the vector will be empty, and hence that does not apply (this becomes
+important for cyclic checks later on).</p>
+<p>When there is no cached answer, <a href="https://rust-lang.github.io/chalk/chalk_engine/forest/struct.Forest.html#method.ensure_root_answer"><code>ensure_root_answer</code></a> will try to produce one.
+It does this by selecting a strand from the set of active strands -- the
+strands are stored in a <code>VecDeque</code> and hence processed in a round-robin
+fashion. Right now, we have only one strand, storing the following X-clause
+with no selected subgoal:</p>
+<pre><code class="language-text">(Rc&lt;?T&gt;: Debug) :- (?T: Debug)
+</code></pre>
+<p>When we activate the strand, we see that we have no selected subgoal,
+and so we first pick one of the subgoals to process. Here, there is only
+one (<code>?T: Debug</code>), so that becomes the selected subgoal, changing
+the state of the strand to:</p>
+<pre><code class="language-text">(Rc&lt;?T&gt;: Debug) :- selected(?T: Debug, A0)
+</code></pre>
+<p>Here, we write <code>selected(L, An)</code> to indicate that (a) the literal <code>L</code>
+is the selected subgoal and (b) which answer <code>An</code> we are looking for. We
+start out looking for <code>A0</code>.</p>
+<p><strong>Processing the selected subgoal.</strong> Next, we have to try and find an
+answer to this selected goal. To do that, we will u-canonicalize it
+and try to find an associated table. In this case, the u-canonical
+form of the subgoal is <code>?0: Debug</code>: we don't have a table yet for
+that, so we can create a new one, T1. As before, we'll initialize T1
+with strands. In this case, there will be three strands, because all
+the program clauses are potentially applicable. Those three strands
+will be:</p>
+<ul>
+<li><code>(u32: Debug) :-</code>, derived from the program clause <code>(u32: Debug).</code>.
+<ul>
+<li>Note: This strand has no subgoals.</li>
+</ul>
+</li>
+<li><code>(Vec&lt;?U&gt;: Debug) :- (?U: Debug)</code>, derived from the <code>Vec</code> impl.</li>
+<li><code>(Rc&lt;?U&gt;: Debug) :- (?U: Debug)</code>, derived from the <code>Rc</code> impl.</li>
+</ul>
+<p>We can thus summarize the state of the whole forest at this point as
+follows:</p>
+<pre><code class="language-text">Table T0 [Rc&lt;?0&gt;: Debug]
+  Strands:
+    (Rc&lt;?T&gt;: Debug) :- selected(?T: Debug, A0)
+
+Table T1 [?0: Debug]
+  Strands:
+    (u32: Debug) :-
+    (Vec&lt;?U&gt;: Debug) :- (?U: Debug)
+    (Rc&lt;?V&gt;: Debug) :- (?V: Debug)
+</code></pre>
+<p><strong>Delegation between tables.</strong> Now that the active strand from T0 has
+created the table T1, it can try to extract an answer. It does this
+via that same <code>ensure_answer</code> operation we saw before. In this case,
+the strand would invoke <code>ensure_answer(T1, A0)</code>, since we will start
+with the first answer. This will cause T1 to activate its first
+strand, <code>u32: Debug :-</code>.</p>
+<p>This strand is somewhat special: it has no subgoals at all. This means
+that the goal is proven. We can therefore add <code>u32: Debug</code> to the set
+of <em>answers</em> for our table, calling it answer A0 (it is the first
+answer). The strand is then removed from the list of strands.</p>
+<p>The state of table T1 is therefore:</p>
+<pre><code class="language-text">Table T1 [?0: Debug]
+  Answers:
+    A0 = [?0 = u32]
+  Strand:
+    (Vec&lt;?U&gt;: Debug) :- (?U: Debug)
+    (Rc&lt;?V&gt;: Debug) :- (?V: Debug)
+</code></pre>
+<p>Note that I am writing out the answer A0 as a substitution that can be
+applied to the table goal; actually, in the code, the goals for each
+X-clause are also represented as substitutions, but in this exposition
+I've chosen to write them as full goals, following <a href="../bibliography.html#slg">NFTD</a>.</p>
+<p>Since we now have an answer, <code>ensure_answer(T1, A0)</code> will return <code>Ok</code>
+to the table T0, indicating that answer A0 is available. T0 now has
+the job of incorporating that result into its active strand. It does
+this in two ways. First, it creates a new strand that is looking for
+the next possible answer of T1. Next, it incorporates the answer from
+A0 and removes the subgoal. The resulting state of table T0 is:</p>
+<pre><code class="language-text">Table T0 [Rc&lt;?0&gt;: Debug]
+  Strands:
+    (Rc&lt;?T&gt;: Debug) :- selected(?T: Debug, A1)
+    (Rc&lt;u32&gt;: Debug) :-
+</code></pre>
+<p>We then immediately activate the strand that incorporated the answer
+(the <code>Rc&lt;u32&gt;: Debug</code> one). In this case, that strand has no further
+subgoals, so it becomes an answer to the table T0. This answer can
+then be returned up to our caller, and the whole forest goes quiescent
+at this point (remember, we only do enough work to generate <em>one</em>
+answer). The ending state of the forest at this point will be:</p>
+<pre><code class="language-text">Table T0 [Rc&lt;?0&gt;: Debug]
+  Answer:
+    A0 = [?0 = u32]
+  Strands:
+    (Rc&lt;?T&gt;: Debug) :- selected(?T: Debug, A1)
+
+Table T1 [?0: Debug]
+  Answers:
+    A0 = [?0 = u32]
+  Strand:
+    (Vec&lt;?U&gt;: Debug) :- (?U: Debug)
+    (Rc&lt;?V&gt;: Debug) :- (?V: Debug)
+</code></pre>
+<p>Here you can see how the forest captures both the answers we have
+created thus far <em>and</em> the strands that will let us try to produce
+more answers later on.</p>
+<h2><a class="header" href="#see-also" id="see-also">See also</a></h2>
+<ul>
+<li><a href="https://github.com/rust-lang/chalk/blob/239e4ae4e69b2785b5f99e0f2b41fc16b0b4e65e/chalk-engine/src/README.md">chalk_solve README</a>, which contains links to papers used and
+acronyms referenced in the code</li>
+<li>This section is a lightly adapted version of the blog post <a href="https://smallcultfollowing.com/babysteps/blog/2018/01/31/an-on-demand-slg-solver-for-chalk/">An on-demand
+SLG solver for chalk</a></li>
+<li><a href="https://aturon.github.io/blog/2017/04/24/negative-chalk/">Negative Reasoning in Chalk</a> explains the need
+for negative reasoning, but not how the SLG solver does it</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../engine/logic/coinduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../recursive.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../engine/logic/coinduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../recursive.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>

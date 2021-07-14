@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Trait for lowering a given piece of rust-ir source (e.g., an impl or struct definition) into its associated “program clauses” – that is, into the lowered, logical rules that it defines."><meta name="keywords" content="rust, rustlang, rust-lang, ToProgramClauses"><title>ToProgramClauses in chalk_solve::clauses::program_clauses - Rust</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc trait"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../chalk_solve/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a><p class="location">Trait ToProgramClauses</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.to_program_clauses">to_program_clauses</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class="location"><a href="../../index.html">chalk_solve</a>::<wbr><a href="../index.html">clauses</a>::<wbr><a href="index.html">program_clauses</a></p><div id="sidebar-vars" data-name="ToProgramClauses" data-ty="trait" data-relpath=""></div><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Trait <a href="../../index.html">chalk_solve</a>::<wbr><a href="../index.html">clauses</a>::<wbr><a href="index.html">program_clauses</a>::<wbr><a class="trait" href="">ToProgramClauses</a><button id="copy-path" onclick="copy_path(this)">⎘</button></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../../../src/chalk_solve/clauses/program_clauses.rs.html#13-15" title="goto source code">[src]</a></span></h1><div class="docblock type-decl"><pre class="rust trait">pub trait ToProgramClauses&lt;I:&nbsp;<a class="trait" href="../../../chalk_ir/interner/trait.Interner.html" title="trait chalk_ir::interner::Interner">Interner</a>&gt; {
+    fn <a href="#tymethod.to_program_clauses" class="fnname">to_program_clauses</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder: &amp;mut <a class="struct" href="../builder/struct.ClauseBuilder.html" title="struct chalk_solve::clauses::builder::ClauseBuilder">ClauseBuilder</a>&lt;'_, I&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;environment: &amp;<a class="struct" href="../../../chalk_ir/struct.Environment.html" title="struct chalk_ir::Environment">Environment</a>&lt;I&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;);
+}</pre></div><div class="docblock"><p>Trait for lowering a given piece of rust-ir source (e.g., an impl
+or struct definition) into its associated “program clauses” –
+that is, into the lowered, logical rules that it defines.</p>
+</div><h2 id="required-methods" class="small-section-header">Required methods<a href="#required-methods" class="anchor"></a></h2><div class="methods"><h3 id="tymethod.to_program_clauses" class="method"><code>fn <a href="#tymethod.to_program_clauses" class="fnname">to_program_clauses</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;builder: &amp;mut <a class="struct" href="../builder/struct.ClauseBuilder.html" title="struct chalk_solve::clauses::builder::ClauseBuilder">ClauseBuilder</a>&lt;'_, I&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;environment: &amp;<a class="struct" href="../../../chalk_ir/struct.Environment.html" title="struct chalk_ir::Environment">Environment</a>&lt;I&gt;<br>)</code><a class="srclink" href="../../../src/chalk_solve/clauses/program_clauses.rs.html#14" title="goto source code">[src]</a></h3></div><span class="loading-content">Loading content...</span><h2 id="implementors" class="small-section-header">Implementors<a href="#implementors" class="anchor"></a></h2><div class="item-list" id="implementors-list"><details class="rustdoc-toggle implementors-toggle" open><summary><h3 id="impl-ToProgramClauses%3CI%3E" class="impl"><code class="in-band">impl&lt;I:&nbsp;<a class="trait" href="../../../chalk_ir/interner/trait.Interner.html" title="trait chalk_ir::interner::Interner">Interner</a>&gt; <a class="trait" href="trait.ToProgramClauses.html" title="trait chalk_solve::clauses::program_clauses::ToProgramClauses">ToProgramClauses</a>&lt;I&gt; for <a class="struct" href="../../rust_ir/struct.AdtDatum.html" title="struct chalk_solve::rust_ir::AdtDatum">AdtDatum</a>&lt;I&gt;</code><a href="#impl-ToProgramClauses%3CI%3E" class="anchor"></a><a class="srclink" href="../../../src/chalk_solve/clauses/program_clauses.rs.html#325-443" title="goto source code">[src]</a></h3></summary><div class="impl-items"><h4 id="method.to_program_clauses" class="method trait-impl"><code>fn <a href="#tymethod.to_program_clauses" class="fnname">to_program_clauses</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;builder: &amp;mut <a class="struct" href="../builder/struct.ClauseBuilder.html" title="struct chalk_solve::clauses::builder::ClauseBuilder">ClauseBuilder</a>&lt;'_, I&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;_environment: &amp;<a class="struct" href="../../../chalk_ir/struct.Environment.html" title="struct chalk_ir::Environment">Environment</a>&lt;I&gt;<br>)</code><a href="#method.to_program_clauses" class="anchor"></a><a class="srclink" href="../../../src/chalk_solve/clauses/program_clauses.rs.html#376" title="goto source code">[src]</a></h4><div class="docblock"><p>Given the following type definition: <code>struct Foo&lt;T: Eq&gt; { }</code>, generate:</p>
+<pre><code class="language-notrust">-- Rule WellFormed-Type
+forall&lt;T&gt; {
+    WF(Foo&lt;T&gt;) :- WF(T: Eq).
+}
+
+-- Rule Implied-Bound-From-Type
+forall&lt;T&gt; {
+    FromEnv(T: Eq) :- FromEnv(Foo&lt;T&gt;).
+}
+
+forall&lt;T&gt; {
+    IsFullyVisible(Foo&lt;T&gt;) :- IsFullyVisible(T).
+}
+</code></pre>
+<p>If the type <code>Foo</code> is marked <code>#[upstream]</code>, we also generate:</p>
+<pre><code class="language-notrust">forall&lt;T&gt; { IsUpstream(Foo&lt;T&gt;). }
+</code></pre>
+<p>Otherwise, if the type <code>Foo</code> is not marked <code>#[upstream]</code>, we generate:</p>
+<pre><code class="language-notrust">forall&lt;T&gt; { IsLocal(Foo&lt;T&gt;). }
+</code></pre>
+<p>Given an <code>#[upstream]</code> type that is also fundamental:</p>
+<pre><code class="language-notrust">#[upstream]
+#[fundamental]
+struct Box&lt;T, U&gt; {}
+</code></pre>
+<p>We generate the following clauses:</p>
+<pre><code class="language-notrust">forall&lt;T, U&gt; { IsLocal(Box&lt;T, U&gt;) :- IsLocal(T). }
+forall&lt;T, U&gt; { IsLocal(Box&lt;T, U&gt;) :- IsLocal(U). }
+
+forall&lt;T, U&gt; { IsUpstream(Box&lt;T, U&gt;) :- IsUpstream(T), IsUpstream(U). }
+
+// Generated for both upstream and local fundamental types
+forall&lt;T, U&gt; { DownstreamType(Box&lt;T, U&gt;) :- DownstreamType(T). }
+forall&lt;T, U&gt; { DownstreamType(Box&lt;T, U&gt;) :- DownstreamType(U). }
+</code></pre>
+</div></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><h3 id="impl-ToProgramClauses%3CI%3E-1" class="impl"><code class="in-band">impl&lt;I:&nbsp;<a class="trait" href="../../../chalk_ir/interner/trait.Interner.html" title="trait chalk_ir::interner::Interner">Interner</a>&gt; <a class="trait" href="trait.ToProgramClauses.html" title="trait chalk_solve::clauses::program_clauses::ToProgramClauses">ToProgramClauses</a>&lt;I&gt; for <a class="struct" href="../../rust_ir/struct.AssociatedTyDatum.html" title="struct chalk_solve::rust_ir::AssociatedTyDatum">AssociatedTyDatum</a>&lt;I&gt;</code><a href="#impl-ToProgramClauses%3CI%3E-1" class="anchor"></a><a class="srclink" href="../../../src/chalk_solve/clauses/program_clauses.rs.html#725-921" title="goto source code">[src]</a></h3></summary><div class="impl-items"><h4 id="method.to_program_clauses-1" class="method trait-impl"><code>fn <a href="#tymethod.to_program_clauses" class="fnname">to_program_clauses</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;builder: &amp;mut <a class="struct" href="../builder/struct.ClauseBuilder.html" title="struct chalk_solve::clauses::builder::ClauseBuilder">ClauseBuilder</a>&lt;'_, I&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;_environment: &amp;<a class="struct" href="../../../chalk_ir/struct.Environment.html" title="struct chalk_ir::Environment">Environment</a>&lt;I&gt;<br>)</code><a href="#method.to_program_clauses-1" class="anchor"></a><a class="srclink" href="../../../src/chalk_solve/clauses/program_clauses.rs.html#794-920" title="goto source code">[src]</a></h4><div class="docblock"><p>For each associated type, we define the “projection
+equality” rules. There are always two; one for a successful normalization,
+and one for the “fallback” notion of equality.</p>
+<p>Given: (here, <code>'a</code> and <code>T</code> represent zero or more parameters)</p>
+<pre><code class="language-notrust">trait Foo {
+    type Assoc&lt;'a, T&gt;: Bounds where WC;
+}
+</code></pre>
+<p>we generate the ‘fallback’ rule:</p>
+<pre><code class="language-notrust">-- Rule AliasEq-Placeholder
+forall&lt;Self, 'a, T&gt; {
+    AliasEq(&lt;Self as Foo&gt;::Assoc&lt;'a, T&gt; = (Foo::Assoc&lt;'a, T&gt;)&lt;Self&gt;).
+}
+</code></pre>
+<p>and</p>
+<pre><code class="language-notrust">-- Rule AliasEq-Normalize
+forall&lt;Self, 'a, T, U&gt; {
+    AliasEq(&lt;T as Foo&gt;::Assoc&lt;'a, T&gt; = U) :-
+        Normalize(&lt;T as Foo&gt;::Assoc -&gt; U).
+}
+</code></pre>
+<p>We used to generate an “elaboration” rule like this:</p>
+<pre><code class="language-notrust">forall&lt;T&gt; {
+    T: Foo :- exists&lt;U&gt; { AliasEq(&lt;T as Foo&gt;::Assoc = U) }.
+}
+</code></pre>
+<p>but this caused problems with the recursive solver. In
+particular, whenever normalization is possible, we cannot
+solve that projection uniquely, since we can now elaborate
+<code>AliasEq</code> to fallback <em>or</em> normalize it. So instead we
+handle this kind of reasoning through the <code>FromEnv</code> predicate.</p>
+<p>We also generate rules specific to WF requirements and implied bounds:</p>
+<pre><code class="language-notrust">-- Rule WellFormed-AssocTy
+forall&lt;Self, 'a, T&gt; {
+    WellFormed((Foo::Assoc)&lt;Self, 'a, T&gt;) :- WellFormed(Self: Foo), WellFormed(WC).
+}
+
+-- Rule Implied-WC-From-AssocTy
+forall&lt;Self, 'a, T&gt; {
+    FromEnv(WC) :- FromEnv((Foo::Assoc)&lt;Self, 'a, T&gt;).
+}
+
+-- Rule Implied-Bound-From-AssocTy
+forall&lt;Self, 'a, T&gt; {
+    FromEnv(&lt;Self as Foo&gt;::Assoc&lt;'a,T&gt;: Bounds) :- FromEnv(Self: Foo), WC.
+}
+
+-- Rule Implied-Trait-From-AssocTy
+forall&lt;Self,'a, T&gt; {
+    FromEnv(Self: Foo) :- FromEnv((Foo::Assoc)&lt;Self, 'a,T&gt;).
+}
+</code></pre>
+</div></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><h3 id="impl-ToProgramClauses%3CI%3E-2" class="impl"><code class="in-band">impl&lt;I:&nbsp;<a class="trait" href="../../../chalk_ir/interner/trait.Interner.html" title="trait chalk_ir::interner::Interner">Interner</a>&gt; <a class="trait" href="trait.ToProgramClauses.html" title="trait chalk_solve::clauses::program_clauses::ToProgramClauses">ToProgramClauses</a>&lt;I&gt; for <a class="struct" href="../../rust_ir/struct.AssociatedTyValue.html" title="struct chalk_solve::rust_ir::AssociatedTyValue">AssociatedTyValue</a>&lt;I&gt;</code><a href="#impl-ToProgramClauses%3CI%3E-2" class="anchor"></a><a class="srclink" href="../../../src/chalk_solve/clauses/program_clauses.rs.html#52-135" title="goto source code">[src]</a></h3></summary><div class="impl-items"><h4 id="method.to_program_clauses-2" class="method trait-impl"><code>fn <a href="#tymethod.to_program_clauses" class="fnname">to_program_clauses</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;builder: &amp;mut <a class="struct" href="../builder/struct.ClauseBuilder.html" title="struct chalk_solve::clauses::builder::ClauseBuilder">ClauseBuilder</a>&lt;'_, I&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;_environment: &amp;<a class="struct" href="../../../chalk_ir/struct.Environment.html" title="struct chalk_ir::Environment">Environment</a>&lt;I&gt;<br>)</code><a href="#method.to_program_clauses-2" class="anchor"></a><a class="srclink" href="../../../src/chalk_solve/clauses/program_clauses.rs.html#78-134" title="goto source code">[src]</a></h4><div class="docblock"><p>Given the following trait:</p>
+<pre><code class="language-notrust">trait Iterable {
+    type IntoIter&lt;'a&gt;: 'a;
+}
+</code></pre>
+<p>Then for the following impl:</p>
+<pre><code class="language-notrust">impl&lt;T&gt; Iterable for Vec&lt;T&gt; where T: Clone {
+    type IntoIter&lt;'a&gt; = Iter&lt;'a, T&gt;;
+}
+</code></pre>
+<p>we generate:</p>
+<pre><code class="language-notrust">-- Rule Normalize-From-Impl
+forall&lt;'a, T&gt; {
+    Normalize(&lt;Vec&lt;T&gt; as Iterable&gt;::IntoIter&lt;'a&gt; -&gt; Iter&lt;'a, T&gt;&gt;) :-
+        Implemented(T: Clone),  // (1)
+        Implemented(Iter&lt;'a, T&gt;: 'a).   // (2)
+}
+</code></pre>
+</div></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><h3 id="impl-ToProgramClauses%3CI%3E-3" class="impl"><code class="in-band">impl&lt;I:&nbsp;<a class="trait" href="../../../chalk_ir/interner/trait.Interner.html" title="trait chalk_ir::interner::Interner">Interner</a>&gt; <a class="trait" href="trait.ToProgramClauses.html" title="trait chalk_solve::clauses::program_clauses::ToProgramClauses">ToProgramClauses</a>&lt;I&gt; for <a class="struct" href="../../rust_ir/struct.FnDefDatum.html" title="struct chalk_solve::rust_ir::FnDefDatum">FnDefDatum</a>&lt;I&gt;</code><a href="#impl-ToProgramClauses%3CI%3E-3" class="anchor"></a><a class="srclink" href="../../../src/chalk_solve/clauses/program_clauses.rs.html#445-482" title="goto source code">[src]</a></h3></summary><div class="impl-items"><h4 id="method.to_program_clauses-3" class="method trait-impl"><code>fn <a href="#tymethod.to_program_clauses" class="fnname">to_program_clauses</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;builder: &amp;mut <a class="struct" href="../builder/struct.ClauseBuilder.html" title="struct chalk_solve::clauses::builder::ClauseBuilder">ClauseBuilder</a>&lt;'_, I&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;_environment: &amp;<a class="struct" href="../../../chalk_ir/struct.Environment.html" title="struct chalk_ir::Environment">Environment</a>&lt;I&gt;<br>)</code><a href="#method.to_program_clauses-3" class="anchor"></a><a class="srclink" href="../../../src/chalk_solve/clauses/program_clauses.rs.html#463" title="goto source code">[src]</a></h4><div class="docblock"><p>Given the following function definition: <code>fn bar&lt;T&gt;() where T: Eq</code>, generate:</p>
+<pre><code class="language-notrust">-- Rule WellFormed-Type
+forall&lt;T&gt; {
+    WF(bar&lt;T&gt;) :- WF(T: Eq)
+}
+
+-- Rule Implied-Bound-From-Type
+forall&lt;T&gt; {
+    FromEnv(T: Eq) :- FromEnv(bar&lt;T&gt;).
+}
+
+forall&lt;T&gt; {
+    IsFullyVisible(bar&lt;T&gt;) :- IsFullyVisible(T).
+}
+</code></pre>
+</div></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><h3 id="impl-ToProgramClauses%3CI%3E-4" class="impl"><code class="in-band">impl&lt;I:&nbsp;<a class="trait" href="../../../chalk_ir/interner/trait.Interner.html" title="trait chalk_ir::interner::Interner">Interner</a>&gt; <a class="trait" href="trait.ToProgramClauses.html" title="trait chalk_solve::clauses::program_clauses::ToProgramClauses">ToProgramClauses</a>&lt;I&gt; for <a class="struct" href="../../rust_ir/struct.ImplDatum.html" title="struct chalk_solve::rust_ir::ImplDatum">ImplDatum</a>&lt;I&gt;</code><a href="#impl-ToProgramClauses%3CI%3E-4" class="anchor"></a><a class="srclink" href="../../../src/chalk_solve/clauses/program_clauses.rs.html#17-50" title="goto source code">[src]</a></h3></summary><div class="impl-items"><h4 id="method.to_program_clauses-4" class="method trait-impl"><code>fn <a href="#tymethod.to_program_clauses" class="fnname">to_program_clauses</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;builder: &amp;mut <a class="struct" href="../builder/struct.ClauseBuilder.html" title="struct chalk_solve::clauses::builder::ClauseBuilder">ClauseBuilder</a>&lt;'_, I&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;_environment: &amp;<a class="struct" href="../../../chalk_ir/struct.Environment.html" title="struct chalk_ir::Environment">Environment</a>&lt;I&gt;<br>)</code><a href="#method.to_program_clauses-4" class="anchor"></a><a class="srclink" href="../../../src/chalk_solve/clauses/program_clauses.rs.html#31-49" title="goto source code">[src]</a></h4><div class="docblock"><p>Given <code>impl&lt;T: Clone&gt; Clone for Vec&lt;T&gt; { ... }</code>, generate:</p>
+<pre><code class="language-notrust">-- Rule Implemented-From-Impl
+forall&lt;T&gt; {
+    Implemented(Vec&lt;T&gt;: Clone) :- Implemented(T: Clone).
+}
+</code></pre>
+<p>For a negative impl like <code>impl... !Clone for ...</code>, however, we
+generate nothing – this is just a way to <em>opt out</em> from the
+default auto trait impls, it doesn’t have any positive effect
+on its own.</p>
+</div></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><h3 id="impl-ToProgramClauses%3CI%3E-5" class="impl"><code class="in-band">impl&lt;I:&nbsp;<a class="trait" href="../../../chalk_ir/interner/trait.Interner.html" title="trait chalk_ir::interner::Interner">Interner</a>&gt; <a class="trait" href="trait.ToProgramClauses.html" title="trait chalk_solve::clauses::program_clauses::ToProgramClauses">ToProgramClauses</a>&lt;I&gt; for <a class="struct" href="../../rust_ir/struct.OpaqueTyDatum.html" title="struct chalk_solve::rust_ir::OpaqueTyDatum">OpaqueTyDatum</a>&lt;I&gt;</code><a href="#impl-ToProgramClauses%3CI%3E-5" class="anchor"></a><a class="srclink" href="../../../src/chalk_solve/clauses/program_clauses.rs.html#137-216" title="goto source code">[src]</a></h3></summary><div class="impl-items"><h4 id="method.to_program_clauses-5" class="method trait-impl"><code>fn <a href="#tymethod.to_program_clauses" class="fnname">to_program_clauses</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;builder: &amp;mut <a class="struct" href="../builder/struct.ClauseBuilder.html" title="struct chalk_solve::clauses::builder::ClauseBuilder">ClauseBuilder</a>&lt;'_, I&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;_environment: &amp;<a class="struct" href="../../../chalk_ir/struct.Environment.html" title="struct chalk_ir::Environment">Environment</a>&lt;I&gt;<br>)</code><a href="#method.to_program_clauses-5" class="anchor"></a><a class="srclink" href="../../../src/chalk_solve/clauses/program_clauses.rs.html#148" title="goto source code">[src]</a></h4><div class="docblock"><p>Given <code>opaque type T&lt;U&gt;: A + B = HiddenTy where U: C;</code>, we generate:</p>
+<pre><code class="language-notrust">AliasEq(T&lt;U&gt; = HiddenTy) :- Reveal.
+AliasEq(T&lt;U&gt; = !T&lt;U&gt;).
+WF(T&lt;U&gt;) :- WF(U: C).
+Implemented(!T&lt;U&gt;: A).
+Implemented(!T&lt;U&gt;: B).
+</code></pre>
+<p>where <code>!T&lt;..&gt;</code> is the placeholder for the unnormalized type <code>T&lt;..&gt;</code>.</p>
+</div></div></details><details class="rustdoc-toggle implementors-toggle" open><summary><h3 id="impl-ToProgramClauses%3CI%3E-6" class="impl"><code class="in-band">impl&lt;I:&nbsp;<a class="trait" href="../../../chalk_ir/interner/trait.Interner.html" title="trait chalk_ir::interner::Interner">Interner</a>&gt; <a class="trait" href="trait.ToProgramClauses.html" title="trait chalk_solve::clauses::program_clauses::ToProgramClauses">ToProgramClauses</a>&lt;I&gt; for <a class="struct" href="../../rust_ir/struct.TraitDatum.html" title="struct chalk_solve::rust_ir::TraitDatum">TraitDatum</a>&lt;I&gt;</code><a href="#impl-ToProgramClauses%3CI%3E-6" class="anchor"></a><a class="srclink" href="../../../src/chalk_solve/clauses/program_clauses.rs.html#484-723" title="goto source code">[src]</a></h3></summary><div class="impl-items"><h4 id="method.to_program_clauses-6" class="method trait-impl"><code>fn <a href="#tymethod.to_program_clauses" class="fnname">to_program_clauses</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;builder: &amp;mut <a class="struct" href="../builder/struct.ClauseBuilder.html" title="struct chalk_solve::clauses::builder::ClauseBuilder">ClauseBuilder</a>&lt;'_, I&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;environment: &amp;<a class="struct" href="../../../chalk_ir/struct.Environment.html" title="struct chalk_ir::Environment">Environment</a>&lt;I&gt;<br>)</code><a href="#method.to_program_clauses-6" class="anchor"></a><a class="srclink" href="../../../src/chalk_solve/clauses/program_clauses.rs.html#598-722" title="goto source code">[src]</a></h4><div class="docblock"><p>Given the following trait declaration: <code>trait Ord&lt;T&gt; where Self: Eq&lt;T&gt; { ... }</code>, generate:</p>
+<pre><code class="language-notrust">-- Rule WellFormed-TraitRef
+forall&lt;Self, T&gt; {
+   WF(Self: Ord&lt;T&gt;) :- Implemented(Self: Ord&lt;T&gt;), WF(Self: Eq&lt;T&gt;).
+}
+</code></pre>
+<p>and the reverse rules:</p>
+<pre><code class="language-notrust">-- Rule Implemented-From-Env
+forall&lt;Self, T&gt; {
+   (Self: Ord&lt;T&gt;) :- FromEnv(Self: Ord&lt;T&gt;).
+}
+
+-- Rule Implied-Bound-From-Trait
+forall&lt;Self, T&gt; {
+    FromEnv(Self: Eq&lt;T&gt;) :- FromEnv(Self: Ord&lt;T&gt;).
+}
+</code></pre>
+<p>As specified in the orphan rules, if a trait is not marked <code>#[upstream]</code>, the current crate
+can implement it for any type. To represent that, we generate:</p>
+<pre><code class="language-notrust">// `Ord&lt;T&gt;` would not be `#[upstream]` when compiling `std`
+forall&lt;Self, T&gt; { LocalImplAllowed(Self: Ord&lt;T&gt;). }
+</code></pre>
+<p>For traits that are <code>#[upstream]</code> (i.e. not in the current crate), the orphan rules dictate
+that impls are allowed as long as at least one type parameter is local and each type
+prior to that is fully visible. That means that each type prior to the first local
+type cannot contain any of the type parameters of the impl.</p>
+<p>This rule is fairly complex, so we expand it and generate a program clause for each
+possible case. This is represented as follows:</p>
+<pre><code class="language-notrust">// for `#[upstream] trait Foo&lt;T, U, V&gt; where Self: Eq&lt;T&gt; { ... }`
+forall&lt;Self, T, U, V&gt; {
+    LocalImplAllowed(Self: Foo&lt;T, U, V&gt;) :- IsLocal(Self).
+}
+
+forall&lt;Self, T, U, V&gt; {
+    LocalImplAllowed(Self: Foo&lt;T, U, V&gt;) :-
+        IsFullyVisible(Self),
+        IsLocal(T).
+}
+
+forall&lt;Self, T, U, V&gt; {
+    LocalImplAllowed(Self: Foo&lt;T, U, V&gt;) :-
+        IsFullyVisible(Self),
+        IsFullyVisible(T),
+        IsLocal(U).
+}
+
+forall&lt;Self, T, U, V&gt; {
+    LocalImplAllowed(Self: Foo&lt;T, U, V&gt;) :-
+        IsFullyVisible(Self),
+        IsFullyVisible(T),
+        IsFullyVisible(U),
+        IsLocal(V).
+}
+</code></pre>
+<p>The overlap check uses compatible { … } mode to ensure that it accounts for impls that
+may exist in some other <em>compatible</em> world. For every upstream trait, we add a rule to
+account for the fact that upstream crates are able to compatibly add impls of upstream
+traits for upstream types.</p>
+<pre><code class="language-notrust">// For `#[upstream] trait Foo&lt;T, U, V&gt; where Self: Eq&lt;T&gt; { ... }`
+forall&lt;Self, T, U, V&gt; {
+    Implemented(Self: Foo&lt;T, U, V&gt;) :-
+        Implemented(Self: Eq&lt;T&gt;), // where clauses
+        Compatible,               // compatible modality
+        IsUpstream(Self),
+        IsUpstream(T),
+        IsUpstream(U),
+        IsUpstream(V),
+        CannotProve.              // returns ambiguous
+}
+</code></pre>
+<p>In certain situations, this is too restrictive. Consider the following code:</p>
+<pre><code class="language-notrust">/* In crate std */
+trait Sized { }
+struct str { }
+
+/* In crate bar (depends on std) */
+trait Bar { }
+impl Bar for str { }
+impl&lt;T&gt; Bar for T where T: Sized { }
+</code></pre>
+<p>Here, because of the rules we’ve defined, these two impls overlap. The std crate is
+upstream to bar, and thus it is allowed to compatibly implement Sized for str. If str
+can implement Sized in a compatible future, these two impls definitely overlap since the
+second impl covers all types that implement Sized.</p>
+<p>The solution we’ve got right now is to mark Sized as “fundamental” when it is defined.
+This signals to the Rust compiler that it can rely on the fact that str does not
+implement Sized in all contexts. A consequence of this is that we can no longer add an
+implementation of Sized compatibly for str. This is the trade off you make when defining
+a fundamental trait.</p>
+<p>To implement fundamental traits, we simply just do not add the rule above that allows
+upstream types to implement upstream traits. Fundamental traits are not allowed to
+compatibly do that.</p>
+</div></div></details></div><span class="loading-content">Loading content...</span><script type="text/javascript" src="../../../implementors/chalk_solve/clauses/program_clauses/trait.ToProgramClauses.js" async></script></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="chalk_solve" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
+    <script src="../../../main.js"></script></body></html>

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["RecursiveSolver",""],["Solver","A Solver is the basic context in which you can propose goals for a given program. All questions posed to the solver are in canonical, closed form, so that each question is answered with effectively a “clean slate”. This allows for better caching, and simplifies management of the inference context."]]});

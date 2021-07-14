@@ -1,0 +1,365 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Type equality and unification</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../mermaid.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../what_is_chalk.html"><strong aria-hidden="true">1.</strong> What is Chalk?</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../what_is_chalk/walkthrough.html"><strong aria-hidden="true">1.1.</strong> Walkthrough</a></li><li class="chapter-item expanded "><a href="../what_is_chalk/crates.html"><strong aria-hidden="true">1.2.</strong> Crates</a></li><li class="chapter-item expanded "><a href="../what_is_chalk/repl.html"><strong aria-hidden="true">1.3.</strong> REPL</a></li></ol></li><li class="chapter-item expanded "><a href="../contribution_guide.html"><strong aria-hidden="true">2.</strong> Contribution guide</a></li><li class="chapter-item expanded "><a href="../types.html"><strong aria-hidden="true">3.</strong> Representing and manipulating types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/role_of_interner.html"><strong aria-hidden="true">3.1.</strong> The Interner</a></li><li class="chapter-item expanded "><a href="../types/rust_types.html"><strong aria-hidden="true">3.2.</strong> Rust types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/rust_types/alias.html"><strong aria-hidden="true">3.2.1.</strong> Alias types</a></li><li class="chapter-item expanded "><a href="../types/rust_types/application_ty.html"><strong aria-hidden="true">3.2.2.</strong> Application types</a></li></ol></li><li class="chapter-item expanded "><a href="../types/rust_lifetimes.html"><strong aria-hidden="true">3.3.</strong> Rust lifetimes</a></li><li class="chapter-item expanded "><a href="../types/operations.html"><strong aria-hidden="true">3.4.</strong> Operations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/operations/fold.html"><strong aria-hidden="true">3.4.1.</strong> Fold and the Folder trait</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../clauses.html"><strong aria-hidden="true">4.</strong> Lowering Rust IR to logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../clauses/goals_and_clauses.html"><strong aria-hidden="true">4.1.</strong> Goals and clauses</a></li><li class="chapter-item expanded "><a href="../clauses/type_equality.html" class="active"><strong aria-hidden="true">4.2.</strong> Type equality and unification</a></li><li class="chapter-item expanded "><a href="../clauses/implied_bounds.html"><strong aria-hidden="true">4.3.</strong> Implied bounds</a></li><li class="chapter-item expanded "><a href="../clauses/lowering_rules.html"><strong aria-hidden="true">4.4.</strong> Lowering rules</a></li><li class="chapter-item expanded "><a href="../clauses/opaque_types.html"><strong aria-hidden="true">4.5.</strong> Opaque types (impl Trait)</a></li><li class="chapter-item expanded "><a href="../clauses/well_known_traits.html"><strong aria-hidden="true">4.6.</strong> Well known traits</a></li><li class="chapter-item expanded "><a href="../clauses/wf.html"><strong aria-hidden="true">4.7.</strong> Well-formedness checking</a></li><li class="chapter-item expanded "><a href="../clauses/coherence.html"><strong aria-hidden="true">4.8.</strong> Coherence</a></li></ol></li><li class="chapter-item expanded "><a href="../canonical_queries.html"><strong aria-hidden="true">5.</strong> Canonical queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../canonical_queries/canonicalization.html"><strong aria-hidden="true">5.1.</strong> Canonicalization</a></li></ol></li><li class="chapter-item expanded "><a href="../engine.html"><strong aria-hidden="true">6.</strong> Chalk engine</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../engine/major_concepts.html"><strong aria-hidden="true">6.1.</strong> Major concepts</a></li><li class="chapter-item expanded "><a href="../engine/logic.html"><strong aria-hidden="true">6.2.</strong> Logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../engine/logic/coinduction.html"><strong aria-hidden="true">6.2.1.</strong> Coinduction</a></li></ol></li><li class="chapter-item expanded "><a href="../engine/slg.html"><strong aria-hidden="true">6.3.</strong> SLG Solver</a></li></ol></li><li class="chapter-item expanded "><a href="../recursive.html"><strong aria-hidden="true">7.</strong> Chalk recursive solver</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../recursive/stack.html"><strong aria-hidden="true">7.1.</strong> The stack</a></li><li class="chapter-item expanded "><a href="../recursive/inductive_cycles.html"><strong aria-hidden="true">7.2.</strong> Inductive cycles</a></li><li class="chapter-item expanded "><a href="../recursive/search_graph.html"><strong aria-hidden="true">7.3.</strong> The search graph and caching</a></li><li class="chapter-item expanded "><a href="../recursive/coinduction.html"><strong aria-hidden="true">7.4.</strong> Coinduction</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../glossary.html">Appendix A: Glossary and terminology</a></li><li class="chapter-item expanded affix "><a href="../bibliography.html">Appendix B: Bibliography</a></li><li class="chapter-item expanded affix "><a href="../todo.html">Appendix C: Incomplete chapters</a></li><li class="chapter-item expanded affix "><a href="../publishing.html">Appendix D: Publishing Chalk</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#type-equality-and-unification" id="type-equality-and-unification">Type equality and unification</a></h1>
+<p>This section covers how the trait system handles equality between
+associated types. The full system consists of several moving parts,
+which we will introduce one by one:</p>
+<ul>
+<li>Projection and the <code>Normalize</code> predicate</li>
+<li>Placeholder associated type projections</li>
+<li>The <code>AliasEq</code> predicate</li>
+<li>Integration with unification</li>
+</ul>
+<h2><a class="header" href="#associated-type-projection-and-normalization" id="associated-type-projection-and-normalization">Associated type projection and normalization</a></h2>
+<p>When a trait defines an associated type (e.g.,
+<a href="https://doc.rust-lang.org/nightly/core/iter/trait.IntoIterator.html#associatedtype.Item">the <code>Item</code> type in the <code>IntoIterator</code> trait</a>), that
+type can be referenced by the user using an <strong>associated type
+projection</strong> like <code>&lt;Option&lt;u32&gt; as IntoIterator&gt;::Item</code>.</p>
+<blockquote>
+<p>Often, people will use the shorthand syntax <code>T::Item</code>. Presently, that
+syntax is expanded during <a href="https://rustc-dev-guide.rust-lang.org/type-checking.html">&quot;type collection&quot;</a> into the
+explicit form, though that is something we may want to change in the future.</p>
+</blockquote>
+<p><a name="normalize"></a></p>
+<p>In some cases, associated type projections can be <strong>normalized</strong> –
+that is, simplified – based on the types given in an impl. So, to
+continue with our example, the impl of <code>IntoIterator</code> for <code>Option&lt;T&gt;</code>
+declares (among other things) that <code>Item = T</code>:</p>
+<pre><code class="language-rust ignore">impl&lt;T&gt; IntoIterator for Option&lt;T&gt; {
+  type Item = T;
+  ...
+}
+</code></pre>
+<p>This means we can normalize the projection <code>&lt;Option&lt;u32&gt; as IntoIterator&gt;::Item</code> to just <code>u32</code>.</p>
+<p>In this case, the projection was a &quot;monomorphic&quot; one – that is, it
+did not have any type parameters.  Monomorphic projections are special
+because they can <strong>always</strong> be fully normalized.</p>
+<p>Often, we can normalize other associated type projections as well. For
+example, <code>&lt;Option&lt;?T&gt; as IntoIterator&gt;::Item</code>, where <code>?T</code> is an inference
+variable, can be normalized to just <code>?T</code>.</p>
+<p>In our logic, normalization is defined by a predicate
+<code>Normalize</code>. The <code>Normalize</code> clauses arise only from
+impls. For example, the <code>impl</code> of <code>IntoIterator</code> for <code>Option&lt;T&gt;</code> that
+we saw above would be lowered to a program clause like so:</p>
+<pre><code class="language-text">forall&lt;T&gt; {
+    Normalize(&lt;Option&lt;T&gt; as IntoIterator&gt;::Item -&gt; T) :-
+        Implemented(Option&lt;T&gt;: IntoIterator)
+}
+</code></pre>
+<p>where in this case, the one <code>Implemented</code> condition is always true.</p>
+<blockquote>
+<p>Since we do not permit quantification over traits, this is really more like
+a family of program clauses, one for each associated type.</p>
+</blockquote>
+<p>We could apply that rule to normalize either of the examples that
+we've seen so far.</p>
+<h2><a class="header" href="#placeholder-associated-types" id="placeholder-associated-types">Placeholder associated types</a></h2>
+<p>Sometimes however we want to work with associated types that cannot be
+normalized. For example, consider this function:</p>
+<pre><code class="language-rust ignore">fn foo&lt;T: IntoIterator&gt;(...) { ... }
+</code></pre>
+<p>In this context, how would we normalize the type <code>T::Item</code>?</p>
+<p>Without knowing what <code>T</code> is, we can't really do so. To represent this case,
+we introduce a type called a <strong>placeholder associated type projection</strong>. This
+is written like so: <code>(IntoIterator::Item)&lt;T&gt;</code>.</p>
+<p>You may note that it looks a lot like a regular type (e.g., <code>Option&lt;T&gt;</code>),
+except that the &quot;name&quot; of the type is <code>(IntoIterator::Item)</code>. This is not an
+accident: placeholder associated type projections work just like ordinary
+types like <code>Vec&lt;T&gt;</code> when it comes to unification. That is, they are only
+considered equal if (a) they are both references to the same associated type,
+like <code>IntoIterator::Item</code> and (b) their type arguments are equal.</p>
+<p>Placeholder associated types are never written directly by the user.
+They are used internally by the trait system only, as we will see
+shortly.</p>
+<p>In rustc, they correspond to the <code>TyKind::UnnormalizedProjectionTy</code> enum
+variant, declared in <a href="https://github.com/rust-lang/rust/blob/master/compiler/rustc_middle/src/ty/sty.rs"><code>compiler/rustc_middle/src/ty/sty.rs</code></a>. In chalk, we use an
+<code>AssociatedType</code>.</p>
+<h2><a class="header" href="#projection-equality" id="projection-equality">Projection equality</a></h2>
+<p>So far we have seen two ways to answer the question of &quot;When can we
+consider an associated type projection equal to another type?&quot;:</p>
+<ul>
+<li>the <code>Normalize</code> predicate could be used to transform projections when we
+knew which impl applied;</li>
+<li><strong>placeholder</strong> associated types can be used when we don't. This is also
+known as <strong>lazy normalization</strong>.</li>
+</ul>
+<p>These two cases are brought together by the <code>AliasEq</code> predicate introduced 
+<a href="../types/rust_types/alias.html">before</a> (where the <a href="https://rust-lang.github.io/chalk/chalk_ir/enum.AliasTy.html"><code>AliasTy</code></a> is <code>Projection</code>). The instantiated predicate for projection 
+equality looks then like so:</p>
+<pre><code class="language-text">AliasEq(&lt;T as IntoIterator&gt;::Item = U)
+</code></pre>
+<p>and we will see that it can be proven <em>either</em> via normalization or
+via the placeholder type. As part of lowering an associated type declaration from
+some trait, we create two program clauses for <code>AliasEq</code>:</p>
+<pre><code class="language-text">forall&lt;T, U&gt; {
+    AliasEq(&lt;T as IntoIterator&gt;::Item = U) :-
+        Normalize(&lt;T as IntoIterator&gt;::Item -&gt; U)
+}
+
+forall&lt;T&gt; {
+    AliasEq(&lt;T as IntoIterator&gt;::Item = (IntoIterator::Item)&lt;T&gt;)
+}
+</code></pre>
+<p>These are the only two <code>AliasEq</code> program clauses we ever make for
+any given associated item.</p>
+<h2><a class="header" href="#integration-with-unification" id="integration-with-unification">Integration with unification</a></h2>
+<p>Now we are ready to discuss how associated type equality integrates
+with unification. As described in the
+<a href="https://rustc-dev-guide.rust-lang.org/type-inference.html">type inference</a>
+section, unification is basically a procedure with a signature like this:</p>
+<pre><code class="language-text">Unify(A, B) = Result&lt;Subgoals, NoSolution&gt;
+</code></pre>
+<p>In other words, we try to unify two things A and B. That procedure
+might just fail, in which case we get back <code>Err(NoSolution)</code>. This
+would happen, for example, if we tried to unify <code>u32</code> and <code>i32</code>.</p>
+<p>The key point is that, on success, unification can also give back to
+us a set of subgoals that still remain to be proven.</p>
+<p>Whenever unification encounters a non-placeholder associated type
+projection P being equated with some other type T, it always succeeds,
+but it produces a subgoal <code>AliasEq(P = T)</code> that is propagated
+back up. Thus it falls to the ordinary workings of the trait system
+to process that constraint.</p>
+<blockquote>
+<p>If we unify two projections P1 and P2, then unification produces a
+variable X and asks us to prove that <code>AliasEq(P1 = X)</code> and
+<code>AliasEq(P2 = X)</code>. (That used to be needed in an older system to
+prevent cycles; I rather doubt it still is. -nmatsakis)</p>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../clauses/goals_and_clauses.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../clauses/implied_bounds.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../clauses/goals_and_clauses.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../clauses/implied_bounds.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Lowering Rust IR to logic</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="mermaid.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="what_is_chalk.html"><strong aria-hidden="true">1.</strong> What is Chalk?</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="what_is_chalk/walkthrough.html"><strong aria-hidden="true">1.1.</strong> Walkthrough</a></li><li class="chapter-item expanded "><a href="what_is_chalk/crates.html"><strong aria-hidden="true">1.2.</strong> Crates</a></li><li class="chapter-item expanded "><a href="what_is_chalk/repl.html"><strong aria-hidden="true">1.3.</strong> REPL</a></li></ol></li><li class="chapter-item expanded "><a href="contribution_guide.html"><strong aria-hidden="true">2.</strong> Contribution guide</a></li><li class="chapter-item expanded "><a href="types.html"><strong aria-hidden="true">3.</strong> Representing and manipulating types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types/role_of_interner.html"><strong aria-hidden="true">3.1.</strong> The Interner</a></li><li class="chapter-item expanded "><a href="types/rust_types.html"><strong aria-hidden="true">3.2.</strong> Rust types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types/rust_types/alias.html"><strong aria-hidden="true">3.2.1.</strong> Alias types</a></li><li class="chapter-item expanded "><a href="types/rust_types/application_ty.html"><strong aria-hidden="true">3.2.2.</strong> Application types</a></li></ol></li><li class="chapter-item expanded "><a href="types/rust_lifetimes.html"><strong aria-hidden="true">3.3.</strong> Rust lifetimes</a></li><li class="chapter-item expanded "><a href="types/operations.html"><strong aria-hidden="true">3.4.</strong> Operations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types/operations/fold.html"><strong aria-hidden="true">3.4.1.</strong> Fold and the Folder trait</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="clauses.html" class="active"><strong aria-hidden="true">4.</strong> Lowering Rust IR to logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="clauses/goals_and_clauses.html"><strong aria-hidden="true">4.1.</strong> Goals and clauses</a></li><li class="chapter-item expanded "><a href="clauses/type_equality.html"><strong aria-hidden="true">4.2.</strong> Type equality and unification</a></li><li class="chapter-item expanded "><a href="clauses/implied_bounds.html"><strong aria-hidden="true">4.3.</strong> Implied bounds</a></li><li class="chapter-item expanded "><a href="clauses/lowering_rules.html"><strong aria-hidden="true">4.4.</strong> Lowering rules</a></li><li class="chapter-item expanded "><a href="clauses/opaque_types.html"><strong aria-hidden="true">4.5.</strong> Opaque types (impl Trait)</a></li><li class="chapter-item expanded "><a href="clauses/well_known_traits.html"><strong aria-hidden="true">4.6.</strong> Well known traits</a></li><li class="chapter-item expanded "><a href="clauses/wf.html"><strong aria-hidden="true">4.7.</strong> Well-formedness checking</a></li><li class="chapter-item expanded "><a href="clauses/coherence.html"><strong aria-hidden="true">4.8.</strong> Coherence</a></li></ol></li><li class="chapter-item expanded "><a href="canonical_queries.html"><strong aria-hidden="true">5.</strong> Canonical queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="canonical_queries/canonicalization.html"><strong aria-hidden="true">5.1.</strong> Canonicalization</a></li></ol></li><li class="chapter-item expanded "><a href="engine.html"><strong aria-hidden="true">6.</strong> Chalk engine</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="engine/major_concepts.html"><strong aria-hidden="true">6.1.</strong> Major concepts</a></li><li class="chapter-item expanded "><a href="engine/logic.html"><strong aria-hidden="true">6.2.</strong> Logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="engine/logic/coinduction.html"><strong aria-hidden="true">6.2.1.</strong> Coinduction</a></li></ol></li><li class="chapter-item expanded "><a href="engine/slg.html"><strong aria-hidden="true">6.3.</strong> SLG Solver</a></li></ol></li><li class="chapter-item expanded "><a href="recursive.html"><strong aria-hidden="true">7.</strong> Chalk recursive solver</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="recursive/stack.html"><strong aria-hidden="true">7.1.</strong> The stack</a></li><li class="chapter-item expanded "><a href="recursive/inductive_cycles.html"><strong aria-hidden="true">7.2.</strong> Inductive cycles</a></li><li class="chapter-item expanded "><a href="recursive/search_graph.html"><strong aria-hidden="true">7.3.</strong> The search graph and caching</a></li><li class="chapter-item expanded "><a href="recursive/coinduction.html"><strong aria-hidden="true">7.4.</strong> Coinduction</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="glossary.html">Appendix A: Glossary and terminology</a></li><li class="chapter-item expanded affix "><a href="bibliography.html">Appendix B: Bibliography</a></li><li class="chapter-item expanded affix "><a href="todo.html">Appendix C: Incomplete chapters</a></li><li class="chapter-item expanded affix "><a href="publishing.html">Appendix D: Publishing Chalk</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#lowering-rust-ir-to-logic" id="lowering-rust-ir-to-logic">Lowering Rust IR to logic</a></h1>
+<p>The key observation here is that the Rust trait system is basically a
+kind of logic, and it can be mapped onto standard logical inference
+rules. We can then look for solutions to those inference rules in a
+very similar fashion to how e.g. a <a href="https://en.wikipedia.org/wiki/Prolog">Prolog</a> solver works. It turns out
+that we can't <em>quite</em> use Prolog rules (also called Horn clauses) but
+rather need a somewhat more expressive variant.</p>
+<h2><a class="header" href="#rust-traits-and-logic" id="rust-traits-and-logic">Rust traits and logic</a></h2>
+<p>One of the first observations is that the Rust trait system is
+basically a kind of logic. As such, we can map our struct, trait, and
+impl declarations into logical inference rules. For the most part,
+these are basically Horn clauses, though we'll see that to capture the
+full richness of Rust – and in particular to support generic
+programming – we have to go a bit further than standard Horn clauses.</p>
+<p>To see how this mapping works, let's start with an example. Imagine
+we declare a trait and a few impls, like so:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Clone { }
+impl Clone for usize { }
+impl&lt;T&gt; Clone for Vec&lt;T&gt; where T: Clone { }
+<span class="boring">}
+</span></code></pre></pre>
+<p>We could map these declarations to some Horn clauses, written in a
+Prolog-like notation, as follows:</p>
+<pre><code class="language-text">Clone(usize).
+Clone(Vec&lt;?T&gt;) :- Clone(?T).
+
+// The notation `A :- B` means &quot;A is true if B is true&quot;.
+// Or, put another way, B implies A.
+</code></pre>
+<p>In Prolog terms, we might say that <code>Clone(Foo)</code> – where <code>Foo</code> is some
+Rust type – is a <em>predicate</em> that represents the idea that the type
+<code>Foo</code> implements <code>Clone</code>. These rules are <strong>program clauses</strong>; they
+state the conditions under which that predicate can be proven (i.e.,
+considered true). So the first rule just says &quot;Clone is implemented
+for <code>usize</code>&quot;. The next rule says &quot;for any type <code>?T</code>, Clone is
+implemented for <code>Vec&lt;?T&gt;</code> if clone is implemented for <code>?T</code>&quot;. So
+e.g. if we wanted to prove that <code>Clone(Vec&lt;Vec&lt;usize&gt;&gt;)</code>, we would do
+so by applying the rules recursively:</p>
+<ul>
+<li><code>Clone(Vec&lt;Vec&lt;usize&gt;&gt;)</code> is provable if:
+<ul>
+<li><code>Clone(Vec&lt;usize&gt;)</code> is provable if:
+<ul>
+<li><code>Clone(usize)</code> is provable. (Which it is, so we're all good.)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>But now suppose we tried to prove that <code>Clone(Vec&lt;Bar&gt;)</code>. This would
+fail (after all, I didn't give an impl of <code>Clone</code> for <code>Bar</code>):</p>
+<ul>
+<li><code>Clone(Vec&lt;Bar&gt;)</code> is provable if:
+<ul>
+<li><code>Clone(Bar)</code> is provable. (But it is not, as there are no applicable rules.)</li>
+</ul>
+</li>
+</ul>
+<p>We can easily extend the example above to cover generic traits with
+more than one input type. So imagine the <code>Eq&lt;T&gt;</code> trait, which declares
+that <code>Self</code> is equatable with a value of type <code>T</code>:</p>
+<pre><code class="language-rust ignore">trait Eq&lt;T&gt; { ... }
+impl Eq&lt;usize&gt; for usize { }
+impl&lt;T: Eq&lt;U&gt;&gt; Eq&lt;Vec&lt;U&gt;&gt; for Vec&lt;T&gt; { }
+</code></pre>
+<p>That could be mapped as follows:</p>
+<pre><code class="language-text">Eq(usize, usize).
+Eq(Vec&lt;?T&gt;, Vec&lt;?U&gt;) :- Eq(?T, ?U).
+</code></pre>
+<p>So far so good.</p>
+<h2><a class="header" href="#type-checking-normal-functions" id="type-checking-normal-functions">Type-checking normal functions</a></h2>
+<p>OK, now that we have defined some logical rules that are able to
+express when traits are implemented and to handle associated types,
+let's turn our focus a bit towards <strong>type-checking</strong>. Type-checking is
+interesting because it is what gives us the goals that we need to
+prove. That is, everything we've seen so far has been about how we
+derive the rules by which we can prove goals from the traits and impls
+in the program; but we are also interested in how to derive the goals
+that we need to prove, and those come from type-checking.</p>
+<p>Consider type-checking the function <code>foo()</code> here:</p>
+<pre><code class="language-rust ignore">fn foo() { bar::&lt;usize&gt;() }
+fn bar&lt;U: Eq&lt;U&gt;&gt;() { }
+</code></pre>
+<p>This function is very simple, of course: all it does is to call
+<code>bar::&lt;usize&gt;()</code>. Now, looking at the definition of <code>bar()</code>, we can see
+that it has one where-clause <code>U: Eq&lt;U&gt;</code>. So, that means that <code>foo()</code> will
+have to prove that <code>usize: Eq&lt;usize&gt;</code> in order to show that it can call <code>bar()</code>
+with <code>usize</code> as the type argument.</p>
+<p>If we wanted, we could write a Prolog predicate that defines the
+conditions under which <code>bar()</code> can be called. We'll say that those
+conditions are called being &quot;well-formed&quot;:</p>
+<pre><code class="language-text">barWellFormed(?U) :- Eq(?U, ?U).
+</code></pre>
+<p>Then we can say that <code>foo()</code> type-checks if the reference to
+<code>bar::&lt;usize&gt;</code> (that is, <code>bar()</code> applied to the type <code>usize</code>) is
+well-formed:</p>
+<pre><code class="language-text">fooTypeChecks :- barWellFormed(usize).
+</code></pre>
+<p>If we try to prove the goal <code>fooTypeChecks</code>, it will succeed:</p>
+<ul>
+<li><code>fooTypeChecks</code> is provable if:
+<ul>
+<li><code>barWellFormed(usize)</code>, which is provable if:
+<ul>
+<li><code>Eq(usize, usize)</code>, which is provable because of an impl.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Ok, so far so good. Let's move on to type-checking a more complex function.</p>
+<h2><a class="header" href="#type-checking-generic-functions-beyond-horn-clauses" id="type-checking-generic-functions-beyond-horn-clauses">Type-checking generic functions: beyond Horn clauses</a></h2>
+<p>In the last section, we used standard Prolog horn-clauses (augmented with Rust's
+notion of type equality) to type-check some simple Rust functions. But that only
+works when we are type-checking non-generic functions. If we want to type-check
+a generic function, it turns out we need a stronger notion of goal than what Prolog
+can provide. To see what I'm talking about, let's revamp our previous
+example to make <code>foo</code> generic:</p>
+<pre><code class="language-rust ignore">fn foo&lt;T: Eq&lt;T&gt;&gt;() { bar::&lt;T&gt;() }
+fn bar&lt;U: Eq&lt;U&gt;&gt;() { }
+</code></pre>
+<p>To type-check the body of <code>foo</code>, we need to be able to hold the type
+<code>T</code> &quot;abstract&quot;.  That is, we need to check that the body of <code>foo</code> is
+type-safe <em>for all types <code>T</code></em>, not just for some specific type. We might express
+this like so:</p>
+<pre><code class="language-text">fooTypeChecks :-
+  // for all types T...
+  forall&lt;T&gt; {
+    // ...if we assume that Eq(T, T) is provable...
+    if (Eq(T, T)) {
+      // ...then we can prove that `barWellFormed(T)` holds.
+      barWellFormed(T)
+    }
+  }.
+</code></pre>
+<p>This notation I'm using here is the notation I've been using in my
+prototype implementation; it's similar to standard mathematical
+notation but a bit Rustified. Anyway, the problem is that standard
+Horn clauses don't allow universal quantification (<code>forall</code>) or
+implication (<code>if</code>) in goals (though many Prolog engines do support
+them, as an extension). For this reason, we need to accept something
+called &quot;first-order hereditary harrop&quot; (FOHH) clauses – this long
+name basically means &quot;standard Horn clauses with <code>forall</code> and <code>if</code> in
+the body&quot;. But it's nice to know the proper name, because there is a
+lot of work describing how to efficiently handle FOHH clauses; see for
+example Gopalan Nadathur's excellent
+<a href="./bibliography.html#pphhf">&quot;A Proof Procedure for the Logic of Hereditary Harrop Formulas&quot;</a>
+in <a href="./bibliography.html">the bibliography</a>.</p>
+<p>It turns out that supporting FOHH is not really all that hard. And
+once we are able to do that, we can easily describe the type-checking
+rule for generic functions like <code>foo</code> in our logic.</p>
+<h2><a class="header" href="#source" id="source">Source</a></h2>
+<p>This page is a lightly adapted version of a
+<a href="https://smallcultfollowing.com/babysteps/blog/2017/01/26/lowering-rust-traits-to-logic/">blog post by Nicholas Matsakis</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="types/operations/fold.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="clauses/goals_and_clauses.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="types/operations/fold.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="clauses/goals_and_clauses.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["ClauseBuilder","The “clause builder” is a useful tool for building up sets of program clauses. It takes ownership of the output vector while it lasts, and offers methods like `push_clause` and so forth to append to it."]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["combine",""],["fixed_point",""],["fulfill",""],["recursive",""],["solve",""]],"struct":[["Cache","The “cache” stores results for goals that we have completely solved. Things are added to the cache when we have completely processed their result, and it can be shared amongst many solvers."],["RecursiveSolver",""]],"type":[["UCanonicalGoal",""]]});

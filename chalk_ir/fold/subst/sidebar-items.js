@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Subst","Substitution used during folding"]]});

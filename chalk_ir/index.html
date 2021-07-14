@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Defines the IR for types and logical predicates."><meta name="keywords" content="rust, rustlang, rust-lang, chalk_ir"><title>chalk_ir - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script id="default-settings"></script><script src="../storage.js"></script><script src="../crates.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../chalk_ir/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class="location">Crate chalk_ir</p><div class="block version"><p>Version 0.70.0-dev.0</p></div><div class="sidebar-elems"><a id="all-types" href="all.html"><p>See all chalk_ir's items</p></a><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class="location"></p><div id="sidebar-vars" data-name="chalk_ir" data-ty="mod" data-relpath="../"></div><script defer src="../sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Crate <a class="mod" href="">chalk_ir</a><button id="copy-path" onclick="copy_path(this)">⎘</button></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/chalk_ir/lib.rs.html#1-3085" title="goto source code">[src]</a></span></h1><div class="docblock"><p>Defines the IR for types and logical predicates.</p>
+</div><h2 id="reexports" class="section-header"><a href="#reexports">Re-exports</a></h2>
+<table><tr class="import-item"><td><code>pub use crate::debug::<a class="struct" href="debug/struct.SeparatorTraitRef.html" title="struct chalk_ir::debug::SeparatorTraitRef">SeparatorTraitRef</a>;</code></td><td class="docblock-short"></td></tr></table><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
+<table><tr class="module-item"><td><a class="mod" href="cast/index.html" title="chalk_ir::cast mod">cast</a></td><td class="docblock-short"><p>Upcasts, to avoid writing out wrapper types.</p>
+</td></tr><tr class="module-item"><td><a class="mod" href="could_match/index.html" title="chalk_ir::could_match mod">could_match</a></td><td class="docblock-short"><p>Fast matching check for zippable values.</p>
+</td></tr><tr class="module-item"><td><a class="mod" href="debug/index.html" title="chalk_ir::debug mod">debug</a></td><td class="docblock-short"><p>Debug impls for types.</p>
+</td></tr><tr class="module-item"><td><a class="mod" href="fold/index.html" title="chalk_ir::fold mod">fold</a></td><td class="docblock-short"><p>Traits for transforming bits of IR.</p>
+</td></tr><tr class="module-item"><td><a class="mod" href="interner/index.html" title="chalk_ir::interner mod">interner</a></td><td class="docblock-short"><p>Encapsulates the concrete representation of core types such as types and goals.</p>
+</td></tr><tr class="module-item"><td><a class="mod" href="visit/index.html" title="chalk_ir::visit mod">visit</a></td><td class="docblock-short"><p>Traits for visiting bits of IR.</p>
+</td></tr><tr class="module-item"><td><a class="mod" href="zip/index.html" title="chalk_ir::zip mod">zip</a></td><td class="docblock-short"><p>Traits for “zipping” types, walking through two structures and checking that they match.</p>
+</td></tr></table><h2 id="macros" class="section-header"><a href="#macros">Macros</a></h2>
+<table><tr class="module-item"><td><a class="macro" href="macro.try_break.html" title="chalk_ir::try_break macro">try_break</a></td><td class="docblock-short"><p>Unwraps a <code>ControlFlow</code> or propagates its <code>Break</code> value.
+This replaces the <code>Try</code> implementation that would be used
+with <code>std::ops::ControlFlow</code>.</p>
+</td></tr></table><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
+<table><tr class="module-item"><td><a class="struct" href="struct.AdtId.html" title="chalk_ir::AdtId struct">AdtId</a></td><td class="docblock-short"><p>The id for an Abstract Data Type (i.e. structs, unions and enums).</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.AliasEq.html" title="chalk_ir::AliasEq struct">AliasEq</a></td><td class="docblock-short"><p>Proves <strong>equality</strong> between an alias and a type.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.AnswerSubst.html" title="chalk_ir::AnswerSubst struct">AnswerSubst</a></td><td class="docblock-short"><p>The resulting substitution after solving a goal.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.AssocTypeId.html" title="chalk_ir::AssocTypeId struct">AssocTypeId</a></td><td class="docblock-short"><p>The id for the associated type member of a trait. The details of the type
+can be found by invoking the <a href="../chalk_solve/trait.RustIrDatabase.html#tymethod.associated_ty_data"><code>associated_ty_data</code></a> method.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Binders.html" title="chalk_ir::Binders struct">Binders</a></td><td class="docblock-short"><p>Indicates that the <code>value</code> is universally quantified over <code>N</code>
+parameters of the given kinds, where <code>N == self.binders.len()</code>. A
+variable with depth <code>i &lt; N</code> refers to the value at
+<code>self.binders[i]</code>. Variables with depth <code>&gt;= N</code> are free.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.BindersIntoIterator.html" title="chalk_ir::BindersIntoIterator struct">BindersIntoIterator</a></td><td class="docblock-short"><p><code>IntoIterator</code> for binders.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.BoundVar.html" title="chalk_ir::BoundVar struct">BoundVar</a></td><td class="docblock-short"><p>Identifies a particular bound variable within a binder.
+Variables are identified by the combination of a <a href="struct.DebruijnIndex.html" title="DebruijnIndex"><code>DebruijnIndex</code></a>,
+which identifies the <em>binder</em>, and an index within that binder.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Canonical.html" title="chalk_ir::Canonical struct">Canonical</a></td><td class="docblock-short"><p>Wraps a “canonicalized item”. Items are canonicalized as follows:</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.CanonicalVarKinds.html" title="chalk_ir::CanonicalVarKinds struct">CanonicalVarKinds</a></td><td class="docblock-short"><p>List of interned elements.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ClauseId.html" title="chalk_ir::ClauseId struct">ClauseId</a></td><td class="docblock-short"><p>Id for a specific clause.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ClosureId.html" title="chalk_ir::ClosureId struct">ClosureId</a></td><td class="docblock-short"><p>Id for Rust closures.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ConcreteConst.html" title="chalk_ir::ConcreteConst struct">ConcreteConst</a></td><td class="docblock-short"><p>Concrete constant, whose value is known (as opposed to
+inferred constants and placeholders).</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Const.html" title="chalk_ir::Const struct">Const</a></td><td class="docblock-short"><p>Constants.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ConstData.html" title="chalk_ir::ConstData struct">ConstData</a></td><td class="docblock-short"><p>Constant data, containing the constant’s type and value.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ConstrainedSubst.html" title="chalk_ir::ConstrainedSubst struct">ConstrainedSubst</a></td><td class="docblock-short"><p>Combines a substitution (<code>subst</code>) with a set of region constraints
+(<code>constraints</code>). This represents the result of a query; the
+substitution stores the values for the query’s unknown variables,
+and the constraints represents any region constraints that must
+additionally be solved.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Constraints.html" title="chalk_ir::Constraints struct">Constraints</a></td><td class="docblock-short"><p>List of interned elements.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.DebruijnIndex.html" title="chalk_ir::DebruijnIndex struct">DebruijnIndex</a></td><td class="docblock-short"><p>References the binder at the given depth. The index is a <a href="https://en.wikipedia.org/wiki/De_Bruijn_index">de
+Bruijn index</a>, so it counts back through the in-scope binders,
+with 0 being the innermost binder. This is used in impls and
+the like. For example, if we had a rule like <code>for&lt;T&gt; { (T: Clone) :- (T: Copy) }</code>, then <code>T</code> would be represented as a
+<code>BoundVar(0)</code> (as the <code>for</code> is the innermost binder).</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.DynTy.html" title="chalk_ir::DynTy struct">DynTy</a></td><td class="docblock-short"><p>A “DynTy” represents a trait object (<code>dyn Trait</code>). Trait objects
+are conceptually very related to an “existential type” of the form
+<code>exists&lt;T&gt; { T: Trait }</code> (another example of such type is <code>impl Trait</code>).
+<code>DynTy</code> represents the bounds on that type.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Environment.html" title="chalk_ir::Environment struct">Environment</a></td><td class="docblock-short"><p>The set of assumptions we’ve made so far, and the current number of
+universal (forall) quantifiers we’re within.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.EqGoal.html" title="chalk_ir::EqGoal struct">EqGoal</a></td><td class="docblock-short"><p>Equality goal: tries to prove that two values are equal.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Floundered.html" title="chalk_ir::Floundered struct">Floundered</a></td><td class="docblock-short"><p>Indicates that the complete set of program clauses for this goal
+cannot be enumerated.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.FnDefId.html" title="chalk_ir::FnDefId struct">FnDefId</a></td><td class="docblock-short"><p>Function definition id.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.FnPointer.html" title="chalk_ir::FnPointer struct">FnPointer</a></td><td class="docblock-short"><p>for&lt;’a…’z&gt; X – all binders are instantiated at once,
+and we use deBruijn indices within <code>self.ty</code></p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.FnSig.html" title="chalk_ir::FnSig struct">FnSig</a></td><td class="docblock-short"><p>A function signature.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.FnSubst.html" title="chalk_ir::FnSubst struct">FnSubst</a></td><td class="docblock-short"><p>A wrapper for the substs on a Fn.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ForeignDefId.html" title="chalk_ir::ForeignDefId struct">ForeignDefId</a></td><td class="docblock-short"><p>Id for foreign types.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.GeneratorId.html" title="chalk_ir::GeneratorId struct">GeneratorId</a></td><td class="docblock-short"><p>Id for Rust generators.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.GenericArg.html" title="chalk_ir::GenericArg struct">GenericArg</a></td><td class="docblock-short"><p>A generic argument, see <code>GenericArgData</code> for more information.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Goal.html" title="chalk_ir::Goal struct">Goal</a></td><td class="docblock-short"><p>A general goal; this is the full range of questions you can pose to Chalk.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Goals.html" title="chalk_ir::Goals struct">Goals</a></td><td class="docblock-short"><p>List of interned elements.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ImplId.html" title="chalk_ir::ImplId struct">ImplId</a></td><td class="docblock-short"><p>The id for an impl.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.InEnvironment.html" title="chalk_ir::InEnvironment struct">InEnvironment</a></td><td class="docblock-short"><p>A goal with an environment to solve it in.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.InferenceVar.html" title="chalk_ir::InferenceVar struct">InferenceVar</a></td><td class="docblock-short"><p>A type, lifetime or constant whose value is being inferred.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Lifetime.html" title="chalk_ir::Lifetime struct">Lifetime</a></td><td class="docblock-short"><p>A Rust lifetime.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.LifetimeOutlives.html" title="chalk_ir::LifetimeOutlives struct">LifetimeOutlives</a></td><td class="docblock-short"><p>Lifetime outlives, which for <code>'a: 'b`` checks that the lifetime </code>’a<code>is a superset of the value of</code>’b`.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.NoSolution.html" title="chalk_ir::NoSolution struct">NoSolution</a></td><td class="docblock-short"><p>Indicates that the attempted operation has “no solution” – i.e.,
+cannot be performed.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Normalize.html" title="chalk_ir::Normalize struct">Normalize</a></td><td class="docblock-short"><p>Proves that the given type alias <strong>normalizes</strong> to the given
+type. A projection <code>T::Foo</code> normalizes to the type <code>U</code> if we can
+<strong>match it to an impl</strong> and that impl has a <code>type Foo = V</code> where
+<code>U = V</code>.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.OpaqueTy.html" title="chalk_ir::OpaqueTy struct">OpaqueTy</a></td><td class="docblock-short"><p>An opaque type <code>opaque type T&lt;..&gt;: Trait = HiddenTy</code>.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.OpaqueTyId.html" title="chalk_ir::OpaqueTyId struct">OpaqueTyId</a></td><td class="docblock-short"><p>Id for an opaque type.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.PlaceholderIndex.html" title="chalk_ir::PlaceholderIndex struct">PlaceholderIndex</a></td><td class="docblock-short"><p>Index of an universally quantified parameter in the environment.
+Two indexes are required, the one of the universe itself
+and the relative index inside the universe.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ProgramClause.html" title="chalk_ir::ProgramClause struct">ProgramClause</a></td><td class="docblock-short"><p>A program clause is a logic expression used to describe a part of the program.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ProgramClauseData.html" title="chalk_ir::ProgramClauseData struct">ProgramClauseData</a></td><td class="docblock-short"><p>Contains the data for a program clause.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ProgramClauseImplication.html" title="chalk_ir::ProgramClauseImplication struct">ProgramClauseImplication</a></td><td class="docblock-short"><p>Represents one clause of the form <code>consequence :- conditions</code> where
+<code>conditions = cond_1 &amp;&amp; cond_2 &amp;&amp; ...</code> is the conjunction of the individual
+conditions.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ProgramClauses.html" title="chalk_ir::ProgramClauses struct">ProgramClauses</a></td><td class="docblock-short"><p>List of interned elements.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ProjectionTy.html" title="chalk_ir::ProjectionTy struct">ProjectionTy</a></td><td class="docblock-short"><p>A projection <code>&lt;P0 as TraitName&lt;P1..Pn&gt;&gt;::AssocItem&lt;Pn+1..Pm&gt;</code>.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.QuantifiedWhereClauses.html" title="chalk_ir::QuantifiedWhereClauses struct">QuantifiedWhereClauses</a></td><td class="docblock-short"><p>List of interned elements.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.SubstFolder.html" title="chalk_ir::SubstFolder struct">SubstFolder</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="struct" href="struct.Substitution.html" title="chalk_ir::Substitution struct">Substitution</a></td><td class="docblock-short"><p>List of interned elements.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.SubtypeGoal.html" title="chalk_ir::SubtypeGoal struct">SubtypeGoal</a></td><td class="docblock-short"><p>Subtype goal: tries to prove that <code>a</code> is a subtype of <code>b</code></p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.TraitId.html" title="chalk_ir::TraitId struct">TraitId</a></td><td class="docblock-short"><p>The id of a trait definition; could be used to load the trait datum by
+invoking the <a href="../chalk_solve/trait.RustIrDatabase.html#tymethod.trait_datum"><code>trait_datum</code></a> method.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.TraitRef.html" title="chalk_ir::TraitRef struct">TraitRef</a></td><td class="docblock-short"><p>A trait reference describes the relationship between a type and a trait.
+This can be used in two forms:</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Ty.html" title="chalk_ir::Ty struct">Ty</a></td><td class="docblock-short"><p>A Rust type. The actual type data is stored in <code>TyKind</code>.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.TyData.html" title="chalk_ir::TyData struct">TyData</a></td><td class="docblock-short"><p>Contains the data for a Ty</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.TypeFlags.html" title="chalk_ir::TypeFlags struct">TypeFlags</a></td><td class="docblock-short"><p>Contains flags indicating various properties of a Ty</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.TypeOutlives.html" title="chalk_ir::TypeOutlives struct">TypeOutlives</a></td><td class="docblock-short"><p>Type outlives, which for <code>T: 'a</code> checks that the type <code>T</code>
+lives at least as long as the lifetime <code>'a</code></p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.UCanonical.html" title="chalk_ir::UCanonical struct">UCanonical</a></td><td class="docblock-short"><p>A “universe canonical” value. This is a wrapper around a
+<code>Canonical</code>, indicating that the universes within have been
+“renumbered” to start from 0 and collapse unimportant
+distinctions.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.UniverseIndex.html" title="chalk_ir::UniverseIndex struct">UniverseIndex</a></td><td class="docblock-short"><p>An universe index is how a universally quantified parameter is
+represented when it’s binder is moved into the environment.
+An example chain of transformations would be:
+<code>forall&lt;T&gt; { Goal(T) }</code> (syntactical representation)
+<code>forall { Goal(?0) }</code> (used a DeBruijn index)
+<code>Goal(!U1)</code> (the quantifier was moved to the environment and replaced with a universe index)
+See https://rustc-dev-guide.rust-lang.org/borrow_check/region_inference.html#placeholders-and-universes for more.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.UniverseMap.html" title="chalk_ir::UniverseMap struct">UniverseMap</a></td><td class="docblock-short"><p>Maps the universes found in the <code>u_canonicalize</code> result (the
+“canonical” universes) to the universes found in the original
+value (and vice versa). When used as a folder – i.e., from
+outside this module – converts from “canonical” universes to the
+original (but see the <code>UMapToCanonical</code> folder).</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.VariableKinds.html" title="chalk_ir::VariableKinds struct">VariableKinds</a></td><td class="docblock-short"><p>List of interned elements.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Variances.html" title="chalk_ir::Variances struct">Variances</a></td><td class="docblock-short"><p>List of interned elements.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.WithKind.html" title="chalk_ir::WithKind struct">WithKind</a></td><td class="docblock-short"><p>A value with an associated variable kind.</p>
+</td></tr></table><h2 id="enums" class="section-header"><a href="#enums">Enums</a></h2>
+<table><tr class="module-item"><td><a class="enum" href="enum.AliasTy.html" title="chalk_ir::AliasTy enum">AliasTy</a></td><td class="docblock-short"><p>An alias, which is a trait indirection such as a projection or opaque type.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.ClausePriority.html" title="chalk_ir::ClausePriority enum">ClausePriority</a></td><td class="docblock-short"><p>Specifies how important an implication is.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.ConstValue.html" title="chalk_ir::ConstValue enum">ConstValue</a></td><td class="docblock-short"><p>A constant value, not necessarily concrete.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.Constraint.html" title="chalk_ir::Constraint enum">Constraint</a></td><td class="docblock-short"><p>A constraint on lifetimes.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.DomainGoal.html" title="chalk_ir::DomainGoal enum">DomainGoal</a></td><td class="docblock-short"><p>A “domain goal” is a goal that is directly about Rust, rather than a pure
+logical statement. As much as possible, the Chalk solver should avoid
+decomposing this enum, and instead treat its values opaquely.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.FallibleOrFloundered.html" title="chalk_ir::FallibleOrFloundered enum">FallibleOrFloundered</a></td><td class="docblock-short"><p>A combination of <code>Fallible</code> and <code>Floundered</code>.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.FloatTy.html" title="chalk_ir::FloatTy enum">FloatTy</a></td><td class="docblock-short"><p>Different kinds of float types.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.FromEnv.html" title="chalk_ir::FromEnv enum">FromEnv</a></td><td class="docblock-short"><p>Checks whether a type or trait ref can be derived from the contents of the environment.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.GenericArgData.html" title="chalk_ir::GenericArgData enum">GenericArgData</a></td><td class="docblock-short"><p>Generic arguments data.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.GoalData.html" title="chalk_ir::GoalData enum">GoalData</a></td><td class="docblock-short"><p>A general goal; this is the full range of questions you can pose to Chalk.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.IntTy.html" title="chalk_ir::IntTy enum">IntTy</a></td><td class="docblock-short"><p>Different signed int types.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.LifetimeData.html" title="chalk_ir::LifetimeData enum">LifetimeData</a></td><td class="docblock-short"><p>Lifetime data, including what kind of lifetime it is and what it points to.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.Mutability.html" title="chalk_ir::Mutability enum">Mutability</a></td><td class="docblock-short"><p>Whether a type is mutable or not.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.QuantifierKind.html" title="chalk_ir::QuantifierKind enum">QuantifierKind</a></td><td class="docblock-short"><p>Kinds of quantifiers in the logic, such as <code>forall</code> and <code>exists</code>.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.Safety.html" title="chalk_ir::Safety enum">Safety</a></td><td class="docblock-short"><p>Whether a function is safe or not.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.Scalar.html" title="chalk_ir::Scalar enum">Scalar</a></td><td class="docblock-short"><p>Types of scalar values.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.TyKind.html" title="chalk_ir::TyKind enum">TyKind</a></td><td class="docblock-short"><p>Type data, which holds the actual type information.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.TyVariableKind.html" title="chalk_ir::TyVariableKind enum">TyVariableKind</a></td><td class="docblock-short"><p>Represents some extra knowledge we may have about the type variable.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.UintTy.html" title="chalk_ir::UintTy enum">UintTy</a></td><td class="docblock-short"><p>Different unsigned int types.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.VariableKind.html" title="chalk_ir::VariableKind enum">VariableKind</a></td><td class="docblock-short"><p>The “kind” of variable. Type, lifetime or constant.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.Variance.html" title="chalk_ir::Variance enum">Variance</a></td><td class="docblock-short"><p>Variance</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.Void.html" title="chalk_ir::Void enum">Void</a></td><td class="docblock-short"><p>Uninhabited (empty) type, used in combination with <code>PhantomData</code>.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.WellFormed.html" title="chalk_ir::WellFormed enum">WellFormed</a></td><td class="docblock-short"><p>Checks whether a type or trait ref is well-formed.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.WhereClause.html" title="chalk_ir::WhereClause enum">WhereClause</a></td><td class="docblock-short"><p>Where clauses that can be written by a Rust programmer.</p>
+</td></tr></table><h2 id="traits" class="section-header"><a href="#traits">Traits</a></h2>
+<table><tr class="module-item"><td><a class="trait" href="trait.AsParameters.html" title="chalk_ir::AsParameters trait">AsParameters</a></td><td class="docblock-short"><p>Convert a value to a list of parameters.</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.Substitute.html" title="chalk_ir::Substitute trait">Substitute</a></td><td class="docblock-short"><p>An extension trait to anything that can be represented as list of <code>GenericArg</code>s that signifies
+that it can applied as a substituion to a value</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.ToGenericArg.html" title="chalk_ir::ToGenericArg trait">ToGenericArg</a></td><td class="docblock-short"><p>Utility for converting a list of all the binders into scope
+into references to those binders. Simply pair the binders with
+the indices, and invoke <code>to_generic_arg()</code> on the <code>(binder, index)</code> pair. The result will be a reference to a bound
+variable of appropriate kind at the corresponding index.</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.UnificationDatabase.html" title="chalk_ir::UnificationDatabase trait">UnificationDatabase</a></td><td class="docblock-short"><p>Logic to decide the Variance for a given subst</p>
+</td></tr></table><h2 id="types" class="section-header"><a href="#types">Type Definitions</a></h2>
+<table><tr class="module-item"><td><a class="type" href="type.CanonicalVarKind.html" title="chalk_ir::CanonicalVarKind type">CanonicalVarKind</a></td><td class="docblock-short"><p>A variable kind with universe index.</p>
+</td></tr><tr class="module-item"><td><a class="type" href="type.Fallible.html" title="chalk_ir::Fallible type">Fallible</a></td><td class="docblock-short"><p>Many of our internal operations (e.g., unification) are an attempt
+to perform some operation which may not complete.</p>
+</td></tr><tr class="module-item"><td><a class="type" href="type.QuantifiedWhereClause.html" title="chalk_ir::QuantifiedWhereClause type">QuantifiedWhereClause</a></td><td class="docblock-short"><p>A where clause that can contain <code>forall&lt;&gt;</code> or <code>exists&lt;&gt;</code> quantifiers.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="chalk_ir" data-search-index-js="../search-index.js" data-search-js="../search.js"></div>
+    <script src="../main.js"></script></body></html>

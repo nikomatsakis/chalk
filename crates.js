@@ -1,0 +1,1 @@
+window.ALL_CRATES = ["chalk","chalk_derive","chalk_engine","chalk_integration","chalk_ir","chalk_parse","chalk_recursive","chalk_solve"];

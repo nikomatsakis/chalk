@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["FindFreeVarsVisitor",""]],"trait":[["VisitExt","Visitor extensions."]]});

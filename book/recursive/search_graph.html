@@ -1,0 +1,389 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>The search graph and caching</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../mermaid.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../what_is_chalk.html"><strong aria-hidden="true">1.</strong> What is Chalk?</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../what_is_chalk/walkthrough.html"><strong aria-hidden="true">1.1.</strong> Walkthrough</a></li><li class="chapter-item expanded "><a href="../what_is_chalk/crates.html"><strong aria-hidden="true">1.2.</strong> Crates</a></li><li class="chapter-item expanded "><a href="../what_is_chalk/repl.html"><strong aria-hidden="true">1.3.</strong> REPL</a></li></ol></li><li class="chapter-item expanded "><a href="../contribution_guide.html"><strong aria-hidden="true">2.</strong> Contribution guide</a></li><li class="chapter-item expanded "><a href="../types.html"><strong aria-hidden="true">3.</strong> Representing and manipulating types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/role_of_interner.html"><strong aria-hidden="true">3.1.</strong> The Interner</a></li><li class="chapter-item expanded "><a href="../types/rust_types.html"><strong aria-hidden="true">3.2.</strong> Rust types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/rust_types/alias.html"><strong aria-hidden="true">3.2.1.</strong> Alias types</a></li><li class="chapter-item expanded "><a href="../types/rust_types/application_ty.html"><strong aria-hidden="true">3.2.2.</strong> Application types</a></li></ol></li><li class="chapter-item expanded "><a href="../types/rust_lifetimes.html"><strong aria-hidden="true">3.3.</strong> Rust lifetimes</a></li><li class="chapter-item expanded "><a href="../types/operations.html"><strong aria-hidden="true">3.4.</strong> Operations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/operations/fold.html"><strong aria-hidden="true">3.4.1.</strong> Fold and the Folder trait</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../clauses.html"><strong aria-hidden="true">4.</strong> Lowering Rust IR to logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../clauses/goals_and_clauses.html"><strong aria-hidden="true">4.1.</strong> Goals and clauses</a></li><li class="chapter-item expanded "><a href="../clauses/type_equality.html"><strong aria-hidden="true">4.2.</strong> Type equality and unification</a></li><li class="chapter-item expanded "><a href="../clauses/implied_bounds.html"><strong aria-hidden="true">4.3.</strong> Implied bounds</a></li><li class="chapter-item expanded "><a href="../clauses/lowering_rules.html"><strong aria-hidden="true">4.4.</strong> Lowering rules</a></li><li class="chapter-item expanded "><a href="../clauses/opaque_types.html"><strong aria-hidden="true">4.5.</strong> Opaque types (impl Trait)</a></li><li class="chapter-item expanded "><a href="../clauses/well_known_traits.html"><strong aria-hidden="true">4.6.</strong> Well known traits</a></li><li class="chapter-item expanded "><a href="../clauses/wf.html"><strong aria-hidden="true">4.7.</strong> Well-formedness checking</a></li><li class="chapter-item expanded "><a href="../clauses/coherence.html"><strong aria-hidden="true">4.8.</strong> Coherence</a></li></ol></li><li class="chapter-item expanded "><a href="../canonical_queries.html"><strong aria-hidden="true">5.</strong> Canonical queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../canonical_queries/canonicalization.html"><strong aria-hidden="true">5.1.</strong> Canonicalization</a></li></ol></li><li class="chapter-item expanded "><a href="../engine.html"><strong aria-hidden="true">6.</strong> Chalk engine</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../engine/major_concepts.html"><strong aria-hidden="true">6.1.</strong> Major concepts</a></li><li class="chapter-item expanded "><a href="../engine/logic.html"><strong aria-hidden="true">6.2.</strong> Logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../engine/logic/coinduction.html"><strong aria-hidden="true">6.2.1.</strong> Coinduction</a></li></ol></li><li class="chapter-item expanded "><a href="../engine/slg.html"><strong aria-hidden="true">6.3.</strong> SLG Solver</a></li></ol></li><li class="chapter-item expanded "><a href="../recursive.html"><strong aria-hidden="true">7.</strong> Chalk recursive solver</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../recursive/stack.html"><strong aria-hidden="true">7.1.</strong> The stack</a></li><li class="chapter-item expanded "><a href="../recursive/inductive_cycles.html"><strong aria-hidden="true">7.2.</strong> Inductive cycles</a></li><li class="chapter-item expanded "><a href="../recursive/search_graph.html" class="active"><strong aria-hidden="true">7.3.</strong> The search graph and caching</a></li><li class="chapter-item expanded "><a href="../recursive/coinduction.html"><strong aria-hidden="true">7.4.</strong> Coinduction</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../glossary.html">Appendix A: Glossary and terminology</a></li><li class="chapter-item expanded affix "><a href="../bibliography.html">Appendix B: Bibliography</a></li><li class="chapter-item expanded affix "><a href="../todo.html">Appendix C: Incomplete chapters</a></li><li class="chapter-item expanded affix "><a href="../publishing.html">Appendix D: Publishing Chalk</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#the-search-graph-and-caching" id="the-search-graph-and-caching">The search graph and caching</a></h1>
+<p>So now we have a good idea of <a href="./inductive_cycles.html">what behavior we expect from cycles</a>, or
+at least inductive cycles (we'll talk about <a href="./coinduction.html">coinduction</a> later). But how do we
+actually implement this? That's where the <a href="https://rust-lang.github.io/chalk/chalk_recursive/search_graph/struct.SearchGraph.html"><code>SearchGraph</code></a> comes into play.</p>
+<p>The role of the <a href="https://rust-lang.github.io/chalk/chalk_recursive/search_graph/struct.SearchGraph.html"><code>SearchGraph</code></a> is to store information about each goal that we
+are currently solving. Typically, these are goals on the stack -- but other
+times, they are goals that are no longer on the stack, but whose results
+(because of a cycle) were dependent on something that is still on the stack.
+We'll work through some examples to make it all clear.</p>
+<h2><a class="header" href="#structure-of-the-search-graph" id="structure-of-the-search-graph">Structure of the search graph</a></h2>
+<p>The search graph consists of nodes, each of which is assigned an index called a
+<a href="https://rust-lang.github.io/chalk/chalk_recursive/search_graph/struct.DepthFirstNumber.html"><code>DepthFirstNumber</code></a>. The name of this index alludes to the fact that, as we try
+to prove a given goal, we are implicitly performing a &quot;depth-first search&quot; over
+a graph of subgoals, and the index in the search graph is similar to a pre-order
+index on the resulting tree.</p>
+<h3><a class="header" href="#example-search-graph" id="example-search-graph">Example search graph</a></h3>
+<p>Consider this example trait plus impls:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait A { }
+impl&lt;T: A, U: A&gt; A for Result&lt;T, U&gt; { }
+impl A for u32 { }
+impl A for i32 { }
+impl A for f32 { }
+<span class="boring">}
+</span></code></pre></pre>
+<p>If we consider the full set of goals/subgoals that are involved in proving <code>Implemented(Result&lt;u32, i32&gt;: A)</code>, 
+it would look like this:</p>
+<pre class="mermaid">graph TD
+  G1[&quot;Implemented(Result&amp;lt;u32, i32&amp;gt;: A)&lt;br&gt;Pre-order number: 0&lt;br&gt;DepthFirstNumber: 0&quot;]
+  G2[&quot;Implemented(u32: A)&lt;br&gt;Pre-order number: 1&lt;br&gt;DepthFirstNumber: 1&quot;]
+  G3[&quot;Implemented(i32: A)&lt;br&gt;Pre-order number: 2&lt;br&gt;DepthFirstNumber: 1&quot;]
+  G1 --&gt; G2
+  G1 --&gt; G3
+</pre>
+<p>The graph also shows a possible set of pre-order numbers, as well as the
+<a href="https://rust-lang.github.io/chalk/chalk_recursive/search_graph/struct.DepthFirstNumber.html"><code>DepthFirstNumber</code></a> that would be used in the search graph. You can see that
+they start to diverge. Pre-order numbers uniquely identify each goal in the
+graph. In contrast, after we finish proving <code>Implemented(u32: A)</code>, we remove
+that node the graph, and hence its <a href="https://rust-lang.github.io/chalk/chalk_recursive/search_graph/struct.DepthFirstNumber.html"><code>DepthFirstNumber</code></a> is re-used.</p>
+<h2><a class="header" href="#goal-lifecycle" id="goal-lifecycle">Goal lifecycle</a></h2>
+<p>Every goal that we prove in the recursive solver goes through the following states:</p>
+<pre class="mermaid">graph TD
+  NewlyCreated[&quot;Newly created&quot;]
+  OnStack[&quot;On stack and in the search graph&quot;]
+  InGraph[&quot;Popped from stack but retained in search graph&quot;]
+  ProcessingComplete[&quot;Processing complete&quot;]
+  InCache[&quot;Stored in the cache&quot;]
+  NewlyCreated --&gt; OnStack
+  OnStack -- Explore all program clauses for the goal --&gt; ProcessingComplete
+  ProcessingComplete -- If node is a participant in a cycle --&gt; InGraph
+  InGraph -- On next iteration --&gt; OnStack
+  ProcessingComplete -- If not part of a cycle or when fixed-point is reached --&gt; InCache
+</pre>
+<p>At first, we create the goal and push it onto the stack, and we also add it to
+the search graph. We then explore each of the relevant program clauses to try and
+find the solution(s) to the goal. Along the way we update the overall solution:</p>
+<ul>
+<li>If there are no valid solutions, then the result is an error.</li>
+<li>If there is exactly one solution, then we remember it as the unique solution.</li>
+<li>If there are multiple distinct solutions, the result is &quot;ambiguous&quot;.</li>
+</ul>
+<p>While we are doing this solving, we also track what other goals this goal winds
+up depending on. In particular, we are looking to see whether it winds up as a
+participant in a cycle -- that is, if it depends on any goals further up the
+goal stack.</p>
+<p>If, when we're done with all program clauses, the goal never participated in any
+cycles, then we have reached our final solution. We can take that result and put
+it into the cache. The next time we look for a solution to this goal, we'll
+check that cache and return the result.</p>
+<p>But otherwise, if the goal <em>was</em> a participant in a cycle, then we have to
+iterate, as described in the <a href="./inductive_cycles.html">section on cycles</a>. In that
+case, we keep the goal in the search graph, but we remove it from the stack.
+This allows the search graph to serve as a kind of &quot;interim cache&quot;. If, as we
+continue to search through the other nodes that remain on the stack, we have to
+solve this same goal again, we will find it in the search cache and re-use the
+result.</p>
+<p>For goals that are participants in a cycle, when the cycle reaches its
+fixed-point (i.e., the top-most node has stopped changing), we go through and
+take all the results for all the subgoals (which are still present in the search
+graph) and move them all into the &quot;final cache&quot;.</p>
+<p>In other words, any result that is present in the <em>search graph</em> can be
+considered an &quot;interim cache&quot;, with a result that is still being determined and
+may be dependent on other goals on the stack. Once the goal is completely
+processed, it is moved to the cache field where others can use it.</p>
+<h2><a class="header" href="#processing-a-single-goal-a-flow-chart" id="processing-a-single-goal-a-flow-chart">Processing a single goal, a flow chart</a></h2>
+<p>Whenever we are asked to solve a goal, these are the steps we take:</p>
+<pre class="mermaid">graph TD
+  GoalInGraph[&quot;Goal in search graph?&quot;]
+  FlagAsHead[&quot;If goal is on stack,&lt;br&gt;flag as head of cycle.&quot;]
+  ReturnCurrentResult[&quot;Return result from&lt;br&gt;search graph.&quot;]
+  PushOnStack[&quot;Push goal on stack,&lt;br&gt;add to the search graph with index `G`,&lt;br&gt;initial result is error&quot;]
+  ProcessEachClause[&quot;Process each program clause in turn,&lt;br&gt;computing result,&lt;br&gt;and tracking `Minimums`&quot;]
+  IsCycleParticipant[&quot;Is G dependent on&lt;br&gt;goal lower in stack?&quot;]
+  StoreInCache[&quot;Move results `G..` &lt;br&gt;from search graph to cache&quot;]
+  PopFromCacheNotGraph[&quot;Pop goal from stack&lt;br&gt;but leave in search graph&quot;]
+  CompareResult[&quot;Did result change from&lt;br&gt;what is stored in search graph?&quot;]
+  UpdateSearchGraph[&quot;Update stored result&lt;br&gt;in search graph&quot;]
+  ClearPreviousIteration[&quot;Clear search graph nodes `G+1..`&lt;br&gt;from previous iteration&quot;]
+
+  GoalInGraph -- Yes --&gt; FlagAsHead
+  FlagAsHead --&gt; ReturnCurrentResult
+  GoalInGraph -- No, not in the graph --&gt; PushOnStack
+  PushOnStack --&gt; ProcessEachClause
+  ProcessEachClause -- Is head of cycle --&gt; CompareResult
+  ProcessEachClause -- Not head of cycle --&gt; IsCycleParticipant
+  CompareResult -- No, fixed-point reached --&gt; IsCycleParticipant
+  CompareResult -- Yes, result changed --&gt; UpdateSearchGraph
+  UpdateSearchGraph --&gt; ClearPreviousIteration
+  ClearPreviousIteration --&gt; ProcessEachClause
+  IsCycleParticipant -- No --&gt; StoreInCache
+  IsCycleParticipant -- Yes --&gt; PopFromCacheNotGraph
+</pre>
+<h2><a class="header" href="#starting-to-prove-a-goal" id="starting-to-prove-a-goal">Starting to prove a goal</a></h2>
+<p>The first thing we do when proving some goal G is to check the search graph to
+see if there is already a node for this goal.</p>
+<h3><a class="header" href="#if-there-is-a-node-for-g" id="if-there-is-a-node-for-g">If there is a node for G</a></h3>
+<p>If there is a node for G, that indicates that there is some sort of cycle
+involved in the graph. For now, we will defer this case, and come back to it
+after we've explained what happens without cycles.</p>
+<h3><a class="header" href="#if-there-is-no-node-for-g-pushing-a-new-goal-onto-the-stack" id="if-there-is-no-node-for-g-pushing-a-new-goal-onto-the-stack">If there is no node for G: pushing a new goal onto the stack</a></h3>
+<p>If there is no node for G in the graph, then we have a new subgoal to add
+to the graph. We will first push a new entry onto the <a href="./stack.html">stack</a>, yielding some new
+stack depth <code>d</code>. Then we create a new <a href="https://rust-lang.github.io/chalk/chalk_recursive/search_graph/struct.Node.html"><code>Node</code></a> in the search graph. It will be
+assigned the next available <a href="https://rust-lang.github.io/chalk/chalk_recursive/search_graph/struct.DepthFirstNumber.html"><code>DepthFirstNumber</code></a>. The search graph node contains a field
+<a href="https://rust-lang.github.io/chalk/chalk_recursive/search_graph/struct.Node.html#structfield.stack_depth"><code>stack_depth</code></a> that will be set to <code>Some(d)</code>, where <code>d</code> is the depth of the
+node on the stack.</p>
+<p>The search graph node also stores the &quot;current solution&quot; for the given goal. As
+described in the search on <a href="./inductive_cycles.html">inductive cycles</a>, this solution starts out
+as an error but may be gradually widened as we iterate, if we find solutions.</p>
+<h2><a class="header" href="#tracking-dependencies" id="tracking-dependencies">Tracking dependencies</a></h2>
+<p>The way that we track dependencies is through a structure called the
+<a href="https://rust-lang.github.io/chalk/chalk_recursive/struct.Minimums.html"><code>Minimums</code></a>. The name comes from the idea that it is tracking the minimum
+<a href="https://rust-lang.github.io/chalk/chalk_recursive/search_graph/struct.DepthFirstNumber.html"><code>DepthFirstNumber</code></a> of any goal whose result we depended on. The minimum for a
+goal G1 starts out as G1, since its result depends on itself, but if it winds up
+recursively processing some goal G2 that is on the stack, then the minimum will
+be adjusted to G2.</p>
+<p>Along with the interim solution, the search graph node for a given goal also
+stores the <a href="https://rust-lang.github.io/chalk/chalk_recursive/struct.Minimums.html"><code>Minimums</code></a> that resulted from computing that interim solution
+(i.e., what goals did that solution depend on). If some goal G1 winds up
+recursively invoking some goal G2 that is in the search graph but <em>not</em> present
+on the stack, then we update the current <a href="https://rust-lang.github.io/chalk/chalk_recursive/struct.Minimums.html"><code>Minimums</code></a> with the values stored in
+the search graph.</p>
+<h2><a class="header" href="#removing-nodes-from-the-graph" id="removing-nodes-from-the-graph">Removing nodes from the graph</a></h2>
+<p>Once we complete the processing for a node, it needs to be removed from the
+processing stack. But we wish to leave it in the graph if it is dependent on
+something else that is already on the stack. We do that just by checking the
+<a href="https://rust-lang.github.io/chalk/chalk_recursive/struct.Minimums.html"><code>Minimums</code></a> value to see if it is less than the current goal.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../recursive/inductive_cycles.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../recursive/coinduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../recursive/inductive_cycles.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../recursive/coinduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>

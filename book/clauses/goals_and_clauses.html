@@ -1,0 +1,438 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Goals and clauses</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../mermaid.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../what_is_chalk.html"><strong aria-hidden="true">1.</strong> What is Chalk?</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../what_is_chalk/walkthrough.html"><strong aria-hidden="true">1.1.</strong> Walkthrough</a></li><li class="chapter-item expanded "><a href="../what_is_chalk/crates.html"><strong aria-hidden="true">1.2.</strong> Crates</a></li><li class="chapter-item expanded "><a href="../what_is_chalk/repl.html"><strong aria-hidden="true">1.3.</strong> REPL</a></li></ol></li><li class="chapter-item expanded "><a href="../contribution_guide.html"><strong aria-hidden="true">2.</strong> Contribution guide</a></li><li class="chapter-item expanded "><a href="../types.html"><strong aria-hidden="true">3.</strong> Representing and manipulating types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/role_of_interner.html"><strong aria-hidden="true">3.1.</strong> The Interner</a></li><li class="chapter-item expanded "><a href="../types/rust_types.html"><strong aria-hidden="true">3.2.</strong> Rust types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/rust_types/alias.html"><strong aria-hidden="true">3.2.1.</strong> Alias types</a></li><li class="chapter-item expanded "><a href="../types/rust_types/application_ty.html"><strong aria-hidden="true">3.2.2.</strong> Application types</a></li></ol></li><li class="chapter-item expanded "><a href="../types/rust_lifetimes.html"><strong aria-hidden="true">3.3.</strong> Rust lifetimes</a></li><li class="chapter-item expanded "><a href="../types/operations.html"><strong aria-hidden="true">3.4.</strong> Operations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/operations/fold.html"><strong aria-hidden="true">3.4.1.</strong> Fold and the Folder trait</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../clauses.html"><strong aria-hidden="true">4.</strong> Lowering Rust IR to logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../clauses/goals_and_clauses.html" class="active"><strong aria-hidden="true">4.1.</strong> Goals and clauses</a></li><li class="chapter-item expanded "><a href="../clauses/type_equality.html"><strong aria-hidden="true">4.2.</strong> Type equality and unification</a></li><li class="chapter-item expanded "><a href="../clauses/implied_bounds.html"><strong aria-hidden="true">4.3.</strong> Implied bounds</a></li><li class="chapter-item expanded "><a href="../clauses/lowering_rules.html"><strong aria-hidden="true">4.4.</strong> Lowering rules</a></li><li class="chapter-item expanded "><a href="../clauses/opaque_types.html"><strong aria-hidden="true">4.5.</strong> Opaque types (impl Trait)</a></li><li class="chapter-item expanded "><a href="../clauses/well_known_traits.html"><strong aria-hidden="true">4.6.</strong> Well known traits</a></li><li class="chapter-item expanded "><a href="../clauses/wf.html"><strong aria-hidden="true">4.7.</strong> Well-formedness checking</a></li><li class="chapter-item expanded "><a href="../clauses/coherence.html"><strong aria-hidden="true">4.8.</strong> Coherence</a></li></ol></li><li class="chapter-item expanded "><a href="../canonical_queries.html"><strong aria-hidden="true">5.</strong> Canonical queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../canonical_queries/canonicalization.html"><strong aria-hidden="true">5.1.</strong> Canonicalization</a></li></ol></li><li class="chapter-item expanded "><a href="../engine.html"><strong aria-hidden="true">6.</strong> Chalk engine</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../engine/major_concepts.html"><strong aria-hidden="true">6.1.</strong> Major concepts</a></li><li class="chapter-item expanded "><a href="../engine/logic.html"><strong aria-hidden="true">6.2.</strong> Logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../engine/logic/coinduction.html"><strong aria-hidden="true">6.2.1.</strong> Coinduction</a></li></ol></li><li class="chapter-item expanded "><a href="../engine/slg.html"><strong aria-hidden="true">6.3.</strong> SLG Solver</a></li></ol></li><li class="chapter-item expanded "><a href="../recursive.html"><strong aria-hidden="true">7.</strong> Chalk recursive solver</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../recursive/stack.html"><strong aria-hidden="true">7.1.</strong> The stack</a></li><li class="chapter-item expanded "><a href="../recursive/inductive_cycles.html"><strong aria-hidden="true">7.2.</strong> Inductive cycles</a></li><li class="chapter-item expanded "><a href="../recursive/search_graph.html"><strong aria-hidden="true">7.3.</strong> The search graph and caching</a></li><li class="chapter-item expanded "><a href="../recursive/coinduction.html"><strong aria-hidden="true">7.4.</strong> Coinduction</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../glossary.html">Appendix A: Glossary and terminology</a></li><li class="chapter-item expanded affix "><a href="../bibliography.html">Appendix B: Bibliography</a></li><li class="chapter-item expanded affix "><a href="../todo.html">Appendix C: Incomplete chapters</a></li><li class="chapter-item expanded affix "><a href="../publishing.html">Appendix D: Publishing Chalk</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#goals-and-clauses" id="goals-and-clauses">Goals and clauses</a></h1>
+<p>In logic programming terms, a <strong>goal</strong> is something that you must
+prove and a <strong>clause</strong> is something that you know is true. As
+described in the <a href="../clauses.html">lowering to logic</a>
+chapter, Rust's trait solver is based on an extension of hereditary
+harrop (HH) clauses, which extend traditional Prolog Horn clauses with
+a few new superpowers.</p>
+<h2><a class="header" href="#goals-and-clauses-meta-structure" id="goals-and-clauses-meta-structure">Goals and clauses meta structure</a></h2>
+<p>In Rust's solver, <strong>goals</strong> and <strong>clauses</strong> have the following forms
+(note that the two definitions reference one another):</p>
+<pre><code class="language-text">Goal = DomainGoal           // defined in the section below
+        | Goal &amp;&amp; Goal
+        | Goal || Goal
+        | exists&lt;K&gt; { Goal }   // existential quantification
+        | forall&lt;K&gt; { Goal }   // universal quantification
+        | if (Clause) { Goal } // implication
+        | true                 // something that's trivially true
+        | ambiguous            // something that's never provable
+
+Clause = DomainGoal
+        | Clause :- Goal     // if can prove Goal, then Clause is true
+        | Clause &amp;&amp; Clause
+        | forall&lt;K&gt; { Clause }
+
+K = &lt;type&gt;     // a &quot;kind&quot;
+    | &lt;lifetime&gt;
+</code></pre>
+<p>The proof procedure for these sorts of goals is actually quite
+straightforward.  Essentially, it's a form of depth-first search. The
+paper
+<a href="../bibliography.html#pphhf">&quot;A Proof Procedure for the Logic of Hereditary Harrop Formulas&quot;</a>
+gives the details.</p>
+<p>In terms of code, these types are defined in
+<a href="https://github.com/rust-lang/rust/blob/master/compiler/rustc_middle/src/traits/mod.rs"><code>compiler/rustc_middle/src/traits/mod.rs</code></a> in rustc, and in
+<a href="https://github.com/rust-lang/chalk/blob/master/chalk-ir/src/lib.rs"><code>chalk-ir/src/lib.rs</code></a> in chalk.</p>
+<p><a name="domain-goals"></a></p>
+<h2><a class="header" href="#domain-goals" id="domain-goals">Domain goals</a></h2>
+<p><em>Domain goals</em> are the atoms of the trait logic. As can be seen in the
+definitions given above, general goals basically consist in a combination of
+domain goals.</p>
+<p>Moreover, flattening a bit the definition of clauses given previously, one can
+see that clauses are always of the form:</p>
+<pre><code class="language-text">forall&lt;K1, ..., Kn&gt; { DomainGoal :- Goal }
+</code></pre>
+<p>hence domain goals are in fact clauses' LHS. That is, at the most granular level,
+domain goals are what the trait solver will end up trying to prove.</p>
+<p><a name="trait-ref"></a></p>
+<p>To define the set of domain goals in our system, we need to first
+introduce a few simple formulations. A <strong>trait reference</strong> consists of
+the name of a trait along with a suitable set of inputs P0..Pn:</p>
+<pre><code class="language-text">TraitRef = P0: TraitName&lt;P1..Pn&gt;
+</code></pre>
+<p>So, for example, <code>u32: Display</code> is a trait reference, as is <code>Vec&lt;T&gt;: IntoIterator</code>. Note that Rust surface syntax also permits some extra
+things, like associated type bindings (<code>Vec&lt;T&gt;: IntoIterator&lt;Item = T&gt;</code>), that are not part of a trait reference.</p>
+<p><a name="projection"></a></p>
+<p>A <strong>projection</strong> consists of an associated item reference along with
+its inputs P0..Pm:</p>
+<pre><code class="language-text">Projection = &lt;P0 as TraitName&lt;P1..Pn&gt;&gt;::AssocItem&lt;Pn+1..Pm&gt;
+</code></pre>
+<p>Given these, we can define a <code>DomainGoal</code> as follows:</p>
+<pre><code class="language-text">DomainGoal = Holds(WhereClause)
+            | FromEnv(TraitRef)
+            | FromEnv(Type)
+            | WellFormed(TraitRef)
+            | WellFormed(Type)
+            | Normalize(Projection -&gt; Type)
+
+WhereClause = Implemented(TraitRef)
+            | AliasEq(Projection = Type)
+            | Outlives(Type: Region)
+            | Outlives(Region: Region)
+</code></pre>
+<p><code>WhereClause</code> refers to a <code>where</code> clause that a Rust user would actually be able
+to write in a Rust program. This abstraction exists only as a convenience as we
+sometimes want to only deal with domain goals that are effectively writable in
+Rust.</p>
+<p>Let's break down each one of these, one-by-one.</p>
+<h4><a class="header" href="#implementedtraitref" id="implementedtraitref">Implemented(TraitRef)</a></h4>
+<p>e.g. <code>Implemented(i32: Copy)</code></p>
+<p>True if the given trait is implemented for the given input types and lifetimes.</p>
+<h4><a class="header" href="#aliaseqprojection--type" id="aliaseqprojection--type">AliasEq(Projection = Type)</a></h4>
+<p>e.g. <code>AliasEq&lt;T as Iterator&gt;::Item = u8</code></p>
+<p>The given associated type <code>Projection</code> is equal to <code>Type</code>; this can be proved
+with either normalization or using placeholder associated types and is handled
+as a special kind of type aliases. See
+<a href="./type_equality.html">the section on associated types</a>.</p>
+<h4><a class="header" href="#normalizeprojection---type" id="normalizeprojection---type">Normalize(Projection -&gt; Type)</a></h4>
+<p>e.g. <code>Normalize&lt;T as Iterator&gt;::Item -&gt; u8</code></p>
+<p>The given associated type <code>Projection</code> can be <a href="./type_equality.html#normalize">normalized</a> to <code>Type</code>.</p>
+<p>As discussed in <a href="./type_equality.html">the section on associated
+types</a>, <code>Normalize</code> implies <code>AliasEq</code>,
+but not vice versa. In general, proving <code>Normalize(&lt;T as Trait&gt;::Item -&gt; U)</code>
+also requires proving <code>Implemented(T: Trait)</code>.</p>
+<h4><a class="header" href="#fromenvtraitref" id="fromenvtraitref">FromEnv(TraitRef)</a></h4>
+<p>e.g. <code>FromEnv(Self: Add&lt;i32&gt;)</code></p>
+<p>True if the inner <code>TraitRef</code> is <em>assumed</em> to be true,
+that is, if it can be derived from the in-scope where clauses.</p>
+<p>For example, given the following function:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn loud_clone&lt;T: Clone&gt;(stuff: &amp;T) -&gt; T {
+    println!(&quot;cloning!&quot;);
+    stuff.clone()
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Inside the body of our function, we would have <code>FromEnv(T: Clone)</code>. In-scope
+where clauses nest, so a function body inside an impl body inherits the
+impl body's where clauses, too.</p>
+<p>This and the next rule are used to implement <a href="./lowering_rules.html#implied-bounds">implied bounds</a>. As we'll see
+in the section on lowering, <code>FromEnv(TraitRef)</code> implies <code>Implemented(TraitRef)</code>,
+but not vice versa. This distinction is crucial to implied bounds.</p>
+<h4><a class="header" href="#fromenvtype" id="fromenvtype">FromEnv(Type)</a></h4>
+<p>e.g. <code>FromEnv(HashSet&lt;K&gt;)</code></p>
+<p>True if the inner <code>Type</code> is <em>assumed</em> to be well-formed, that is, if it is an
+input type of a function or an impl.</p>
+<p>For example, given the following code:</p>
+<pre><code class="language-rust ignore">struct HashSet&lt;K&gt; where K: Hash { ... }
+
+fn loud_insert&lt;K&gt;(set: &amp;mut HashSet&lt;K&gt;, item: K) {
+    println!(&quot;inserting!&quot;);
+    set.insert(item);
+}
+</code></pre>
+<p><code>HashSet&lt;K&gt;</code> is an input type of the <code>loud_insert</code> function. Hence, we assume it
+to be well-formed, so we would have <code>FromEnv(HashSet&lt;K&gt;)</code> inside the body of our
+function. As we'll see in the section on lowering, <code>FromEnv(HashSet&lt;K&gt;)</code> implies
+<code>Implemented(K: Hash)</code> because the
+<code>HashSet</code> declaration was written with a <code>K: Hash</code> where clause. Hence, we don't
+need to repeat that bound on the <code>loud_insert</code> function: we rather automatically
+assume that it is true.</p>
+<h4><a class="header" href="#wellformeditem" id="wellformeditem">WellFormed(Item)</a></h4>
+<p>These goals imply that the given item is <em>well-formed</em>.</p>
+<p>We can talk about different types of items being well-formed:</p>
+<ul>
+<li>
+<p><em>Types</em>, like <code>WellFormed(Vec&lt;i32&gt;)</code>, which is true in Rust, or
+<code>WellFormed(Vec&lt;str&gt;)</code>, which is not (because <code>str</code> is not <code>Sized</code>.)</p>
+</li>
+<li>
+<p><em>TraitRefs</em>, like <code>WellFormed(Vec&lt;i32&gt;: Clone)</code>.</p>
+</li>
+</ul>
+<p>Well-formedness is important to <a href="./lowering_rules.html#implied-bounds">implied bounds</a>. In particular, the reason
+it is okay to assume <code>FromEnv(T: Clone)</code> in the <code>loud_clone</code> example is that we
+<em>also</em> verify <code>WellFormed(T: Clone)</code> for each call site of <code>loud_clone</code>.
+Similarly, it is okay to assume <code>FromEnv(HashSet&lt;K&gt;)</code> in the <code>loud_insert</code>
+example because we will verify <code>WellFormed(HashSet&lt;K&gt;)</code> for each call site of
+<code>loud_insert</code>. </p>
+<h4><a class="header" href="#outlivestype-region-outlivesregion-region" id="outlivestype-region-outlivesregion-region">Outlives(Type: Region), Outlives(Region: Region)</a></h4>
+<p>e.g. <code>Outlives(&amp;'a str: 'b)</code>, <code>Outlives('a: 'static)</code></p>
+<p>True if the given type or region on the left outlives the right-hand region.</p>
+<p><a name="coinductive"></a></p>
+<h2><a class="header" href="#coinductive-goals" id="coinductive-goals">Coinductive goals</a></h2>
+<p>Most goals in our system are &quot;inductive&quot;. In an inductive goal,
+circular reasoning is disallowed. Consider this example clause:</p>
+<pre><code class="language-text">    Implemented(Foo: Bar) :-
+        Implemented(Foo: Bar).
+</code></pre>
+<p>Considered inductively, this clause is useless: if we are trying to
+prove <code>Implemented(Foo: Bar)</code>, we would then recursively have to prove
+<code>Implemented(Foo: Bar)</code>, and that cycle would continue ad infinitum
+(the trait solver will terminate here, it would just consider that
+<code>Implemented(Foo: Bar)</code> is not known to be true).</p>
+<p>However, some goals are <em>co-inductive</em>. Simply put, this means that
+cycles are OK. So, if <code>Bar</code> were a co-inductive trait, then the rule
+above would be perfectly valid, and it would indicate that
+<code>Implemented(Foo: Bar)</code> is true.</p>
+<p><em>Auto traits</em> are one example in Rust where co-inductive goals are used.
+Consider the <code>Send</code> trait, and imagine that we have this struct:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Foo {
+    next: Option&lt;Box&lt;Foo&gt;&gt;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>The default rules for auto traits say that <code>Foo</code> is <code>Send</code> if the
+types of its fields are <code>Send</code>. Therefore, we would have a rule like</p>
+<pre><code class="language-text">Implemented(Foo: Send) :-
+    Implemented(Option&lt;Box&lt;Foo&gt;&gt;: Send).
+</code></pre>
+<p>As you can probably imagine, proving that <code>Option&lt;Box&lt;Foo&gt;&gt;: Send</code> is
+going to wind up circularly requiring us to prove that <code>Foo: Send</code>
+again. So this would be an example where we wind up in a cycle – but
+that's ok, we <em>do</em> consider <code>Foo: Send</code> to hold, even though it
+references itself.</p>
+<p>In general, co-inductive traits are used in Rust trait solving when we
+want to enumerate a fixed set of possibilities. In the case of auto
+traits, we are enumerating the set of reachable types from a given
+starting point (i.e., <code>Foo</code> can reach values of type
+<code>Option&lt;Box&lt;Foo&gt;&gt;</code>, which implies it can reach values of type
+<code>Box&lt;Foo&gt;</code>, and then of type <code>Foo</code>, and then the cycle is complete).</p>
+<p>In addition to auto traits, <code>WellFormed</code> predicates are co-inductive.
+These are used to achieve a similar &quot;enumerate all the cases&quot; pattern,
+as described in the section on <a href="./lowering_rules.html#implied-bounds">implied bounds</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../clauses.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../clauses/type_equality.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../clauses.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../clauses/type_equality.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>

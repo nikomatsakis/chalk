@@ -1,0 +1,169 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `chalk-solve/src/clauses/dyn_ty.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>dyn_ty.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../chalk_solve/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1"> 1</span>
+<span id="2"> 2</span>
+<span id="3"> 3</span>
+<span id="4"> 4</span>
+<span id="5"> 5</span>
+<span id="6"> 6</span>
+<span id="7"> 7</span>
+<span id="8"> 8</span>
+<span id="9"> 9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+</pre><div class="example-wrap"><pre class="rust ">
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">builder::ClauseBuilder</span>, <span class="ident">generalize</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::RustIrDatabase</span>;
+<span class="kw">use</span> <span class="ident">chalk_ir</span>::{<span class="ident">cast::Cast</span>, <span class="ident">interner::Interner</span>, <span class="ident">Ty</span>, <span class="ident">TyKind</span>, <span class="ident">WhereClause</span>};
+
+<span class="doccomment">/// If the self type `S` of an `Implemented` goal is a `dyn trait` type, we wish</span>
+<span class="doccomment">/// to generate program-clauses that indicates that it implements its own</span>
+<span class="doccomment">/// traits. For example, a `dyn Write` type implements `Write` and so on.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// To see how this works, consider as an example the type `dyn Fn(&amp;u8)`. This</span>
+<span class="doccomment">/// is really shorthand for `dyn for&lt;&#39;a&gt; Fn&lt;(&amp;&#39;a u8), Output = ()&gt;`, and we</span>
+<span class="doccomment">/// represent that type as something like this:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```ignore</span>
+<span class="doccomment">/// dyn(exists&lt;T&gt; {</span>
+<span class="doccomment">///     forall&lt;&#39;a&gt; { Implemented(T: Fn&lt;&#39;a&gt;) },</span>
+<span class="doccomment">///     forall&lt;&#39;a&gt; { AliasEq(&lt;T as Fn&lt;&#39;a&gt;&gt;::Output, ()) },</span>
+<span class="doccomment">/// })</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// so what we will do is to generate one program clause for each of the</span>
+<span class="doccomment">/// conditions. Thus we get two program clauses:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```ignore</span>
+<span class="doccomment">/// forall&lt;&#39;a&gt; { Implemented(dyn Fn(&amp;u8): Fn&lt;(&amp;&#39;a u8)&gt;) }</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// and</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```ignore</span>
+<span class="doccomment">/// forall&lt;&#39;a&gt; { AliasEq(&lt;dyn Fn(&amp;u8) as Fn&lt;&#39;a&gt;&gt;::Output, ()) },</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">build_dyn_self_ty_clauses</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Interner</span><span class="op">&gt;</span>(
+    <span class="ident">db</span>: <span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">RustIrDatabase</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>,
+    <span class="ident">builder</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ClauseBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">I</span><span class="op">&gt;</span>,
+    <span class="ident">self_ty</span>: <span class="ident">Ty</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>,
+) {
+    <span class="kw">let</span> <span class="ident">interner</span> <span class="op">=</span> <span class="ident">db</span>.<span class="ident">interner</span>();
+    <span class="kw">let</span> <span class="ident">dyn_ty</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">self_ty</span>.<span class="ident">kind</span>(<span class="ident">interner</span>) {
+        <span class="ident">TyKind::Dyn</span>(<span class="ident">dyn_ty</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">dyn_ty</span>.<span class="ident">clone</span>(),
+        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span>,
+    };
+    <span class="kw">let</span> <span class="ident">generalized_dyn_ty</span> <span class="op">=</span> <span class="ident">generalize::Generalize::apply</span>(<span class="ident">db</span>.<span class="ident">interner</span>(), <span class="ident">dyn_ty</span>);
+
+    <span class="comment">// Here, `self_ty` is the `dyn Fn(&amp;u8)`, and `dyn_ty` is the `exists&lt;T&gt; { ..</span>
+    <span class="comment">// }` clauses shown above.</span>
+
+    <span class="comment">// Turn free BoundVars in the type into new existentials. E.g.</span>
+    <span class="comment">// we might get some `dyn Foo&lt;?X&gt;`, and we don&#39;t want to return</span>
+    <span class="comment">// a clause with a free variable. We can instead return a</span>
+    <span class="comment">// slightly more general clause by basically turning this into</span>
+    <span class="comment">// `exists&lt;A&gt; dyn Foo&lt;A&gt;`.</span>
+
+    <span class="ident">builder</span>.<span class="ident">push_binders</span>(<span class="ident">generalized_dyn_ty</span>, <span class="op">|</span><span class="ident">builder</span>, <span class="ident">dyn_ty</span><span class="op">|</span> {
+        <span class="kw">for</span> <span class="ident">exists_qwc</span> <span class="kw">in</span> <span class="ident">dyn_ty</span>.<span class="ident">bounds</span>.<span class="ident">map_ref</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">r</span>.<span class="ident">iter</span>(<span class="ident">interner</span>)) {
+            <span class="comment">// Replace the `T` from `exists&lt;T&gt; { .. }` with `self_ty`,</span>
+            <span class="comment">// yielding clases like</span>
+            <span class="comment">//</span>
+            <span class="comment">// ```</span>
+            <span class="comment">// forall&lt;&#39;a&gt; { Implemented(dyn Fn(&amp;u8): Fn&lt;(&amp;&#39;a u8)&gt;) }</span>
+            <span class="comment">// ```</span>
+            <span class="kw">let</span> <span class="ident">qwc</span> <span class="op">=</span> <span class="ident">exists_qwc</span>
+                .<span class="ident">cloned</span>()
+                .<span class="ident">substitute</span>(<span class="ident">interner</span>, <span class="kw-2">&amp;</span>[<span class="ident">self_ty</span>.<span class="ident">clone</span>().<span class="ident">cast</span>(<span class="ident">interner</span>)]);
+
+            <span class="ident">builder</span>.<span class="ident">push_binders</span>(<span class="ident">qwc</span>, <span class="op">|</span><span class="ident">builder</span>, <span class="ident">bound</span><span class="op">|</span> <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="ident">bound</span> {
+                <span class="comment">// For the implemented traits, we need to elaborate super traits and add where clauses from the trait</span>
+                <span class="ident">WhereClause::Implemented</span>(<span class="ident">trait_ref</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="kw">super</span><span class="ident">::super_traits::push_trait_super_clauses</span>(
+                        <span class="ident">builder</span>.<span class="ident">db</span>,
+                        <span class="ident">builder</span>,
+                        <span class="ident">trait_ref</span>.<span class="ident">clone</span>(),
+                    )
+                }
+                <span class="comment">// FIXME: Associated item bindings are just taken as facts (?)</span>
+                <span class="ident">WhereClause::AliasEq</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">builder</span>.<span class="ident">push_fact</span>(<span class="ident">bound</span>),
+                <span class="ident">WhereClause::LifetimeOutlives</span>(..) <span class="op">=</span><span class="op">&gt;</span> {}
+                <span class="ident">WhereClause::TypeOutlives</span>(..) <span class="op">=</span><span class="op">&gt;</span> {}
+            });
+        }
+    });
+}
+</pre></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="chalk_solve" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
+    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>

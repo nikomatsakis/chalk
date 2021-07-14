@@ -1,0 +1,76 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="An alternative solver based around the SLG algorithm, which implements the well-formed semantics. For an overview of how the solver works, see The On-Demand SLG Solver in the chalk book."><meta name="keywords" content="rust, rustlang, rust-lang, chalk_engine"><title>chalk_engine - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script id="default-settings"></script><script src="../storage.js"></script><script src="../crates.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../chalk_engine/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class="location">Crate chalk_engine</p><div class="block version"><p>Version 0.70.0-dev.0</p></div><div class="sidebar-elems"><a id="all-types" href="all.html"><p>See all chalk_engine's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li></ul></div><p class="location"></p><div id="sidebar-vars" data-name="chalk_engine" data-ty="mod" data-relpath="../"></div><script defer src="../sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Crate <a class="mod" href="">chalk_engine</a><button id="copy-path" onclick="copy_path(this)">⎘</button></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/chalk_engine/lib.rs.html#1-334" title="goto source code">[src]</a></span></h1><div class="docblock"><p>An alternative solver based around the SLG algorithm, which
+implements the well-formed semantics. For an overview of how the solver
+works, see <a href="https://rust-lang.github.io/chalk/book/engine/slg.html">The On-Demand SLG Solver</a> in the chalk book.</p>
+<p>This algorithm is very closed based on the description found in the
+following paper, which I will refer to in the comments as EWFS:</p>
+<blockquote>
+<p>Efficient Top-Down Computation of Queries Under the Well-founded Semantics
+(Chen, Swift, and Warren; Journal of Logic Programming ’95)</p>
+</blockquote>
+<p>However, to understand that paper, I would recommend first
+starting with the following paper, which I will refer to in the
+comments as NFTD:</p>
+<blockquote>
+<p>A New Formulation of Tabled resolution With Delay
+(Swift; EPIA ’99)</p>
+</blockquote>
+<p>In addition, I incorporated extensions from the following papers,
+which I will refer to as SA and RR respectively, that
+describes how to do introduce approximation when processing
+subgoals and so forth:</p>
+<blockquote>
+<p>Terminating Evaluation of Logic Programs with Finite Three-Valued Models
+Riguzzi and Swift; ACM Transactions on Computational Logic 2013
+(Introduces “subgoal abstraction”, hence the name SA)</p>
+<p>Radial Restraint
+Grosof and Swift; 2013</p>
+</blockquote>
+<p>Another useful paper that gives a kind of high-level overview of
+concepts at play is the following, which I will refer to as XSB:</p>
+<blockquote>
+<p>XSB: Extending Prolog with Tabled Logic Programming
+(Swift and Warren; Theory and Practice of Logic Programming ’10)</p>
+</blockquote>
+<p>While this code is adapted from the algorithms described in those
+papers, it is not the same. For one thing, the approaches there
+had to be extended to our context, and in particular to coping
+with hereditary harrop predicates and our version of unification
+(which produces subgoals). I believe those to be largely faithful
+extensions. However, there are some other places where I
+intentionally diverged from the semantics as described in the
+papers – e.g. by more aggressively approximating – which I
+marked them with a comment DIVERGENCE. Those places may want to be
+evaluated in the future.</p>
+<p>Glossary of other terms:</p>
+<ul>
+<li>WAM: Warren abstract machine, an efficient way to evaluate Prolog programs.
+See <a href="http://wambook.sourceforge.net/">http://wambook.sourceforge.net/</a>.</li>
+<li>HH: Hereditary harrop predicates. What Chalk deals in.
+Popularized by Lambda Prolog.</li>
+</ul>
+</div><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
+<table><tr class="module-item"><td><a class="mod" href="context/index.html" title="chalk_engine::context mod">context</a></td><td class="docblock-short"><p>Defines traits used to embed the chalk-engine in another crate.</p>
+</td></tr><tr class="module-item"><td><a class="mod" href="derived/index.html" title="chalk_engine::derived mod">derived</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="mod" href="forest/index.html" title="chalk_engine::forest mod">forest</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="mod" href="logic/index.html" title="chalk_engine::logic mod">logic</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="mod" href="normalize_deep/index.html" title="chalk_engine::normalize_deep mod">normalize_deep</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="mod" href="simplify/index.html" title="chalk_engine::simplify mod">simplify</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="mod" href="slg/index.html" title="chalk_engine::slg mod">slg</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="mod" href="solve/index.html" title="chalk_engine::solve mod">solve</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="mod" href="stack/index.html" title="chalk_engine::stack mod">stack</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="mod" href="strand/index.html" title="chalk_engine::strand mod">strand</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="mod" href="table/index.html" title="chalk_engine::table mod">table</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="mod" href="tables/index.html" title="chalk_engine::tables mod">tables</a></td><td class="docblock-short"></td></tr></table><h2 id="macros" class="section-header"><a href="#macros">Macros</a></h2>
+<table><tr class="module-item"><td><a class="macro" href="macro.index_struct.html" title="chalk_engine::index_struct macro">index_struct</a></td><td class="docblock-short"></td></tr></table><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
+<table><tr class="module-item"><td><a class="struct" href="struct.Answer.html" title="chalk_engine::Answer struct">Answer</a></td><td class="docblock-short"><p>An “answer” in the on-demand solver corresponds to a fully solved
+goal for a particular table (modulo delayed literals). It contains
+a substitution</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.CompleteAnswer.html" title="chalk_engine::CompleteAnswer struct">CompleteAnswer</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="struct" href="struct.ExClause.html" title="chalk_engine::ExClause struct">ExClause</a></td><td class="docblock-short"><p>The paper describes these as <code>A :- D | G</code>.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.FlounderedSubgoal.html" title="chalk_engine::FlounderedSubgoal struct">FlounderedSubgoal</a></td><td class="docblock-short"><p>A “floundered” subgoal is one that contains unbound existential
+variables for which it cannot produce a value. The classic example
+of floundering is a negative subgoal:</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Minimums.html" title="chalk_engine::Minimums struct">Minimums</a></td><td class="docblock-short"><p>The <code>Minimums</code> structure is used to track the dependencies between
+some item E on the evaluation stack. In particular, it tracks
+cases where the success of E depends (or may depend) on items
+deeper in the stack than E (i.e., with lower DFNs).</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.TableIndex.html" title="chalk_engine::TableIndex struct">TableIndex</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="struct" href="struct.TimeStamp.html" title="chalk_engine::TimeStamp struct">TimeStamp</a></td><td class="docblock-short"><p>The “time stamp” is a simple clock that gets incremented each time
+we encounter a positive answer in processing a particular
+strand. This is used as an optimization to help us figure out when
+we <em>may</em> have changed inference variables.</p>
+</td></tr></table><h2 id="enums" class="section-header"><a href="#enums">Enums</a></h2>
+<table><tr class="module-item"><td><a class="enum" href="enum.AnswerMode.html" title="chalk_engine::AnswerMode enum">AnswerMode</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="enum" href="enum.Literal.html" title="chalk_engine::Literal enum">Literal</a></td><td class="docblock-short"><p>Either <code>A</code> or <code>~A</code>, where <code>A</code> is a <code>Env |- Goal</code>.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="chalk_engine" data-search-index-js="../search-index.js" data-search-js="../search.js"></div>
+    <script src="../main.js"></script></body></html>

@@ -1,0 +1,520 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Coherence</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../mermaid.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../what_is_chalk.html"><strong aria-hidden="true">1.</strong> What is Chalk?</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../what_is_chalk/walkthrough.html"><strong aria-hidden="true">1.1.</strong> Walkthrough</a></li><li class="chapter-item expanded "><a href="../what_is_chalk/crates.html"><strong aria-hidden="true">1.2.</strong> Crates</a></li><li class="chapter-item expanded "><a href="../what_is_chalk/repl.html"><strong aria-hidden="true">1.3.</strong> REPL</a></li></ol></li><li class="chapter-item expanded "><a href="../contribution_guide.html"><strong aria-hidden="true">2.</strong> Contribution guide</a></li><li class="chapter-item expanded "><a href="../types.html"><strong aria-hidden="true">3.</strong> Representing and manipulating types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/role_of_interner.html"><strong aria-hidden="true">3.1.</strong> The Interner</a></li><li class="chapter-item expanded "><a href="../types/rust_types.html"><strong aria-hidden="true">3.2.</strong> Rust types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/rust_types/alias.html"><strong aria-hidden="true">3.2.1.</strong> Alias types</a></li><li class="chapter-item expanded "><a href="../types/rust_types/application_ty.html"><strong aria-hidden="true">3.2.2.</strong> Application types</a></li></ol></li><li class="chapter-item expanded "><a href="../types/rust_lifetimes.html"><strong aria-hidden="true">3.3.</strong> Rust lifetimes</a></li><li class="chapter-item expanded "><a href="../types/operations.html"><strong aria-hidden="true">3.4.</strong> Operations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/operations/fold.html"><strong aria-hidden="true">3.4.1.</strong> Fold and the Folder trait</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../clauses.html"><strong aria-hidden="true">4.</strong> Lowering Rust IR to logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../clauses/goals_and_clauses.html"><strong aria-hidden="true">4.1.</strong> Goals and clauses</a></li><li class="chapter-item expanded "><a href="../clauses/type_equality.html"><strong aria-hidden="true">4.2.</strong> Type equality and unification</a></li><li class="chapter-item expanded "><a href="../clauses/implied_bounds.html"><strong aria-hidden="true">4.3.</strong> Implied bounds</a></li><li class="chapter-item expanded "><a href="../clauses/lowering_rules.html"><strong aria-hidden="true">4.4.</strong> Lowering rules</a></li><li class="chapter-item expanded "><a href="../clauses/opaque_types.html"><strong aria-hidden="true">4.5.</strong> Opaque types (impl Trait)</a></li><li class="chapter-item expanded "><a href="../clauses/well_known_traits.html"><strong aria-hidden="true">4.6.</strong> Well known traits</a></li><li class="chapter-item expanded "><a href="../clauses/wf.html"><strong aria-hidden="true">4.7.</strong> Well-formedness checking</a></li><li class="chapter-item expanded "><a href="../clauses/coherence.html" class="active"><strong aria-hidden="true">4.8.</strong> Coherence</a></li></ol></li><li class="chapter-item expanded "><a href="../canonical_queries.html"><strong aria-hidden="true">5.</strong> Canonical queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../canonical_queries/canonicalization.html"><strong aria-hidden="true">5.1.</strong> Canonicalization</a></li></ol></li><li class="chapter-item expanded "><a href="../engine.html"><strong aria-hidden="true">6.</strong> Chalk engine</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../engine/major_concepts.html"><strong aria-hidden="true">6.1.</strong> Major concepts</a></li><li class="chapter-item expanded "><a href="../engine/logic.html"><strong aria-hidden="true">6.2.</strong> Logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../engine/logic/coinduction.html"><strong aria-hidden="true">6.2.1.</strong> Coinduction</a></li></ol></li><li class="chapter-item expanded "><a href="../engine/slg.html"><strong aria-hidden="true">6.3.</strong> SLG Solver</a></li></ol></li><li class="chapter-item expanded "><a href="../recursive.html"><strong aria-hidden="true">7.</strong> Chalk recursive solver</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../recursive/stack.html"><strong aria-hidden="true">7.1.</strong> The stack</a></li><li class="chapter-item expanded "><a href="../recursive/inductive_cycles.html"><strong aria-hidden="true">7.2.</strong> Inductive cycles</a></li><li class="chapter-item expanded "><a href="../recursive/search_graph.html"><strong aria-hidden="true">7.3.</strong> The search graph and caching</a></li><li class="chapter-item expanded "><a href="../recursive/coinduction.html"><strong aria-hidden="true">7.4.</strong> Coinduction</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../glossary.html">Appendix A: Glossary and terminology</a></li><li class="chapter-item expanded affix "><a href="../bibliography.html">Appendix B: Bibliography</a></li><li class="chapter-item expanded affix "><a href="../todo.html">Appendix C: Incomplete chapters</a></li><li class="chapter-item expanded affix "><a href="../publishing.html">Appendix D: Publishing Chalk</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#chalk-coherence" id="chalk-coherence">Chalk Coherence</a></h1>
+<p>This document was previously prepared for the initial design of coherence rules in Chalk. It was copy-pasted here on 2020-10-06, but has not been vetted for accuracy of the current implementation or edited for clarity.</p>
+<h2><a class="header" href="#coherence" id="coherence">Coherence</a></h2>
+<blockquote>
+<p>The idea of trait coherence is that, given a trait and some set of types for its type parameters, there should be exactly one impl that applies. So if we think of the trait <code>Display</code>, we want to guarantee that if we have a trait reference like <code>MyType : Display</code>, we can uniquely identify a particular impl.</p>
+<p>The role of the orphan rules in particular is basically to prevent you from implementing external traits for external types. So continuing our simple example of <code>Display</code>, if you are defining your own library, you could not implement <code>Display</code> for <code>Vec&lt;T&gt;</code>, because both <code>Display</code> and <code>Vec</code> are defined in the standard library. But you can implement <code>Display</code> for <code>MyType</code>, because you defined <code>MyType</code>. However, if you define your own trait <code>MyTrait</code>, then you can implement <code>MyTrait</code> for any type you like, including external types like <code>Vec&lt;T&gt;</code>. To this end, the orphan rule intuitively says “either the trait must be local or the self-type must be local”.</p>
+<p>-- <a href="https://smallcultfollowing.com/babysteps/blog/2015/01/14/little-orphan-impls/">Little Orphan Impls</a> by Niko Matsakis</p>
+</blockquote>
+<p>To check for coherence, the Rust compiler completes two separate but related checks:</p>
+<ul>
+<li>orphan check - ensures that each impl abides by the orphan rules, or in other words, that an impl is potentially implementable by the crate adding it
+<ul>
+<li>A consequence of the orphan rules: for every impl that could exist, it only exists in <strong>one</strong> place — this is key to having a coherent system</li>
+</ul>
+</li>
+<li>overlap check - ensures that no two impls overlap in your program <strong>or</strong> <strong>in any</strong> <em><strong>compatible</strong></em> <strong>world</strong>
+<ul>
+<li><strong>compatible</strong> - any semver compatible world</li>
+</ul>
+</li>
+</ul>
+<h1><a class="header" href="#resources-about-coherence" id="resources-about-coherence">Resources About Coherence</a></h1>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=AI7SLCubTnk&amp;t=43m19s">Coherence - talk by withoutboats</a></li>
+<li><a href="https://smallcultfollowing.com/babysteps/blog/2015/01/14/little-orphan-impls/">Little Orphan Impls</a></li>
+<li><a href="https://rust-lang.github.io/rfcs/1023-rebalancing-coherence.html">RFC 1023 Rebalancing Coherence</a></li>
+<li><a href="http://blog.ezyang.com/2014/07/type-classes-confluence-coherence-global-uniqueness/">Type classes: confluence, coherence and global uniqueness</a></li>
+</ul>
+<h2><a class="header" href="#axioms--properties-of-coherence" id="axioms--properties-of-coherence">Axioms &amp; Properties of Coherence</a></h2>
+<blockquote>
+<p>Historical Note: We used to use the term “external” instead of “upstream”.</p>
+</blockquote>
+<ul>
+<li><strong>Axiom 1:</strong> crates upstream to you should be able to implement their own traits for their own types</li>
+<li><strong>Axiom 2:</strong> crates downstream from you should be able to implement your traits</li>
+<li><strong>Property:</strong> Upstream crates must assume that downstream crates will add any impls that compile. Downstream crates are allowed to assume that upstream crates will not add any semver incompatible impls.</li>
+</ul>
+<h1><a class="header" href="#chalk-orphan-check" id="chalk-orphan-check">Chalk: Orphan Check</a></h1>
+<p>The purpose of the orphan check is to ensure that an impl is only definable in a single crate. This check is what makes it impossible for other crates to define impls of your traits for your types.</p>
+<p><strong>We want to capture some rule:</strong> Given <code>impl&lt;T0…Tn&gt; for Trait&lt;P1…Pn&gt; for P0</code>, <code>LocalImplAllowed(P0: Trait&lt;P1…Pn&gt;)</code> is true if and only if this impl is allowed in the current (local) crate. </p>
+<p>This check is applied to all impls in the current crate. Upstream impls are not checked with this rule.</p>
+<h2><a class="header" href="#the-orphan-rules" id="the-orphan-rules">The Orphan Rules</a></h2>
+<p>In order to model the orphan check in chalk, we need a precise description of the orphan rules as they are implemented in rustc today.</p>
+<p>There are several resources which can be used to figure out the orphan rules in rustc.</p>
+<ul>
+<li><a href="https://rust-lang.github.io/rfcs/1023-rebalancing-coherence.html">RFC 1023: Rebalancing Coherence</a></li>
+<li><a href="https://doc.rust-lang.org/reference/items/implementations.html#trait-implementation-coherence"><em>Trait Implementation Coherence</em></a> <a href="https://doc.rust-lang.org/reference/items/implementations.html#trait-implementation-coherence">in the</a> <a href="https://doc.rust-lang.org/reference/items/implementations.html#trait-implementation-coherence"><em>Rust Reference</em></a></li>
+<li><a href="https://doc.rust-lang.org/error-index.html#E0210">E0210: A violation of the orphan rules in the</a> <a href="https://doc.rust-lang.org/error-index.html#E0210"><em>Rust Error Index</em></a></li>
+<li><a href="https://smallcultfollowing.com/babysteps/blog/2015/01/14/little-orphan-impls/"><em>Little Orphan Impls</em></a> <a href="https://smallcultfollowing.com/babysteps/blog/2015/01/14/little-orphan-impls/">by Niko Matsakis</a></li>
+</ul>
+<p>Of all of these, RFC 1023 is probably considered the most authoritative source on the orphan rules. The orphan rules as proposed in that RFC are as follows:</p>
+<p>Given an impl <code>impl&lt;T1...Tn&gt; Trait&lt;P1...Pn&gt; for P0</code>, either <code>Trait</code> must be local to the current crate, or:</p>
+<ol>
+<li>At least one type must meet the <code>LT</code> pattern defined above. Let <code>Pi</code> be the first such type.</li>
+<li>No type parameters <code>T1...Tn</code> may appear in the type parameters that precede <code>Pi</code> (that is, <code>Pj</code> where <code>j &lt; i</code>).</li>
+</ol>
+<p>The <code>LT</code> pattern being referred to basically means that the type is a “local type” including the affects of fundamental types. That means that <code>Ti</code> is either a local type, or a fundamental type whose first parameter is a local type.</p>
+<p>This definition is good. Once you read it a few times and it makes sense, it is fairly unambiguous. That being said, the RFC was written quite a while ago and we have since found <a href="https://github.com/rust-lang/rust/issues/43355">unsoundness</a> in some of the parts of the compiler that were implemented based on that RFC.</p>
+<p>Thus, it is probably best to look at the only <em>truly authoritative</em> source on the Rust compiler: the rustc source code itself! Indeed, if you think of the rustc source code as an executable specification of how the Rust programming language is meant to work, you can look at it and determine the true behaviour of the orphan rules.</p>
+<h2><a class="header" href="#the-orphan-check-in-rustc" id="the-orphan-check-in-rustc">The Orphan Check in rustc</a></h2>
+<p>The orphan check as implemented today in the Rust compiler takes place in the <a href="https://github.com/rust-lang/rust/blob/b7c6e8f1805cd8a4b0a1c1f22f17a89e9e2cea23/src/librustc/traits/coherence.rs#L236"><code>orphan_check</code></a> function which is called <a href="https://github.com/rust-lang/rust/blob/b7c6e8f1805cd8a4b0a1c1f22f17a89e9e2cea23/src/librustc_typeck/coherence/orphan.rs#L45">for every declared impl</a>. Since implementations for locally defined traits are always defined, that function returns OK if the trait being implemented is local. Otherwise, it dispatches to the <a href="https://github.com/rust-lang/rust/blob/b7c6e8f1805cd8a4b0a1c1f22f17a89e9e2cea23/src/librustc/traits/coherence.rs#L343"><code>orphan_check_trait_ref</code></a> function which does the major orphan rules checking.</p>
+<p>Recall that the impls we are dealing with are in the form <code>impl&lt;T0…Tn&gt; Trait&lt;P1…Pn&gt; for P0</code>.</p>
+<p>The <code>orphan_check_trait_ref</code> function takes a <strong>trait ref</strong> which is essentially <code>Trait</code> and its parameters <code>P0…Pn</code> (notice that the <code>Self</code> type <code>P0</code> is included). The parameters <code>P0…Pn</code> are known as the <strong>input types</strong> of the trait. The function goes through each input type from <code>P0</code> to <code>Pn</code> looking for the first local type <code>Pi</code>. For each type parameter <code>Pj</code> found before that, the function checks that it does not contain any of the placeholder types <code>T0…Tn</code> at any level. That means that <code>Pj</code> cannot have any of the types <code>T0…Tn</code> at any level recursively. When the first local type <code>Pi</code> is found, we check to make sure any type parameters used in it are covered by a local type. Since we don’t have any fundamental types with more than one type parameter, this check is probably extraneous.</p>
+<h2><a class="header" href="#the-orphan-rules-in-rustc" id="the-orphan-rules-in-rustc">The Orphan Rules in rustc</a></h2>
+<p>Thus, based on the source code, the orphan rules in Rust are as follows:</p>
+<p>Given an impl of the form <code>impl&lt;T0…Tn&gt; Trait&lt;P1…Pn&gt; for P0</code>, the impl is allowed if:</p>
+<ul>
+<li><code>Trait</code> is local to the current crate</li>
+<li><code>Trait</code> is upstream to the current crate and:
+<ul>
+<li>There is at least one type parameter <code>Pi</code> which, taking fundamental types into account, is <strong>local</strong> to the current crate</li>
+<li>Within the type <code>Pi</code>,  all type parameters are covered by <code>Pi</code>
+<ul>
+<li>This only really applies if we allowed fundamental types with multiple type parameters</li>
+<li>Since we don’t do that yet, we can ignore this for the time being</li>
+</ul>
+</li>
+<li>All types <code>Pj</code> such that <code>j &lt; i</code> do not contain <code>T0…Tn</code> at any level of depth (i.e. the types are <strong>fully visible</strong> <strong>—</strong> “visible” meaning that the type is a known type and not a type parameter or variable)</li>
+</ul>
+</li>
+</ul>
+<h2><a class="header" href="#modeling-the-orphan-check" id="modeling-the-orphan-check">Modeling The Orphan Check</a></h2>
+<p>Determining how to model these rules in chalk is actually quite straightforward at this point. We have an exact specification of how the rules are meant to work and we can translate that directly. </p>
+<p>Here’s how the lowering rules would look: </p>
+<p>For each trait <code>Trait</code>,</p>
+<ul>
+<li>If <code>Trait</code> is local to the current crate, we generate:
+<code>forall&lt;Self, P1…Pn&gt; { LocalImplAllowed(Self: Trait&lt;P1...Pn&gt;) }</code>
+This models that any impls are allowed if the trait is local to the current crate.</li>
+<li>If <code>Trait</code> is upstream to the current crate, we need a rule which models the additional conditions on which impls are allowed:</li>
+</ul>
+<pre><code class="language-ignore">forall&lt;Self, P1...Pn&gt; { LocalImplAllowed(Self: Trait&lt;P1...Pn&gt;) :- IsLocal(Self) }
+forall&lt;Self, P1...Pn&gt; {
+  LocalImplAllowed(Self: Trait&lt;P1...Pn&gt;) :- IsFullyVisible(Self), IsLocal(P1)
+}
+forall&lt;Self, P1...Pn&gt; {
+  LocalImplAllowed(Self: Trait&lt;P1...Pn&gt;) :-
+    IsFullyVisible(Self),
+    IsFullyVisible(P1),
+    IsLocal(P2)
+}
+forall&lt;Self, P1...Pn&gt; {
+  LocalImplAllowed(Self: Trait&lt;P1...Pn&gt;) :-
+    IsFullyVisible(Self),
+    IsFullyVisible(P1),
+    IsFullyVisible(P2),
+    IsLocal(P3)
+}
+...
+forall&lt;Self, P1...Pn&gt; {
+  LocalImplAllowed(Self: Trait&lt;P1...Pn&gt;) :-
+    IsFullyVisible(Self),
+    IsFullyVisible(P1),
+    IsFullyVisible(P2),
+    ...
+    IsFullyVisible(Pn-1),
+    IsLocal(Pn)
+}
+</code></pre>
+<p>Here, we have modeled every possible case of <code>P1</code> to <code>Pn</code> being local and then checked if all prior type parameters are fully visible. This truly is a direct translation of the rules listed above!</p>
+<p>Now, to complete the orphan check, we can iterate over each impl of the same form as before and check if <code>LocalImplAllowed(P0: Trait&lt;P1…Pn&gt;)</code> is provable.</p>
+<h1><a class="header" href="#chalk-overlap-check" id="chalk-overlap-check">Chalk: Overlap Check</a></h1>
+<blockquote>
+<p>Note: A key assumption for the overlap check is that the orphan check runs before it. That means that any impl that the overlap check encounters already abides by the orphan rules. This is very important to how the check works and it wouldn’t work without the orphan check also present before it.</p>
+</blockquote>
+<p>The purpose of the overlap check is to ensure that there is only up to one impl that can apply to a method call at a given time. In order to accomplish this, the overlap check looks at all pairs of impls and tries to ensure that there is no “overlap” between the sets of types that both impls can apply to. It accomplishes this by attempting to take the “intersection” of the constraints of both impls and then ensuring that this intersection cannot possibly apply to any types. If this turns out to be provable, the types are truly disjoint.</p>
+<p>This is a simple application of the mathematical law:</p>
+<blockquote>
+<p>If two sets <em>A</em> and <em>B</em> are disjoint, then <em>A</em> ∩ <em>B</em> = ∅</p>
+</blockquote>
+<p>More concretely, let’s say you have the following two impls: (<a href="https://rust-lang.github.io/rfcs/1023-rebalancing-coherence.html#type-locality-and-negative-reasoning">example from RFC 1023</a>)</p>
+<pre><code class="language-rust ignore">impl&lt;T: Copy&gt; Clone for T { /* ... */ }
+impl&lt;U&gt; Clone for MyType&lt;U&gt; { /* ... */ }
+</code></pre>
+<p>Then we’ll try to solve the following:</p>
+<pre><code class="language-ignore">not { exists&lt;T, U&gt; { T = MyType&lt;U&gt;, T: Copy } }
+</code></pre>
+<p>One way to read this is to say “try to prove that there is no <code>MyType&lt;U&gt;</code> for any <code>U</code> that implements the <code>Copy</code> trait”. The reason we’re trying to prove this is because if there is such an implementation, then the second impl would overlap with the first one. The first impl applies to any type that implements <code>Copy</code>.</p>
+<p>The issue is that there may very well not be any such impl at this current time. In that case, chalk will conclude that these two impls do not overlap. This is an issue because that is certainly an impl that could be added later, so this conclusion may be too strong.</p>
+<p>Why is that we’re only saying that this conclusion <em>may</em> be too strong? Well we’re using “may” because it depends on what we want to assume about different crates. The orphan rules make it so that upstream crates can add certain impls to themselves in a semver compatible way. In particular, upstream crates can add impls of upstream traits for their own upstream types without having to worry about breaking downstream code. That means that we can’t just assume that upstream type doesn’t implement an upstream trait. This particular assumption is too strong.</p>
+<p>On the other hand, the orphan rules permit the current crate to add certain impls as well. A property of the orphan rules is that the impls it allows are only allowed to be defined in a single crate. So that means that if the impls allowed by the orphan rules in the current crate don’t exist, it is perfectly safe to assume that they are not there.</p>
+<p>The conclusion from all of this is that it is perfectly safe to rule out impls that can be defined in the current crate, but we can’t do the same for impls in any other crate. That means that we need to come up with a way to model all possible impls in upstream, downstream and even sibling crates so we can make sure that our overlap check isn’t making assumptions that are too strong.</p>
+<p><strong>Clarification:</strong> One caveat to all of this is that we can’t simply model “all possible impls” because then the current crate wouldn’t be able to add any impls at all for upstream traits. After all, it is <em>possible</em> for an upstream crate to add <em>any</em> impl for its upstream trait. A more precise version of what we’re looking for is to model impls that an upstream crate could add in a <strong>compatible</strong> way. These are impls that we may not be able to current see, but also cannot ignore since that would be too strong of an assumption.</p>
+<p><strong>We are specifically trying to avoid a situation where a semver compatible upgrade of a dependency breaks the current crate because the current crate was able to add an impl that only the dependency was meant to be able to add.</strong></p>
+<p><strong>Sibling Crates:</strong> Furthermore, we can immediately rule out sibling crates because by definition they are unable to use each other’s types or traits. If two crates are unable to interact at all, they cannot possibly add a conflicting implementation in any <strong>coherent</strong> world. Proof: Suppose that a sibling crate could add an impl that would conflict with a conclusion drawn by the overlap check in the current crate. Then the sibling crate would have to be able to implement a trait that was available to the current crate for a type that was available for the current crate. Since the sibling crate by definition does not have access to the current crate’s types or traits, the conflicting type and trait must be upstream. By the orphan rules, the sibling crate cannot implement a trait for upstream types and traits. Thus, the conflicting implementation in the sibling crate is impossible and no such implementation can exist.</p>
+<p><strong>Downstream Crates:</strong> Downstream crates come into play because all traits in upstream crates and in the current crate can potentially be implemented by downstream crates using the forms allowed by the orphan rules. In essence, we always need to assume that downstream crates will implement traits in all ways that compile.</p>
+<h2><a class="header" href="#discussion-modeling-the-overlap-check" id="discussion-modeling-the-overlap-check">Discussion: Modeling the Overlap Check</a></h2>
+<p><a href="https://aturon.github.io/blog/2017/04/24/negative-chalk/">Aaron’s excellent blog post</a> talks about this exact problem from the point of view of negative reasoning. It also describes a potential solution which we will apply here to solve our problem.</p>
+<p>The <strong>compatible modality</strong> (<code>compat</code> in Aaron’s blog post) is necessary because we don’t always want to assume that all compatible impls exist. In particular, there are certain phases of compilation (e.g. trans) where the closed-world assumption is entirely necessary and sufficient.</p>
+<p>To start addressing the problem at hand, the question is: what implementations are crates other than the current crate allowed to add in a semver compatible way? </p>
+<p>Since we already ruled out sibling crates, this only leaves upstream crates and downstream crates. Upstream crates only have access to upstream types and traits. That means that the only impls they can add are impls for upstream types or blanket impls over type parameters. Downstream crates have access to all upstream traits and types in addition to all traits and types in the current crate.</p>
+<p><strong>Claim:</strong> No impl containing generic types can be added in a semver compatible way.
+<strong>Proof:</strong> If the impl contains only generic types, it is considered a blanket impl and it may already be that a downstream trait implements that trait. So by adding a blanket impl, it now conflicts with the potential downstream implementation and is thus a breaking change. If the impl contains a generic type and also some number of upstream types, then a downstream crate may still have implemented that trait for all of the same values of the type parameters but with the generic types filled with downstream types. Thus, adding such an impl would also be a breaking change that would conflict with that potential downstream impl.</p>
+<p>The only situation where an impl containing generic types can be added in a way that is <strong>not</strong> a breaking change is if <strong>in addition to the impl</strong>, a new type is also added to the upstream crate. In that case, downstream crates would not have had an opportunity to implement that trait for those types just yet. All of that being said, from the perspective of the current crate looking at potential upstream impls, this case does not matter at all because the current crate can never query for a type that doesn’t exist yet. That means that this situation doesn’t actually impact the potential impls that we need to account for even though it is a valid example of a situation where a new blanket impl is possible.</p>
+<p>Thus, for all intents and purposes, impls containing generic type parameters cannot be added in semver compatible ways. This only leaves a single option: impls containing only upstream types. These are compatible because by the orphan rules, the current crate and any further downstream crates is not allowed to implement upstream traits for all upstream types. Thus, adding these impls cannot possibly break anything.</p>
+<p>This significantly narrows down our set of potential impls that we need to account for to only impls of upstream traits for upstream types.</p>
+<p>For downstream crates, we need to add rules for all possible impls that they could potentially add using any upstream traits or traits in the current crate. We can do this by enumerating the possibilities generated from the orphan rules specified above:</p>
+<pre><code class="language-ignore">// Given a trait MyTrait&lt;P1...Pn&gt; where WCs
+
+forall&lt;Self, P1...Pn&gt; {
+  Implemented(Self: MyTrait&lt;P1...Pn&gt;) :-
+    WCs,                  // where clauses
+    Compatible,
+    DownstreamType(Self), // local to a downstream crate
+    CannotProve,
+}
+forall&lt;Self, P1...Pn&gt; {
+  Implemented(Self: MyTrait&lt;P1...Pn&gt;) :-
+    WCs,
+    Compatible,
+    IsFullyVisible(Self),
+    DownstreamType(P1),
+    CannotProve,
+}
+...
+forall&lt;Self, P1...Pn&gt; {
+  Implemented(Self: MyTrait&lt;P1...Pn&gt;) :-
+    WCs,
+    Compatible,
+    IsFullyVisible(Self),
+    IsFullyVisible(P1),
+    ...,
+    IsFullyVisible(Pn-1),
+    DownstreamType(Pn),
+    CannotProve,
+}
+</code></pre>
+<p>Perhaps somewhat surprisingly, <code>IsFullyVisible</code> works here too. This is because our previous definition of the lowering for <code>IsFullyVisible</code> was quite broad. By lowering <em>all</em> types in the current crate and in upstream crates with <code>IsFullyVisible</code>, that predicate covers the correct set of types here too. The orphan rules only require that there are no types parameters prior to the first local type. Types that are not type parameters and also by definition not downstream types are all of the types in the current crate and in upstream crates. This is exactly what <code>IsFullyVisible</code> covers.</p>
+<p>Fundamental types in both the current crate and in upstream crates can be considered local in a downstream crate if they are provided with a downstream type. To model this, we can add an additional rule for fundamental types:</p>
+<pre><code class="language-ignore">forall&lt;T&gt; { DownstreamType(MyFundamentalType&lt;T&gt;) :- DownstreamType(T) }
+</code></pre>
+<p><strong>Where clauses:</strong> Traits can have where clauses.</p>
+<pre><code class="language-rust ignore">#[upstream] trait Foo&lt;T, U, V&gt; where Self: Eq&lt;T&gt; { /* ... */ }
+</code></pre>
+<p><strong>The question is</strong>: do we need to bring these where clauses down into the rule that we generate for the overlap check?
+<strong>Answer:</strong> Yes. Since the trait can only be implemented for types that satisfy its where clauses, it makes sense to also limit our assumption of compatible impls to impls that can exist.</p>
+<p><strong>Associated types:</strong> Traits can have associated types. We do not need to worry about them in our discussion because associated types are output types and trait matching is done on input types. This is also why the orphan rules do not mention associated types at all.</p>
+<h2><a class="header" href="#overlap-check-in-chalk" id="overlap-check-in-chalk">Overlap Check in Chalk</a></h2>
+<p>Thus, based on the discussion above, the overlap check with coherence in mind can be modeled in chalk with the following:</p>
+<ul>
+<li>
+<p>All disjoint queries take place inside of <code>compatible</code></p>
+</li>
+<li>
+<p><code>compatible { G }</code> desugars into <code>forall&lt;T&gt; { (Compatible, DownstreamType(T)) =&gt; G }</code>, thus introducing a <code>Compatible</code> predicate using implication</p>
+</li>
+<li>
+<p>For each upstream trait <code>MyTrait&lt;P1…Pn&gt;</code>, we lower it into the following rule:</p>
+<pre><code class="language-ignore">forall&lt;Self, P1...Pn&gt; {
+  Implemented(Self: MyTrait&lt;P1...Pn&gt;) :-
+    Compatible,
+    IsUpstream(Self),
+    IsUpstream(P1),
+    ...,
+    IsUpstream(Pn),
+    CannotProve
+}
+</code></pre>
+<p>This will accomplish our goal of returning an ambiguous answer whenever the
+overlap check query asks about any impls that an upstream crate may add in a
+compatible way. We determined in the discussion above that these are the only
+impls in any crate that can be added compatibly.</p>
+<p><strong>Note:</strong> Trait <code>where</code> clauses are lowered into the rule’s conditions as well as a prerequisite to everything else.</p>
+</li>
+<li>
+<p>For all traits <code>MyTrait&lt;P1…Pn&gt; where WCs</code> in the current crate and in upstream traits,</p>
+<pre><code class="language-ignore">forall&lt;Self, P1...Pn&gt; {
+  Implemented(Self: MyTrait&lt;P1...Pn&gt;) :-
+    WCs,                  // where clauses
+    Compatible,
+    DownstreamType(Self), // local to a downstream crate
+    CannotProve,
+}
+forall&lt;Self, P1...Pn&gt; {
+  Implemented(Self: MyTrait&lt;P1...Pn&gt;) :-
+    WCs,
+    Compatible,
+    IsFullyVisible(Self),
+    DownstreamType(P1),
+    CannotProve,
+}
+...
+forall&lt;Self, P1...Pn&gt; {
+  Implemented(Self: MyTrait&lt;P1...Pn&gt;) :-
+    WCs,
+    Compatible,
+    IsFullyVisible(Self),
+    IsFullyVisible(P1),
+    ...,
+    IsFullyVisible(Pn-1),
+    DownstreamType(Pn),
+    CannotProve,
+}
+</code></pre>
+</li>
+<li>
+<p>For fundamental types in both the current crate and in upstream crates,</p>
+<pre><code class="language-ignore">forall&lt;T&gt; { DownstreamType(MyFundamentalType&lt;T&gt;) :- DownstreamType(T) }
+</code></pre>
+</li>
+</ul>
+<h2><a class="header" href="#alternative-designs" id="alternative-designs">Alternative Designs</a></h2>
+<p>Initially, when Niko and I started working on this, Niko suggested the following implementation:</p>
+<blockquote>
+<p>For each upstream trait, <code>MyTrait&lt;P1…Pn&gt;</code>, we lower it into the following rule:</p>
+<pre><code class="language-ignore">forall&lt;Self, P1...Pn&gt; {
+  Implemented(Self: MyTrait&lt;P1...Pn&gt;) :-
+    Compatible,
+    not { LocalImplAllowed(Self: MyTrait&lt;P1...Pn&gt;) },
+    CannotProve
+}
+</code></pre>
+</blockquote>
+<p>This appears to make sense because we need to assume that any impls that the current crate cannot add itself may exist somewhere else. By using <code>not { LocalImplAllowed(…) }</code>, we modeled exactly that. The problem is, that this assumption is actually too strong. What we actually need to model is that any <strong>compatible</strong> impls that the current crate cannot add itself may exist somewhere else. This is a <strong>subset</strong> of the impls covered by <code>not { LocalImplAllowed(…) }</code>.</p>
+<p>Notes to be added somewhere:</p>
+<ul>
+<li>For impls that are definable in the current crate, we assume that the only ones that exist are the ones that are actually present. If the current crate does not define an impl that it could define, for our purposes, that impl does not exist. This is in contrast to how we treat upstream impls. For those, we assume that impls <em>may</em> exist even if we don’t <em>know</em> that they do.</li>
+<li>Struct/Trait privacy (e.g. <code>pub</code>) does not matter. For better or for worse, we always assume that everything is public or is going to be public someday, so we do not consider privacy at all.</li>
+<li>Fundamental traits - tend to be traits that you generally wouldn't implement yourself. The compiler is the one generating implementations for those traits, so it was decided that it was okay to definitively conclude whether or not an impl exists for them</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../clauses/wf.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../canonical_queries.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../clauses/wf.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../canonical_queries.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>

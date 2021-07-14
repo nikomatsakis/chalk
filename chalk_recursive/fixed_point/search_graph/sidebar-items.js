@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["DepthFirstNumber",""],["Node",""],["SearchGraph","The “search graph” stores in-progress goals that are still being solved."]]});

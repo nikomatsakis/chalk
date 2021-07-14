@@ -1,0 +1,424 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Canonicalization</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../mermaid.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../what_is_chalk.html"><strong aria-hidden="true">1.</strong> What is Chalk?</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../what_is_chalk/walkthrough.html"><strong aria-hidden="true">1.1.</strong> Walkthrough</a></li><li class="chapter-item expanded "><a href="../what_is_chalk/crates.html"><strong aria-hidden="true">1.2.</strong> Crates</a></li><li class="chapter-item expanded "><a href="../what_is_chalk/repl.html"><strong aria-hidden="true">1.3.</strong> REPL</a></li></ol></li><li class="chapter-item expanded "><a href="../contribution_guide.html"><strong aria-hidden="true">2.</strong> Contribution guide</a></li><li class="chapter-item expanded "><a href="../types.html"><strong aria-hidden="true">3.</strong> Representing and manipulating types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/role_of_interner.html"><strong aria-hidden="true">3.1.</strong> The Interner</a></li><li class="chapter-item expanded "><a href="../types/rust_types.html"><strong aria-hidden="true">3.2.</strong> Rust types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/rust_types/alias.html"><strong aria-hidden="true">3.2.1.</strong> Alias types</a></li><li class="chapter-item expanded "><a href="../types/rust_types/application_ty.html"><strong aria-hidden="true">3.2.2.</strong> Application types</a></li></ol></li><li class="chapter-item expanded "><a href="../types/rust_lifetimes.html"><strong aria-hidden="true">3.3.</strong> Rust lifetimes</a></li><li class="chapter-item expanded "><a href="../types/operations.html"><strong aria-hidden="true">3.4.</strong> Operations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/operations/fold.html"><strong aria-hidden="true">3.4.1.</strong> Fold and the Folder trait</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../clauses.html"><strong aria-hidden="true">4.</strong> Lowering Rust IR to logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../clauses/goals_and_clauses.html"><strong aria-hidden="true">4.1.</strong> Goals and clauses</a></li><li class="chapter-item expanded "><a href="../clauses/type_equality.html"><strong aria-hidden="true">4.2.</strong> Type equality and unification</a></li><li class="chapter-item expanded "><a href="../clauses/implied_bounds.html"><strong aria-hidden="true">4.3.</strong> Implied bounds</a></li><li class="chapter-item expanded "><a href="../clauses/lowering_rules.html"><strong aria-hidden="true">4.4.</strong> Lowering rules</a></li><li class="chapter-item expanded "><a href="../clauses/opaque_types.html"><strong aria-hidden="true">4.5.</strong> Opaque types (impl Trait)</a></li><li class="chapter-item expanded "><a href="../clauses/well_known_traits.html"><strong aria-hidden="true">4.6.</strong> Well known traits</a></li><li class="chapter-item expanded "><a href="../clauses/wf.html"><strong aria-hidden="true">4.7.</strong> Well-formedness checking</a></li><li class="chapter-item expanded "><a href="../clauses/coherence.html"><strong aria-hidden="true">4.8.</strong> Coherence</a></li></ol></li><li class="chapter-item expanded "><a href="../canonical_queries.html"><strong aria-hidden="true">5.</strong> Canonical queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../canonical_queries/canonicalization.html" class="active"><strong aria-hidden="true">5.1.</strong> Canonicalization</a></li></ol></li><li class="chapter-item expanded "><a href="../engine.html"><strong aria-hidden="true">6.</strong> Chalk engine</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../engine/major_concepts.html"><strong aria-hidden="true">6.1.</strong> Major concepts</a></li><li class="chapter-item expanded "><a href="../engine/logic.html"><strong aria-hidden="true">6.2.</strong> Logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../engine/logic/coinduction.html"><strong aria-hidden="true">6.2.1.</strong> Coinduction</a></li></ol></li><li class="chapter-item expanded "><a href="../engine/slg.html"><strong aria-hidden="true">6.3.</strong> SLG Solver</a></li></ol></li><li class="chapter-item expanded "><a href="../recursive.html"><strong aria-hidden="true">7.</strong> Chalk recursive solver</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../recursive/stack.html"><strong aria-hidden="true">7.1.</strong> The stack</a></li><li class="chapter-item expanded "><a href="../recursive/inductive_cycles.html"><strong aria-hidden="true">7.2.</strong> Inductive cycles</a></li><li class="chapter-item expanded "><a href="../recursive/search_graph.html"><strong aria-hidden="true">7.3.</strong> The search graph and caching</a></li><li class="chapter-item expanded "><a href="../recursive/coinduction.html"><strong aria-hidden="true">7.4.</strong> Coinduction</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../glossary.html">Appendix A: Glossary and terminology</a></li><li class="chapter-item expanded affix "><a href="../bibliography.html">Appendix B: Bibliography</a></li><li class="chapter-item expanded affix "><a href="../todo.html">Appendix C: Incomplete chapters</a></li><li class="chapter-item expanded affix "><a href="../publishing.html">Appendix D: Publishing Chalk</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#canonicalization" id="canonicalization">Canonicalization</a></h1>
+<p>Canonicalization is the process of <strong>isolating</strong> an inference value
+from its context. It is a key part of implementing
+<a href="../canonical_queries.html">canonical queries</a>, and you may wish to read the parent chapter
+to get more context.</p>
+<p>Canonicalization is really based on a very simple concept: every
+<a href="https://rustc-dev-guide.rust-lang.org/type-inference.html#vars">inference variable</a> 
+is always in one of two states: either it is <strong>unbound</strong>, in which case we don't know yet
+what type it is, or it is <strong>bound</strong>, in which case we do. So to
+isolate some data-structure T that contains types/regions from its
+environment, we just walk down and find the unbound variables that
+appear in T; those variables get replaced with &quot;canonical variables&quot;,
+starting from zero and numbered in a fixed order (left to right, for
+the most part, but really it doesn't matter as long as it is
+consistent).</p>
+<p>So, for example, if we have the type <code>X = (?T, ?U)</code>, where <code>?T</code> and
+<code>?U</code> are distinct, unbound inference variables, then the canonical
+form of <code>X</code> would be <code>(?0, ?1)</code>, where <code>?0</code> and <code>?1</code> represent these
+<strong>canonical placeholders</strong>. Note that the type <code>Y = (?U, ?T)</code> also
+canonicalizes to <code>(?0, ?1)</code>. But the type <code>Z = (?T, ?T)</code> would
+canonicalize to <code>(?0, ?0)</code> (as would <code>(?U, ?U)</code>). In other words, the
+exact identity of the inference variables is not important – unless
+they are repeated.</p>
+<p>We use this to improve caching as well as to detect cycles and other
+things during trait resolution. Roughly speaking, the idea is that if
+two trait queries have the same canonical form, then they will get
+the same answer. That answer will be expressed in terms of the
+canonical variables (<code>?0</code>, <code>?1</code>), which we can then map back to the
+original variables (<code>?T</code>, <code>?U</code>).</p>
+<h2><a class="header" href="#canonicalizing-the-query" id="canonicalizing-the-query">Canonicalizing the query</a></h2>
+<p>To see how it works, imagine that we are asking to solve the following
+trait query: <code>?A: Foo&lt;'static, ?B&gt;</code>, where <code>?A</code> and <code>?B</code> are unbound.
+This query contains two unbound variables, but it also contains the
+lifetime <code>'static</code>. The trait system generally ignores all lifetimes
+and treats them equally, so when canonicalizing, we will <em>also</em>
+replace any <a href="https://rustc-dev-guide.rust-lang.org/appendix/background.html#free-vs-bound">free lifetime</a> with a
+canonical variable (Note that <code>'static</code> is actually a <em>free</em> lifetime 
+variable here. We are not considering it in the typing context of the whole 
+program but only in the context of this trait reference. Mathematically, we
+are not quantifying over the whole program, but only this obligation).
+Therefore, we get the following result:</p>
+<pre><code class="language-text">?0: Foo&lt;'?1, ?2&gt;
+</code></pre>
+<p>Sometimes we write this differently, like so:</p>
+<pre><code class="language-text">for&lt;T,L,T&gt; { ?0: Foo&lt;'?1, ?2&gt; }
+</code></pre>
+<p>This <code>for&lt;&gt;</code> gives some information about each of the canonical
+variables within.  In this case, each <code>T</code> indicates a type variable,
+so <code>?0</code> and <code>?2</code> are types; the <code>L</code> indicates a lifetime variable, so
+<code>?1</code> is a lifetime. The <code>canonicalize</code> method <em>also</em> gives back a
+<code>CanonicalVarValues</code> array OV with the &quot;original values&quot; for each
+canonicalized variable:</p>
+<pre><code class="language-text">[?A, 'static, ?B]
+</code></pre>
+<p>We'll need this vector OV later, when we process the query response.</p>
+<h2><a class="header" href="#executing-the-query" id="executing-the-query">Executing the query</a></h2>
+<p>Once we've constructed the canonical query, we can try to solve it.
+To do so, we will wind up creating a fresh inference context and
+<strong>instantiating</strong> the canonical query in that context. The idea is that
+we create a substitution S from the canonical form containing a fresh
+inference variable (of suitable kind) for each canonical variable.
+So, for our example query:</p>
+<pre><code class="language-text">for&lt;T,L,T&gt; { ?0: Foo&lt;'?1, ?2&gt; }
+</code></pre>
+<p>the substitution S might be:</p>
+<pre><code class="language-text">S = [?A, '?B, ?C]
+</code></pre>
+<p>We can then replace the bound canonical variables (<code>?0</code>, etc) with
+these inference variables, yielding the following fully instantiated
+query:</p>
+<pre><code class="language-text">?A: Foo&lt;'?B, ?C&gt;
+</code></pre>
+<p>Remember that substitution S though! We're going to need it later.</p>
+<p>OK, now that we have a fresh inference context and an instantiated
+query, we can go ahead and try to solve it. The trait solver itself is
+explained in more detail in <a href="../engine/slg.html">another section</a>, but
+suffice to say that it will compute a <a href="../canonical_queries.html#query-response">certainty value</a> (<code>Proven</code> or
+<code>Ambiguous</code>) and have side-effects on the inference variables we've
+created. For example, if there were only one impl of <code>Foo</code>, like so:</p>
+<pre><code class="language-rust ignore">impl&lt;'a, X&gt; Foo&lt;'a, X&gt; for Vec&lt;X&gt;
+where X: 'a
+{ ... }
+</code></pre>
+<p>then we might wind up with a certainty value of <code>Proven</code>, as well as
+creating fresh inference variables <code>'?D</code> and <code>?E</code> (to represent the
+parameters on the impl) and unifying as follows:</p>
+<ul>
+<li><code>'?B = '?D</code></li>
+<li><code>?A = Vec&lt;?E&gt;</code></li>
+<li><code>?C = ?E</code></li>
+</ul>
+<p>We would also accumulate the region constraint <code>?E: '?D</code>, due to the
+where clause.</p>
+<p>In order to create our final query result, we have to &quot;lift&quot; these
+values out of the query's inference context and into something that
+can be reapplied in our original inference context. We do that by
+<strong>re-applying canonicalization</strong>, but to the <strong>query result</strong>.</p>
+<h2><a class="header" href="#canonicalizing-the-query-result" id="canonicalizing-the-query-result">Canonicalizing the query result</a></h2>
+<p>As discussed in <a href="../canonical_queries.html#query-response">the parent section</a>, most trait queries wind up
+with a result that brings together a &quot;certainty value&quot; <code>certainty</code>, a
+result substitution <code>var_values</code>, and some region constraints. To
+create this, we wind up re-using the substitution S that we created
+when first instantiating our query. To refresh your memory, we had a query</p>
+<pre><code class="language-text">for&lt;T,L,T&gt; { ?0: Foo&lt;'?1, ?2&gt; }
+</code></pre>
+<p>for which we made a substitution S:</p>
+<pre><code class="language-text">S = [?A, '?B, ?C]
+</code></pre>
+<p>We then did some work which unified some of those variables with other things.
+If we &quot;refresh&quot; S with the latest results, we get:</p>
+<pre><code class="language-text">S = [Vec&lt;?E&gt;, '?D, ?E]
+</code></pre>
+<p>These are precisely the new values for the three input variables from
+our original query. Note though that they include some new variables
+(like <code>?E</code>). We can make those go away by canonicalizing again! We don't
+just canonicalize S, though, we canonicalize the whole query response QR:</p>
+<pre><code class="language-text">QR = {
+    certainty: Proven,             // or whatever
+    var_values: [Vec&lt;?E&gt;, '?D, ?E] // this is S
+    region_constraints: [?E: '?D], // from the impl
+    value: (),                     // for our purposes, just (), but
+                                   // in some cases this might have
+                                   // a type or other info
+}
+</code></pre>
+<p>The result would be as follows:</p>
+<pre><code class="language-text">Canonical(QR) = for&lt;T, L&gt; {
+    certainty: Proven,
+    var_values: [Vec&lt;?0&gt;, '?1, ?0]
+    region_constraints: [?0: '?1],
+    value: (),
+}
+</code></pre>
+<p>(One subtle point: when we canonicalize the query <strong>result</strong>, we do not
+use any special treatment for free lifetimes. Note that both
+references to <code>'?D</code>, for example, were converted into the same
+canonical variable (<code>?1</code>). This is in contrast to the original query,
+where we canonicalized every free lifetime into a fresh canonical
+variable.)</p>
+<p>Now, this result must be reapplied in each context where needed.</p>
+<h2><a class="header" href="#processing-the-canonicalized-query-result" id="processing-the-canonicalized-query-result">Processing the canonicalized query result</a></h2>
+<p>In the previous section we produced a canonical query result. We now have
+to apply that result in our original context. If you recall, way back in the
+beginning, we were trying to prove this query:</p>
+<pre><code class="language-text">?A: Foo&lt;'static, ?B&gt;
+</code></pre>
+<p>We canonicalized that into this:</p>
+<pre><code class="language-text">for&lt;T,L,T&gt; { ?0: Foo&lt;'?1, ?2&gt; }
+</code></pre>
+<p>and now we got back a canonical response:</p>
+<pre><code class="language-text">for&lt;T, L&gt; {
+    certainty: Proven,
+    var_values: [Vec&lt;?0&gt;, '?1, ?0]
+    region_constraints: [?0: '?1],
+    value: (),
+}
+</code></pre>
+<p>We now want to apply that response to our context. Conceptually, how
+we do that is to (a) instantiate each of the canonical variables in
+the result with a fresh inference variable, (b) unify the values in
+the result with the original values, and then (c) record the region
+constraints for later. Doing step (a) would yield a result of</p>
+<pre><code class="language-text">{
+      certainty: Proven,
+      var_values: [Vec&lt;?C&gt;, '?D, ?C]
+                       ^^   ^^^ fresh inference variables
+      region_constraints: [?C: '?D],
+      value: (),
+}
+</code></pre>
+<p>Step (b) would then unify:</p>
+<pre><code class="language-text">?A with Vec&lt;?C&gt;
+'static with '?D
+?B with ?C
+</code></pre>
+<p>And finally the region constraint of <code>?C: 'static</code> would be recorded
+for later verification.</p>
+<p>(What we <em>actually</em> do is a mildly optimized variant of that: Rather
+than eagerly instantiating all of the canonical values in the result
+with variables, we instead walk the vector of values, looking for
+cases where the value is just a canonical variable. In our example,
+<code>values[2]</code> is <code>?C</code>, so that means we can deduce that <code>?C := ?B</code> and
+<code>'?D := 'static</code>. This gives us a partial set of values. Anything for
+which we do not find a value, we create an inference variable.)</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../canonical_queries.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../engine.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../canonical_queries.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../engine.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>

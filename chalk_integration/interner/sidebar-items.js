@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["ChalkFnAbi",""]],"struct":[["ChalkIr","The default “interner” and the only interner used by chalk itself. In this interner, no interning actually occurs."],["RawId",""]],"type":[["Identifier",""]]});

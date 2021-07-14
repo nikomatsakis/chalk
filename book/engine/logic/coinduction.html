@@ -1,0 +1,494 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Coinduction</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../favicon.png">
+        
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../../mermaid.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../what_is_chalk.html"><strong aria-hidden="true">1.</strong> What is Chalk?</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../what_is_chalk/walkthrough.html"><strong aria-hidden="true">1.1.</strong> Walkthrough</a></li><li class="chapter-item expanded "><a href="../../what_is_chalk/crates.html"><strong aria-hidden="true">1.2.</strong> Crates</a></li><li class="chapter-item expanded "><a href="../../what_is_chalk/repl.html"><strong aria-hidden="true">1.3.</strong> REPL</a></li></ol></li><li class="chapter-item expanded "><a href="../../contribution_guide.html"><strong aria-hidden="true">2.</strong> Contribution guide</a></li><li class="chapter-item expanded "><a href="../../types.html"><strong aria-hidden="true">3.</strong> Representing and manipulating types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../types/role_of_interner.html"><strong aria-hidden="true">3.1.</strong> The Interner</a></li><li class="chapter-item expanded "><a href="../../types/rust_types.html"><strong aria-hidden="true">3.2.</strong> Rust types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../types/rust_types/alias.html"><strong aria-hidden="true">3.2.1.</strong> Alias types</a></li><li class="chapter-item expanded "><a href="../../types/rust_types/application_ty.html"><strong aria-hidden="true">3.2.2.</strong> Application types</a></li></ol></li><li class="chapter-item expanded "><a href="../../types/rust_lifetimes.html"><strong aria-hidden="true">3.3.</strong> Rust lifetimes</a></li><li class="chapter-item expanded "><a href="../../types/operations.html"><strong aria-hidden="true">3.4.</strong> Operations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../types/operations/fold.html"><strong aria-hidden="true">3.4.1.</strong> Fold and the Folder trait</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../clauses.html"><strong aria-hidden="true">4.</strong> Lowering Rust IR to logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../clauses/goals_and_clauses.html"><strong aria-hidden="true">4.1.</strong> Goals and clauses</a></li><li class="chapter-item expanded "><a href="../../clauses/type_equality.html"><strong aria-hidden="true">4.2.</strong> Type equality and unification</a></li><li class="chapter-item expanded "><a href="../../clauses/implied_bounds.html"><strong aria-hidden="true">4.3.</strong> Implied bounds</a></li><li class="chapter-item expanded "><a href="../../clauses/lowering_rules.html"><strong aria-hidden="true">4.4.</strong> Lowering rules</a></li><li class="chapter-item expanded "><a href="../../clauses/opaque_types.html"><strong aria-hidden="true">4.5.</strong> Opaque types (impl Trait)</a></li><li class="chapter-item expanded "><a href="../../clauses/well_known_traits.html"><strong aria-hidden="true">4.6.</strong> Well known traits</a></li><li class="chapter-item expanded "><a href="../../clauses/wf.html"><strong aria-hidden="true">4.7.</strong> Well-formedness checking</a></li><li class="chapter-item expanded "><a href="../../clauses/coherence.html"><strong aria-hidden="true">4.8.</strong> Coherence</a></li></ol></li><li class="chapter-item expanded "><a href="../../canonical_queries.html"><strong aria-hidden="true">5.</strong> Canonical queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../canonical_queries/canonicalization.html"><strong aria-hidden="true">5.1.</strong> Canonicalization</a></li></ol></li><li class="chapter-item expanded "><a href="../../engine.html"><strong aria-hidden="true">6.</strong> Chalk engine</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../engine/major_concepts.html"><strong aria-hidden="true">6.1.</strong> Major concepts</a></li><li class="chapter-item expanded "><a href="../../engine/logic.html"><strong aria-hidden="true">6.2.</strong> Logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../engine/logic/coinduction.html" class="active"><strong aria-hidden="true">6.2.1.</strong> Coinduction</a></li></ol></li><li class="chapter-item expanded "><a href="../../engine/slg.html"><strong aria-hidden="true">6.3.</strong> SLG Solver</a></li></ol></li><li class="chapter-item expanded "><a href="../../recursive.html"><strong aria-hidden="true">7.</strong> Chalk recursive solver</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../recursive/stack.html"><strong aria-hidden="true">7.1.</strong> The stack</a></li><li class="chapter-item expanded "><a href="../../recursive/inductive_cycles.html"><strong aria-hidden="true">7.2.</strong> Inductive cycles</a></li><li class="chapter-item expanded "><a href="../../recursive/search_graph.html"><strong aria-hidden="true">7.3.</strong> The search graph and caching</a></li><li class="chapter-item expanded "><a href="../../recursive/coinduction.html"><strong aria-hidden="true">7.4.</strong> Coinduction</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../../glossary.html">Appendix A: Glossary and terminology</a></li><li class="chapter-item expanded affix "><a href="../../bibliography.html">Appendix B: Bibliography</a></li><li class="chapter-item expanded affix "><a href="../../todo.html">Appendix C: Incomplete chapters</a></li><li class="chapter-item expanded affix "><a href="../../publishing.html">Appendix D: Publishing Chalk</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#coinduction" id="coinduction">Coinduction</a></h1>
+<p>This sub-chapter was originally prepared for wg-traits design meeting on 2019-11-08 (see the <a href="https://hackmd.io/OJRi5OM6Twunw8ZmuLxfRA">Hackmd</a> doc). It briefly covers some tricky (and previously incorrectly handled) cases of coinduction, as well as two proposed solutions. The resulting and current solution ended up being something <em>pretty</em> close to Niko's solution. However, this is basically a copy-paste from the original document, and so shouldn't necessarily be taken as 100% truth as far as implementation.</p>
+<h2><a class="header" href="#the-problem" id="the-problem">The problem</a></h2>
+<p>See <a href="https://github.com/rust-lang/chalk/issues/248">chalk#248</a> for details. The short version is that we fail to handle a case like this correctly, where <code>Ci</code> are all co-inductive goals:</p>
+<pre><code class="language-notrust">C1 :- C2, C3.
+C2 :- C1.
+</code></pre>
+<p>What happens is that we </p>
+<ul>
+<li>start to prove C1</li>
+<li>start to prove C2</li>
+<li>see a recursive attempt to prove C1, assume it is successful</li>
+<li>consider C2 proved <strong>and cache this</strong></li>
+<li>start to prove C3, fail</li>
+<li>consider C1 <strong>unproven</strong></li>
+</ul>
+<p>Now we incorrectly have a result that <code>C2</code> is true -- but that result was made on the assumption that <code>C1</code> was true, and it was not.</p>
+<h2><a class="header" href="#some-other-tricky-cases-to-consider" id="some-other-tricky-cases-to-consider">Some other tricky cases to consider</a></h2>
+<h3><a class="header" href="#unification-failures" id="unification-failures">Unification failures</a></h3>
+<p>One thing to consider is that even when we have &quot;coinduction obligations&quot; to prove, we have to remember their substitutions too:</p>
+<pre><code class="language-notrust">C1(X) :- C2(Y), X = 22.
+C2(X) :- C3(X), X = 44.
+C3(X) :- C1(X), C2(X).
+</code></pre>
+<p>None of these predicates should be provable,  because <code>C1(X)</code> and <code>C2(X)</code> don't hold for the same <code>X</code>.</p>
+<p>If we're not careful, we might:</p>
+<ul>
+<li>start to prove C1</li>
+<li>start to prove C2</li>
+<li>start to prove C3, see the recursive calls to C1 and C2
+<ul>
+<li>maybe we wait to consider it proven until C1 and C2 complete</li>
+</ul>
+</li>
+</ul>
+<p>In this case, it's not enough that C1 and C2 are provable at all, they have to be provable for the same X.</p>
+<h3><a class="header" href="#non-trivial-self-cycles" id="non-trivial-self-cycles">Non-trivial self-cycles</a></h3>
+<pre><code class="language-notrust">C1(A) :- C1(B), B = 22, C2(A).
+C2(44).
+</code></pre>
+<p>This case is not provable, even though the only cycle is <code>C1(X) :- C1(Y)</code> -- but it turns out that <code>X</code> must not be 22. The catch is that while this might <em>appear</em> to be a trivial self-cycle, it is not! </p>
+<p>Actually I have to think about the best way to handle this case, as my proposed solution doesn't quite cut it. It wouldn't be <em>wrong</em> but it seems not ideal. -- Niko</p>
+<h3><a class="header" href="#delayed-trivial-cycles" id="delayed-trivial-cycles">Delayed trivial cycles</a></h3>
+<pre><code class="language-notrust">C1(A, B) :- C2(A, B), A = 22, B = 22.
+C2(A, B) :- C1(B, A).
+</code></pre>
+<p>This should be provable, but the cycle from C2 to C1 is not immediately visible as a trivial cycle, at least if subgoals are solved in order.</p>
+<h3><a class="header" href="#delayed-trivial-cycles-variant-2" id="delayed-trivial-cycles-variant-2">Delayed trivial cycles, variant 2</a></h3>
+<pre><code class="language-notrust">C1(A, B) :- C2(A, B), A = 22.
+C2(A, B) :- C1(B, A).
+</code></pre>
+<p>As above, here the only complete answer is <code>C1(22, 22)</code>. This is because the <code>C1</code>, <code>C2</code> cycle effectively guarantees equality.</p>
+<h3><a class="header" href="#delayed-trivial-cycles-variant-3" id="delayed-trivial-cycles-variant-3">Delayed trivial cycles, variant 3</a></h3>
+<pre><code class="language-notrust">C1(A, B) :- C1(B, A).
+</code></pre>
+<p>This is true for all <code>A, B</code></p>
+<h3><a class="header" href="#other-cases" id="other-cases">Other cases?</a></h3>
+<h2><a class="header" href="#approach-in-existing-pr" id="approach-in-existing-pr">Approach in existing PR</a></h2>
+<h3><a class="header" href="#high-level-idea" id="high-level-idea">High-level idea</a></h3>
+<ul>
+<li>When we encounter a co-inductive subgoal, we delay them in the current <code>Strand</code></li>
+<li>When all subgoals have been tested, and there are remaining delayed co-inductive subgoals, this is propagated up, marking the current <code>Strand</code> as co-inductive</li>
+<li>When the co-inductive <code>Strand</code>s reach the root table, we only then pursue an answer</li>
+</ul>
+<h2><a class="header" href="#nikos-proposed-solution" id="nikos-proposed-solution">Niko's proposed solution</a></h2>
+<h3><a class="header" href="#high-level-idea-1" id="high-level-idea-1">High-level idea</a></h3>
+<ul>
+<li>We only consider a co-induction subgoal proven for <em>trivial</em> recursion -- i.e., self-recursion where you have <code>C1 :- C1</code>.</li>
+<li>For non-trivial recursion, we propagate the co-inductive subgoal to the parent. This continues until it becomes trivial.</li>
+</ul>
+<h3><a class="header" href="#implementation-steps" id="implementation-steps">Implementation steps</a></h3>
+<p><strong>Extend <code>Answer</code> in two ways.</strong></p>
+<p>Currently <code>Answer</code> has a &quot;constrained substitution&quot; that includes values for the table's substitution + region constraints:</p>
+<pre><code class="language-notrust">struct Answer {
+    constrained_subst: Canonical&lt;ConstrainedSubst&gt;,
+    is_ambiguous: bool
+}
+
+struct ConstrainedSubst {
+    substitution: Substitution,
+    region_constraints: Vec&lt;RegionConstraint&gt;,
+}
+</code></pre>
+<p>we would first extend <code>ConstrainedSubst</code> to include as yet unproven co-inductive subgoals (this might actually be better done as a new type): </p>
+<pre><code class="language-rust ignore">struct ConstrainedSubst {
+    substitution: Substitution,
+    delayed_subgoals: Vec&lt;Literal&gt;,
+    region_constraints: Vec&lt;RegionConstraint&gt;,
+}
+</code></pre>
+<p>then we would extend <code>Answer</code> slightly as well so it can be &quot;ok&quot; or ambiguous, as today, but also an <em>error</em> case</p>
+<pre><code class="language-rust ignore">enum AnswerMode {
+    OK,
+    Ambiguous,
+    Error,
+}
+
+struct Answer {
+    constrained_subst: Canonical&lt;ConstrainedSubst&gt;,
+    mode: AnswerMode
+}
+</code></pre>
+<p>We won't need this error case till later, so let's ignore it for now. (And in a way, we never need it.)</p>
+<p><strong>Deferring coinductive subgoals</strong></p>
+<p>When we encounter a co-inductive subgoal, we check if it is <strong>trivial cycle</strong> or not. A trivial cycle is a case like <code>C1 :- C1</code>. We can simply consider such cycles to be true (but note the distinction between a <em>trivial</em> cycle and a <em>self-cycle</em> -- see the &quot;non-trivial self-cycle&quot; example above).</p>
+<p>For non-trivial cycles, we will want to store the cycle to be validated later. To accommodate that, we extend <code>ExClause</code> to include a <code>delayed_subgoals</code> list as well. We can write this the same way SLG does, so <code>Goal :- DelayedSubgoals | Subgoals</code></p>
+<p>In our example, proving <code>C2 :- C1</code> would result in adding <code>C1</code> to the list of delayed subgoals.</p>
+<p>When we reach the end of the list of subgoals, we can create an answer that contains the delayed subgoals. We don't have to add all the goals -- we can check for those that are trivial self-cycles again and remove them (in some cases, something which was not trivial to start may have become trivial through later unifications, see Delayed Trivial Self-Cycle case). Note that we <em>do</em> have to add all non-trivial cycles, including non-trivial self-cycles -- see the walkthrough of Non-trivial self-cycle variant 3.</p>
+<p>So the answer to <code>C2</code> would be</p>
+<pre><code class="language-notrust">substitution: [] // no variables
+delayed_subgoals: [&quot;C1&quot;]
+region_constraints: []
+</code></pre>
+<p>We can denote this as <code>C2 :- C1 |</code>, to use SLG notation.</p>
+<p><strong>Incorporating an answer with deferred subgoals.</strong></p>
+<p>When a table gets back an answer that has deferred sub-goals, they get added to the current list of subgoals. </p>
+<p>So e.g. in our case, we had a <code>ExClause</code> like:</p>
+<pre><code class="language-notrust">C1 :- | C2, C3
+</code></pre>
+<p>and we get the answer <code>C2 :- C1 |</code>, so we would convert it to</p>
+<pre><code class="language-notrust">C1 :- | C3, C1
+</code></pre>
+<p>i.e., we have added <code>C1</code> to the list of goals to prove. When we go to prove <code>C3</code>, of course, we will fail -- but it had succeeded, we would go on to prove <code>C1</code> but encounter a trivial cycle and hence succeed.</p>
+<p><strong>Extending root answer</strong></p>
+<p>So we failed to prove C1, but we do have a (conditional) answer to C2 -- <code>C2 :- C1 |</code>, even though <code>C2</code> is unprovable. What happens if <code>ensure_root_answer</code> is invoked on <code>C2</code>?</p>
+<p>What we have here is a <em>conditional</em> answer. We know that <code>C1</code> must have ultimately resolved itself somehow (although it might not yet be proven). What we can do is create a strand in C2 to evaluate C1 again -- if this strand succeeds, it can actually overwrite the <code>C2 :- C1 |</code> answer in place with <code>C2 :-</code> (i.e., an unconditional answer). This is just a refinement of what we had. If the strand fails, though, we'll want to remember the error.</p>
+<p>I think when we get a new answer, we want it to <em>overwrite</em> the old answer in place, rather than create a new answer. This is valid because it's not a new answer, it's just a more refined form of the old answer (although note that it might have different substitutions and other details, see the &quot;delayed trivial cycle&quot; case).</p>
+<p>In particular, it could be that the table already has a &quot;complete&quot; set of answers -- i.e., somebody invoked <code>ensure_answer(N)</code> and got back <code>None</code>. We don't want to be adding new answers which would change the result of that call. It <em>is</em> a bit strange that we are changing the result of <code>ensure_answer(i)</code> for the current <code>i</code>, but then the result is the same answer, just a bit more elaborated.</p>
+<p>The idea then would be to create a strand <em>associated with this answer somehow</em> (it doesn't, I don't think, live in the normal strand table; we probably have a separate &quot;refinement strand&quot; table). This strand has as its subgoals the delayed subgoals. It pursues them. This either results in an answer (which replaces the existing answer) or an error (in which case the existing answer is marked as <em>error</em>). This may require extending strand with an optional answer index that it should overwrite, or perhaps we thread it down as an argument to <code>pursue_strand</code> (optional because, in the normal mode, we are just appending a new answer).</p>
+<p>(Question: What distinguishes root answer? Nothing -- we could actually do this process for any answer, so long as the delayed subgoals are not to tables actively on the stack. This just happens to be trivially true for root answers. The key part though is that the answer must be registered in the table first before the refinement strand is created, see Delayed Self-Cycle Variant 3.)</p>
+<p>This is complex, so let's walk through an example or two.</p>
+<p><strong>The original problem.</strong> When we finish solving <code>C1</code>, we leave <code>C2</code> with a single answer <code>C2 :- C1 |</code>. If someone  invokes <code>ensure_root_answer(C2, 0)</code>, we would see the delayed literal and create a refinement strand for the answer: <code>C2 :- | C1</code>. We would pursue <code>C1</code> and get back the successful answer. So the refinement strand would terminate and we can overwrite with the answer <code>C2 :- |</code>.</p>
+<p><strong>Delayed trivial self-cycle.</strong> Similar to above, but the answer is <code>C2(?A, ?B) :- C1(?B, ?A) |</code>. In other words, in the canonical answer, we have a (identity) substitution of <code>[^0, ^1]</code> and a delayed goal of <code>C1(^1, ^0)</code>. The strand we create will find only one answer to <code>C1</code>, <code>C1(22, 22)</code>, so we wind up with an answer <code>C2(22, 22)</code>.</p>
+<p><strong>Handling error answers</strong></p>
+<p>We introduced the idea of an &quot;error answer&quot;...how do we handle that? It's fairly simple. If a strand encounters an error answer, it simply fails. Done. The <em>outer</em> search however needs to treat an error answer as basically a no-op -- so e.g. the answer iterator should simply increment the error counter and move to the next answer.</p>
+<h3><a class="header" href="#walk-through-delayed-trivial-self-cycle-variant-2" id="walk-through-delayed-trivial-self-cycle-variant-2">Walk through: delayed trivial self cycle, variant 2</a></h3>
+<pre><code class="language-notrust">C1(A, B) :- C2(A, B), A = 22.
+C2(A, B) :- C1(B, A).
+</code></pre>
+<ul>
+<li><code>ensure_root_answer(C1(?A, ?B))</code> is invoked
+<ul>
+<li>We start solving <code>C1(?A, ?B)</code> with the ex-clause <code>C1(?A, ?B) :- | C2(?A, ?B), ?A = 22</code>
+<ul>
+<li>That starts solving <code>C2(?A, ?B)</code>
+<ul>
+<li>This gets an answer <code>C2(?A, ?B) :- C1(?B, ?A) |</code></li>
+<li>When answer is incorporated, we get <code>C1(?A, ?B) :- | C1(?B, ?A), ?A = 22</code></li>
+</ul>
+</li>
+<li><code>C1(?B, ?A)</code> is a non-trivial cycle, and so we get 
+<ul>
+<li><code>C1(?A, ?B) :- C1(?B, ?A) | ?A = 22</code></li>
+</ul>
+</li>
+<li>Unification completes, leaving us with
+<ul>
+<li><code>C1(22, ?B) :- C1(?B, 22) |</code></li>
+</ul>
+</li>
+<li>This is a complete answer</li>
+</ul>
+</li>
+<li>ensure root answer attempts to refine this answer, creating a strand for <code>C1(22, ?B) :- | C1(?B, 22)</code>
+<ul>
+<li>This creates a table for <code>C1(?B, 22)</code> with ex-clause <code>C1(?B, 22) :- | C2(?B, 22), ?B = 22</code>
+<ul>
+<li>We start solving <code>C2(?B, 22)</code>, which has ex-clause <code>C2(?B, 22) :- C1(22, ?B)</code>
+<ul>
+<li>This creates a table for <code>C1(22, ?B)</code>, with ex-clause <code>C1(22, ?B) :- C2(22, ?B), 22 = 22</code>
+<ul>
+<li>This starts solving <code>C2(22, ?B)</code>, which is a fresh table with ex-clause <code>C2(22, ?B) :- C1(?B, 22)</code>
+<ul>
+<li>This is a co-inductive cycle</li>
+<li>So our answer is <code>C2(22, ?B) :- C1(?B, 22) |</code></li>
+</ul>
+</li>
+<li>Incorporating this answer yields <code>C1(22, ?B) :- 22 = 22, C1(?B, 22)</code></li>
+<li>The unification constraint succeeds, leaving <code>C1(22, ?B) :- C1(?B, 22)</code></li>
+<li>Co-inductive cycle detected, so answer is
+<ul>
+<li><code>C1(22, ?B) :- C1(?B, 22) |</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>This answer is incorporated into <code>C2</code>, yielding the ex-clause
+<ul>
+<li><code>C2(?B, 22) :- C1(?B, 22)</code></li>
+</ul>
+</li>
+<li>Pursuing that sub-goal gives a co-inductive cycle, so our final answer is
+<ul>
+<li><code>C2(?B, 22) :- C1(?B, 22) |</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>This answer is incorporated, yielding ex-clause <code>C1(?B, 22) :- | ?B = 22, C1(?B, 22)</code></li>
+<li>Unification yields <code>C1(22, 22) :- C1(22, 22)</code></li>
+<li>Trivial self-cycle detected, so final answer is
+<ul>
+<li><code>C1(22, 22)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>the answer for <code>C1(?A, ?B)</code> is thus updated to <code>C1(22, 22)</code></li>
+</ul>
+</li>
+</ul>
+<h3><a class="header" href="#walk-through-delayed-trivial-self-cycle-variant-3" id="walk-through-delayed-trivial-self-cycle-variant-3">Walk through: delayed trivial self cycle, variant 3</a></h3>
+<pre><code class="language-notrust">C1(A, B) :- C1(B, A).
+</code></pre>
+<p>This example is interesting because it shows that we have to incorporate non-trivial self cycles into an answer so they can recursively build on one another.</p>
+<ul>
+<li>we get an initial answer of
+<ul>
+<li><code>C1(?A, ?B) :- C1(?B, ?A) |</code></li>
+</ul>
+</li>
+<li>if we attempt to refine this, we will get a strand <code>C1(?X, ?Y) :- C1(?Y, ?X)</code>
+<ul>
+<li>pursuing the first subgoal <code>C1(?Y, ?X)</code> leads us to our own table, but at answer 0
+<ul>
+<li>(the very answer we are refining)</li>
+<li>the answer is <code>C1(?Y, ?X) :- C1(?X, ?Y) |</code></li>
+</ul>
+</li>
+<li>this strand incorporates its own answer, yielding
+<ul>
+<li><code>C1(?X, ?Y) :- C1(?X, ?Y)</code></li>
+</ul>
+</li>
+<li>next subgoal is a trivial self-cycle, discard, yielding
+<ul>
+<li><code>C1(?X, ?Y) :-</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>result: true</li>
+</ul>
+<h3><a class="header" href="#walk-through-non-trivial-self-cycle" id="walk-through-non-trivial-self-cycle">Walk through: non-trivial self cycle</a></h3>
+<p>Let's walk through one more case, the non-trivial self cycle.</p>
+<pre><code class="language-notrust">C1(A) :- C1(B), B = 22, C2(A).
+C2(44).
+</code></pre>
+<p>What happens here is that we get an initial answer from <code>C1</code> that looks like:</p>
+<pre><code class="language-notrust">C1(44) :- C1(22) |
+</code></pre>
+<p>Ensure root answer will thus try to refine by trying to solve <code>C1(22)</code>. Interestingly, this is going to go to a distinct table, because the canonical form is not the same, but that table will just fail.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../engine/logic.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../engine/slg.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../engine/logic.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../engine/slg.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Coinduction</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../mermaid.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../what_is_chalk.html"><strong aria-hidden="true">1.</strong> What is Chalk?</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../what_is_chalk/walkthrough.html"><strong aria-hidden="true">1.1.</strong> Walkthrough</a></li><li class="chapter-item expanded "><a href="../what_is_chalk/crates.html"><strong aria-hidden="true">1.2.</strong> Crates</a></li><li class="chapter-item expanded "><a href="../what_is_chalk/repl.html"><strong aria-hidden="true">1.3.</strong> REPL</a></li></ol></li><li class="chapter-item expanded "><a href="../contribution_guide.html"><strong aria-hidden="true">2.</strong> Contribution guide</a></li><li class="chapter-item expanded "><a href="../types.html"><strong aria-hidden="true">3.</strong> Representing and manipulating types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/role_of_interner.html"><strong aria-hidden="true">3.1.</strong> The Interner</a></li><li class="chapter-item expanded "><a href="../types/rust_types.html"><strong aria-hidden="true">3.2.</strong> Rust types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/rust_types/alias.html"><strong aria-hidden="true">3.2.1.</strong> Alias types</a></li><li class="chapter-item expanded "><a href="../types/rust_types/application_ty.html"><strong aria-hidden="true">3.2.2.</strong> Application types</a></li></ol></li><li class="chapter-item expanded "><a href="../types/rust_lifetimes.html"><strong aria-hidden="true">3.3.</strong> Rust lifetimes</a></li><li class="chapter-item expanded "><a href="../types/operations.html"><strong aria-hidden="true">3.4.</strong> Operations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../types/operations/fold.html"><strong aria-hidden="true">3.4.1.</strong> Fold and the Folder trait</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../clauses.html"><strong aria-hidden="true">4.</strong> Lowering Rust IR to logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../clauses/goals_and_clauses.html"><strong aria-hidden="true">4.1.</strong> Goals and clauses</a></li><li class="chapter-item expanded "><a href="../clauses/type_equality.html"><strong aria-hidden="true">4.2.</strong> Type equality and unification</a></li><li class="chapter-item expanded "><a href="../clauses/implied_bounds.html"><strong aria-hidden="true">4.3.</strong> Implied bounds</a></li><li class="chapter-item expanded "><a href="../clauses/lowering_rules.html"><strong aria-hidden="true">4.4.</strong> Lowering rules</a></li><li class="chapter-item expanded "><a href="../clauses/opaque_types.html"><strong aria-hidden="true">4.5.</strong> Opaque types (impl Trait)</a></li><li class="chapter-item expanded "><a href="../clauses/well_known_traits.html"><strong aria-hidden="true">4.6.</strong> Well known traits</a></li><li class="chapter-item expanded "><a href="../clauses/wf.html"><strong aria-hidden="true">4.7.</strong> Well-formedness checking</a></li><li class="chapter-item expanded "><a href="../clauses/coherence.html"><strong aria-hidden="true">4.8.</strong> Coherence</a></li></ol></li><li class="chapter-item expanded "><a href="../canonical_queries.html"><strong aria-hidden="true">5.</strong> Canonical queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../canonical_queries/canonicalization.html"><strong aria-hidden="true">5.1.</strong> Canonicalization</a></li></ol></li><li class="chapter-item expanded "><a href="../engine.html"><strong aria-hidden="true">6.</strong> Chalk engine</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../engine/major_concepts.html"><strong aria-hidden="true">6.1.</strong> Major concepts</a></li><li class="chapter-item expanded "><a href="../engine/logic.html"><strong aria-hidden="true">6.2.</strong> Logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../engine/logic/coinduction.html"><strong aria-hidden="true">6.2.1.</strong> Coinduction</a></li></ol></li><li class="chapter-item expanded "><a href="../engine/slg.html"><strong aria-hidden="true">6.3.</strong> SLG Solver</a></li></ol></li><li class="chapter-item expanded "><a href="../recursive.html"><strong aria-hidden="true">7.</strong> Chalk recursive solver</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../recursive/stack.html"><strong aria-hidden="true">7.1.</strong> The stack</a></li><li class="chapter-item expanded "><a href="../recursive/inductive_cycles.html"><strong aria-hidden="true">7.2.</strong> Inductive cycles</a></li><li class="chapter-item expanded "><a href="../recursive/search_graph.html"><strong aria-hidden="true">7.3.</strong> The search graph and caching</a></li><li class="chapter-item expanded "><a href="../recursive/coinduction.html" class="active"><strong aria-hidden="true">7.4.</strong> Coinduction</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../glossary.html">Appendix A: Glossary and terminology</a></li><li class="chapter-item expanded affix "><a href="../bibliography.html">Appendix B: Bibliography</a></li><li class="chapter-item expanded affix "><a href="../todo.html">Appendix C: Incomplete chapters</a></li><li class="chapter-item expanded affix "><a href="../publishing.html">Appendix D: Publishing Chalk</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#coinduction" id="coinduction">Coinduction</a></h1>
+<p>This sub-chapter is meant to describe the current handling of coinductive goals in the recursive solver rather than providing an extensive overview over the theoretical backgrounds and ideas.
+It follows the description in <a href="https://github.com/rust-lang/chalk/issues/399#issuecomment-643420016">this GitHub comment</a> and the Zulip topic linked there.
+In general, coinductive cycles can arise for well-formedness checking and autotraits.
+Therefore, correctly handling coinductive cycles is necessary to model the Rust trait system in its entirety.</p>
+<h2><a class="header" href="#general-idea" id="general-idea">General Idea</a></h2>
+<p>Coinductive cycles can be handled the same way as inductive cycles described <a href="./inductive_cycles.html">before</a>.
+The only difference is the start value for coinductive goals.
+Whereas inductive goals start with a negative result and are iterated until a least fixed-point is found, coinductive goals start with a positive result (i.e. a unique solution with identity substitution).
+This negative result is then iterated until a greatest fixed-point is reached.</p>
+<h2><a class="header" href="#mixed-co-inductive-and-inductive-cycles" id="mixed-co-inductive-and-inductive-cycles">Mixed co-inductive and inductive Cycles</a></h2>
+<p>As described above, the handling of inductive and coindutive cycles differs only in the start value from which the computation begins.
+Thus, it might seem reasonable to have mixed inductive and coinductive cycles as all goals inside these cycles would be handled the same way anyway.
+Unfortunately, this is not possible for the kind of logic that Chalk is based on (i.e. essentially an extension of co-LP for Hereditary Harrop clauses, cf. <a href="https://link.springer.com/chapter/10.1007%2F978-3-540-73420-8_42">this paper</a>).</p>
+<p>There is fundamental difference between results for inductive cycles and results for coinductive cycles of goals.
+An inductive goal is provable if and only if there exists a proof for it consisting of a finite chain of derivations from axioms that are members of the least-fixed point of the underlying logic program.
+On the other hand, coinductive goals are provable if there exists an at most infinite derivation starting from the axioms that proves it (this includes in particular all finite derivations).
+This infinite derivation is then part of the greatest fixed-point of the logic program.
+As infinite derivations are not feasible to compute, it is enough to show that such a derivation contains no contradiction.</p>
+<p>A simple example <code>X :- X.</code> (with <code>X</code> a free variable) is thus not provable by inductive reasoning (the least solution/lfp for this is the empty solution, a failure) but it is provable by coinductive reasoning (the greatest solution/gfp is the universe, i.e. all values).</p>
+<p>This difference between inductive and coinductive results becomes a problem when combined in a single cycle.
+Consider a coinductive goal <code>CG</code> and an inductive goal <code>IG</code>. Now consider the simplest possible mixed cycle:</p>
+<pre><code class="language-notrust">CG :- IG
+IG :- CG
+</code></pre>
+<p>It is apparent, that there can not exist a solution for <code>IG</code> as the cyclic dependency prevents a finite proof derivation.
+In contrast to that, <code>CG</code> could potentially be provable as the derivation <em><code>CG</code> if <code>IG</code> if <code>CG</code> if <code>IG</code> ...</em> is infinite and based only on the two axioms.
+As a result, <code>CG</code> would hold whereas <code>IG</code> would not hold, creating a contradiction.</p>
+<p>The simplest solution to this problem, proposed by Simon et al. in <a href="https://link.springer.com/chapter/10.1007%2F978-3-540-73420-8_42">their paper about co-LP</a>, is to disallow mixed inductive and coinductive cycles.
+This approach is also used by Chalk.</p>
+<h2><a class="header" href="#prevention-of-invalid-results" id="prevention-of-invalid-results">Prevention of Invalid Results</a></h2>
+<p>The problem of invalid results propagated outside of the coinductive cycle is also described in the <a href="../engine/logic/coinduction.html">Coinduction chapter</a> for the SLG solver alongside the rather complex handling used with it.
+Whereas the SLG solver introduces <a href="../engine/logic/coinduction.html#nikos-proposed-solution">special constructs</a> to handle coinduction, it is sufficient for the recursive solver to use the same logic for inductive and coinductive cycles.
+The following is a description of how this works in more detail.</p>
+<h3><a class="header" href="#the-problem" id="the-problem">The Problem</a></h3>
+<p>The problem arises if a solution that is purely based on the positive starting value for the coinductive cycle is cached (or tabled in logic programming terms) and as such propagated to other goals that are possibly reliant on this. An example where all clause goals are assumedly coinductive may look like this (cf. the test case <code>coinduction::coinductive_unsound1</code>):</p>
+<pre><code class="language-notrust">C :- C1.
+C :- C2.
+C1 :- C2, C3.
+C2 :- C1.
+</code></pre>
+<p>The following is a computation to find out whether there exists a type that implements <code>C</code>.
+Here the implementation of <code>C</code> may be proved by either showing that the type implements <code>C1</code> or <code>C2</code>.</p>
+<ul>
+<li>Start proving <code>C</code> by trying to prove <code>C1</code>:
+<ul>
+<li>For <code>C1</code> try to prove <code>C2</code> and <code>C3</code>:
+<ul>
+<li>Start with <code>C2</code>. For <code>C2</code> we need to prove <code>C1</code>:
+<ul>
+<li>This is a (coinductive) cycle. Assume that <code>C1</code> holds, i.e. use the positive start value.</li>
+</ul>
+</li>
+<li>Based on this <code>C2</code> also holds. If this case is not handled specifically, the solution for <code>C2</code> is cached without a reference to the solution for <code>C1</code> on which it depends.</li>
+<li>Now try to prove <code>C3</code>:
+<ul>
+<li>Find that there is no way do so from the given axioms.</li>
+</ul>
+</li>
+<li>Thus, there exists no solution for <code>C3</code> and the computation fails. This valid result is cached and lifted back up.</li>
+</ul>
+</li>
+<li>Due to the failure of <code>C3</code> there is also no solution for <code>C1</code>. This failure is also cached correctly and lifted back up. The cached solution for <code>C2</code> has now become invalid as it depends on a positive result for <code>C1</code>.</li>
+</ul>
+</li>
+<li>As a result of the failure for <code>C1</code>, <code>C</code> can not be proved from <code>C1</code>. Try proving <code>C</code> from <code>C2</code> instead:
+<ul>
+<li>Find the cached result that <code>C2</code> has a solution and lift it back up.</li>
+</ul>
+</li>
+<li>Due to the solution for <code>C2</code>, <code>C</code> is also proved with the same solution.</li>
+<li>Stop with this positive but invalid result for <code>C</code>.</li>
+</ul>
+<h3><a class="header" href="#the-solution" id="the-solution">The Solution</a></h3>
+<p>The above example should make it evident that the caching of found solutions in coinductive cycles can lead to invalid results and should therefore be prevented.
+This can be achieved by delaying the caching of all results inside the coinductive cycle until it is clear whether the start of the cycle (i.e. <code>C1</code> in the example above) is provable (cf. the handling of inductive cycles <a href="./inductive_cycles.html">before</a>).
+If the start of the cycle can be proven by the results of the cycle and related subgoals then the assumption about it was correct and thus all results for goals inside the cycle are also valid.
+If, however, the start of the cycle can not be proved, i.e. the initial assumption was false, then a subset of the found solutions for the coinductive cycle may be invalid (i.e. the solution for <code>C2</code> in the example).</p>
+<p>To remove such invalid results, the cycle is restarted with a negative result for the cycle start.
+With this approach, it is possible to remove all invalid result that would otherwise depend on the disproved cycle assumption.
+To allow for the cycle to be restarted correctly, all nodes in the search graph after the cycle start are deleted.</p>
+<p>With this procedure, the example is handled as follows:</p>
+<ul>
+<li>Start proving <code>C</code> with <code>C1</code>:
+<ul>
+<li>For <code>C1</code> prove <code>C2</code> and <code>C3</code>:
+<ul>
+<li>For <code>C2</code> prove <code>C1</code>:
+<ul>
+<li>This is a coinductive cycle. Assume that <code>C1</code> holds.</li>
+</ul>
+</li>
+<li>Thus <code>C2</code> also holds. Delay the caching of the result about <code>C2</code>.</li>
+<li>There is no way to prove <code>C3</code>. Cache this result and lift the failure up.</li>
+</ul>
+</li>
+<li>Due to the failure of <code>C3</code> there is also no solution for <code>C1</code>. Set <code>C1</code> to a negative result and restart the cycle.
+<ul>
+<li>For <code>C2</code> prove <code>C1</code>:
+<ul>
+<li><code>C1</code> has now a negative result.</li>
+</ul>
+</li>
+<li>Thus, <code>C2</code> also has a negative result which is not yet cached.</li>
+<li>Find the already cached negative result for <code>C3</code>.</li>
+</ul>
+</li>
+<li>Nothing changed regarding <code>C1</code> (this would indicate a negative cycle which is currently  not allowed) and the negative result for <code>C1</code> and <code>C2</code> are cached. Lift the negative result for <code>C1</code> back up.</li>
+</ul>
+</li>
+<li>Start proving <code>C</code> with <code>C2</code>:
+<ul>
+<li>Find negative cached result for <code>C2</code>. Lift the result back up.</li>
+</ul>
+</li>
+<li>Neither <code>C1</code> nor <code>C2</code> have a positive result. Stop with the valid disproof of <code>C</code>.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../recursive/search_graph.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../glossary.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../recursive/search_graph.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../glossary.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="../mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>

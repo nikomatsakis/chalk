@@ -1,0 +1,442 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Canonical queries</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="mermaid.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="what_is_chalk.html"><strong aria-hidden="true">1.</strong> What is Chalk?</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="what_is_chalk/walkthrough.html"><strong aria-hidden="true">1.1.</strong> Walkthrough</a></li><li class="chapter-item expanded "><a href="what_is_chalk/crates.html"><strong aria-hidden="true">1.2.</strong> Crates</a></li><li class="chapter-item expanded "><a href="what_is_chalk/repl.html"><strong aria-hidden="true">1.3.</strong> REPL</a></li></ol></li><li class="chapter-item expanded "><a href="contribution_guide.html"><strong aria-hidden="true">2.</strong> Contribution guide</a></li><li class="chapter-item expanded "><a href="types.html"><strong aria-hidden="true">3.</strong> Representing and manipulating types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types/role_of_interner.html"><strong aria-hidden="true">3.1.</strong> The Interner</a></li><li class="chapter-item expanded "><a href="types/rust_types.html"><strong aria-hidden="true">3.2.</strong> Rust types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types/rust_types/alias.html"><strong aria-hidden="true">3.2.1.</strong> Alias types</a></li><li class="chapter-item expanded "><a href="types/rust_types/application_ty.html"><strong aria-hidden="true">3.2.2.</strong> Application types</a></li></ol></li><li class="chapter-item expanded "><a href="types/rust_lifetimes.html"><strong aria-hidden="true">3.3.</strong> Rust lifetimes</a></li><li class="chapter-item expanded "><a href="types/operations.html"><strong aria-hidden="true">3.4.</strong> Operations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types/operations/fold.html"><strong aria-hidden="true">3.4.1.</strong> Fold and the Folder trait</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="clauses.html"><strong aria-hidden="true">4.</strong> Lowering Rust IR to logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="clauses/goals_and_clauses.html"><strong aria-hidden="true">4.1.</strong> Goals and clauses</a></li><li class="chapter-item expanded "><a href="clauses/type_equality.html"><strong aria-hidden="true">4.2.</strong> Type equality and unification</a></li><li class="chapter-item expanded "><a href="clauses/implied_bounds.html"><strong aria-hidden="true">4.3.</strong> Implied bounds</a></li><li class="chapter-item expanded "><a href="clauses/lowering_rules.html"><strong aria-hidden="true">4.4.</strong> Lowering rules</a></li><li class="chapter-item expanded "><a href="clauses/opaque_types.html"><strong aria-hidden="true">4.5.</strong> Opaque types (impl Trait)</a></li><li class="chapter-item expanded "><a href="clauses/well_known_traits.html"><strong aria-hidden="true">4.6.</strong> Well known traits</a></li><li class="chapter-item expanded "><a href="clauses/wf.html"><strong aria-hidden="true">4.7.</strong> Well-formedness checking</a></li><li class="chapter-item expanded "><a href="clauses/coherence.html"><strong aria-hidden="true">4.8.</strong> Coherence</a></li></ol></li><li class="chapter-item expanded "><a href="canonical_queries.html" class="active"><strong aria-hidden="true">5.</strong> Canonical queries</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="canonical_queries/canonicalization.html"><strong aria-hidden="true">5.1.</strong> Canonicalization</a></li></ol></li><li class="chapter-item expanded "><a href="engine.html"><strong aria-hidden="true">6.</strong> Chalk engine</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="engine/major_concepts.html"><strong aria-hidden="true">6.1.</strong> Major concepts</a></li><li class="chapter-item expanded "><a href="engine/logic.html"><strong aria-hidden="true">6.2.</strong> Logic</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="engine/logic/coinduction.html"><strong aria-hidden="true">6.2.1.</strong> Coinduction</a></li></ol></li><li class="chapter-item expanded "><a href="engine/slg.html"><strong aria-hidden="true">6.3.</strong> SLG Solver</a></li></ol></li><li class="chapter-item expanded "><a href="recursive.html"><strong aria-hidden="true">7.</strong> Chalk recursive solver</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="recursive/stack.html"><strong aria-hidden="true">7.1.</strong> The stack</a></li><li class="chapter-item expanded "><a href="recursive/inductive_cycles.html"><strong aria-hidden="true">7.2.</strong> Inductive cycles</a></li><li class="chapter-item expanded "><a href="recursive/search_graph.html"><strong aria-hidden="true">7.3.</strong> The search graph and caching</a></li><li class="chapter-item expanded "><a href="recursive/coinduction.html"><strong aria-hidden="true">7.4.</strong> Coinduction</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="glossary.html">Appendix A: Glossary and terminology</a></li><li class="chapter-item expanded affix "><a href="bibliography.html">Appendix B: Bibliography</a></li><li class="chapter-item expanded affix "><a href="todo.html">Appendix C: Incomplete chapters</a></li><li class="chapter-item expanded affix "><a href="publishing.html">Appendix D: Publishing Chalk</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#canonical-queries" id="canonical-queries">Canonical queries</a></h1>
+<p>The &quot;start&quot; of the trait system is the <strong>canonical query</strong> (these are
+both queries in the more general sense of the word – something you
+would like to know the answer to – and in the
+rustc-specific sense).  The idea is that the type
+checker or other parts of the system, may in the course of doing their
+thing want to know whether some trait is implemented for some type
+(e.g., is <code>u32: Debug</code> true?). Or they may want to
+normalize some associated type.</p>
+<p>This section covers queries at a fairly high level of abstraction. The
+subsections look a bit more closely at how these ideas are implemented
+in rustc.</p>
+<h2><a class="header" href="#the-traditional-interactive-prolog-query" id="the-traditional-interactive-prolog-query">The traditional, interactive Prolog query</a></h2>
+<p>In a traditional Prolog system, when you start a query, the solver
+will run off and start supplying you with every possible answer it can
+find. So given something like this:</p>
+<pre><code class="language-text">?- Vec&lt;i32&gt;: AsRef&lt;?U&gt;
+</code></pre>
+<p>The solver might answer:</p>
+<pre><code class="language-text">Vec&lt;i32&gt;: AsRef&lt;[i32]&gt;
+    continue? (y/n)
+</code></pre>
+<p>This <code>continue</code> bit is interesting. The idea in Prolog is that the
+solver is finding <strong>all possible</strong> instantiations of your query that
+are true. In this case, if we instantiate <code>?U = [i32]</code>, then the query
+is true (note that a traditional Prolog interface does not, directly,
+tell us a value for <code>?U</code>, but we can infer one by unifying the
+response with our original query – Rust's solver gives back a
+substitution instead). If we were to hit <code>y</code>, the solver might then
+give us another possible answer:</p>
+<pre><code class="language-text">Vec&lt;i32&gt;: AsRef&lt;Vec&lt;i32&gt;&gt;
+    continue? (y/n)
+</code></pre>
+<p>This answer derives from the fact that there is a reflexive impl
+(<code>impl&lt;T&gt; AsRef&lt;T&gt; for T</code>) for <code>AsRef</code>. If were to hit <code>y</code> again,
+then we might get back a negative response:</p>
+<pre><code class="language-text">no
+</code></pre>
+<p>Naturally, in some cases, there may be no possible answers, and hence
+the solver will just give me back <code>no</code> right away:</p>
+<pre><code class="language-text">?- Box&lt;i32&gt;: Copy
+    no
+</code></pre>
+<p>In some cases, there might be an infinite number of responses. So for
+example if I gave this query, and I kept hitting <code>y</code>, then the solver
+would never stop giving me back answers:</p>
+<pre><code class="language-text">?- Vec&lt;?U&gt;: Clone
+    Vec&lt;i32&gt;: Clone
+        continue? (y/n)
+    Vec&lt;Box&lt;i32&gt;&gt;: Clone
+        continue? (y/n)
+    Vec&lt;Box&lt;Box&lt;i32&gt;&gt;&gt;: Clone
+        continue? (y/n)
+    Vec&lt;Box&lt;Box&lt;Box&lt;i32&gt;&gt;&gt;&gt;: Clone
+        continue? (y/n)
+</code></pre>
+<p>As you can imagine, the solver will gleefully keep adding another
+layer of <code>Box</code> until we ask it to stop, or it runs out of memory.</p>
+<p>Another interesting thing is that queries might still have variables
+in them. For example:</p>
+<pre><code class="language-text">?- Rc&lt;?T&gt;: Clone
+</code></pre>
+<p>might produce the answer:</p>
+<pre><code class="language-text">Rc&lt;?T&gt;: Clone
+    continue? (y/n)
+</code></pre>
+<p>After all, <code>Rc&lt;?T&gt;</code> is true <strong>no matter what type <code>?T</code> is</strong>.</p>
+<p><a name="query-response"></a></p>
+<h2><a class="header" href="#a-trait-query-in-rustc" id="a-trait-query-in-rustc">A trait query in rustc</a></h2>
+<p>The trait queries in rustc work somewhat differently. Instead of
+trying to enumerate <strong>all possible</strong> answers for you, they are looking
+for an <strong>unambiguous</strong> answer. In particular, when they tell you the
+value for a type variable, that means that this is the <strong>only possible
+instantiation</strong> that you could use, given the current set of impls and
+where-clauses, that would be provable. (Internally within the solver,
+though, they can potentially enumerate all possible answers. See
+the description of the SLG solver for details.)</p>
+<p>The response to a trait query in rustc is typically a
+<code>Result&lt;QueryResult&lt;T&gt;, NoSolution&gt;</code> (where the <code>T</code> will vary a bit
+depending on the query itself). The <code>Err(NoSolution)</code> case indicates
+that the query was false and had no answers (e.g., <code>Box&lt;i32&gt;: Copy</code>).
+Otherwise, the <code>QueryResult</code> gives back information about the possible answer(s)
+we did find. It consists of four parts:</p>
+<ul>
+<li><strong>Certainty:</strong> tells you how sure we are of this answer. It can have two
+values:
+<ul>
+<li><code>Proven</code> means that the result is known to be true.
+<ul>
+<li>This might be the result for trying to prove <code>Vec&lt;i32&gt;: Clone</code>,
+say, or <code>Rc&lt;?T&gt;: Clone</code>.</li>
+</ul>
+</li>
+<li><code>Ambiguous</code> means that there were things we could not yet prove to
+be either true <em>or</em> false, typically because more type information
+was needed. (We'll see an example shortly.)
+<ul>
+<li>This might be the result for trying to prove <code>Vec&lt;?T&gt;: Clone</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Var values:</strong> Values for each of the unbound inference variables
+(like <code>?T</code>) that appeared in your original query. (Remember that in Prolog,
+we had to infer these.)
+<ul>
+<li>As we'll see in the example below, we can get back var values even
+for <code>Ambiguous</code> cases.</li>
+</ul>
+</li>
+<li><strong>Region constraints:</strong> these are relations that must hold between
+the lifetimes that you supplied as inputs. We'll ignore these here,
+but see the section on handling regions in traits for
+more details.</li>
+<li><strong>Value:</strong> The query result also comes with a value of type <code>T</code>. For
+some specialized queries – like normalizing associated types –
+this is used to carry back an extra result, but it's often just
+<code>()</code>.</li>
+</ul>
+<h3><a class="header" href="#examples" id="examples">Examples</a></h3>
+<p>Let's work through an example query to see what all the parts mean.
+Consider <a href="https://doc.rust-lang.org/std/borrow/trait.Borrow.html">the <code>Borrow</code> trait</a>. This trait has a number of
+impls; among them, there are these two (for clarity, I've written the
+<code>Sized</code> bounds explicitly):</p>
+<pre><code class="language-rust ignore">impl&lt;T&gt; Borrow&lt;T&gt; for T where T: ?Sized
+impl&lt;T&gt; Borrow&lt;[T]&gt; for Vec&lt;T&gt; where T: Sized
+</code></pre>
+<p><strong>Example 1.</strong> Imagine we are type-checking this (rather artificial)
+bit of code:</p>
+<pre><code class="language-rust ignore">fn foo&lt;A, B&gt;(a: A, vec_b: Option&lt;B&gt;) where A: Borrow&lt;B&gt; { }
+
+fn main() {
+    let mut t: Vec&lt;_&gt; = vec![]; // Type: Vec&lt;?T&gt;
+    let mut u: Option&lt;_&gt; = None; // Type: Option&lt;?U&gt;
+    foo(t, u); // Example 1: requires `Vec&lt;?T&gt;: Borrow&lt;?U&gt;`
+    ...
+}
+</code></pre>
+<p>As the comments indicate, we first create two variables <code>t</code> and <code>u</code>;
+<code>t</code> is an empty vector and <code>u</code> is a <code>None</code> option. Both of these
+variables have unbound inference variables in their type: <code>?T</code>
+represents the elements in the vector <code>t</code> and <code>?U</code> represents the
+value stored in the option <code>u</code>.  Next, we invoke <code>foo</code>; comparing the
+signature of <code>foo</code> to its arguments, we wind up with <code>A = Vec&lt;?T&gt;</code> and
+<code>B = ?U</code>. Therefore, the where clause on <code>foo</code> requires that <code>Vec&lt;?T&gt;: Borrow&lt;?U&gt;</code>. This is thus our first example trait query.</p>
+<p>There are many possible solutions to the query <code>Vec&lt;?T&gt;: Borrow&lt;?U&gt;</code>;
+for example:</p>
+<ul>
+<li><code>?U = Vec&lt;?T&gt;</code>,</li>
+<li><code>?U = [?T]</code>,</li>
+<li><code>?T = u32, ?U = [u32]</code></li>
+<li>and so forth.</li>
+</ul>
+<p>Therefore, the result we get back would be as follows (I'm going to
+ignore region constraints and the &quot;value&quot;):</p>
+<ul>
+<li>Certainty: <code>Ambiguous</code> – we're not sure yet if this holds</li>
+<li>Var values: <code>[?T = ?T, ?U = ?U]</code> – we learned nothing about the values of
+the variables</li>
+</ul>
+<p>In short, the query result says that it is too soon to say much about
+whether this trait is proven. During type-checking, this is not an
+immediate error: instead, the type checker would hold on to this
+requirement (<code>Vec&lt;?T&gt;: Borrow&lt;?U&gt;</code>) and wait. As we'll see in the next
+example, it may happen that <code>?T</code> and <code>?U</code> wind up constrained from
+other sources, in which case we can try the trait query again.</p>
+<p><strong>Example 2.</strong> We can now extend our previous example a bit,
+and assign a value to <code>u</code>:</p>
+<pre><code class="language-rust ignore">fn foo&lt;A, B&gt;(a: A, vec_b: Option&lt;B&gt;) where A: Borrow&lt;B&gt; { }
+
+fn main() {
+    // What we saw before:
+    let mut t: Vec&lt;_&gt; = vec![]; // Type: Vec&lt;?T&gt;
+    let mut u: Option&lt;_&gt; = None; // Type: Option&lt;?U&gt;
+    foo(t, u); // `Vec&lt;?T&gt;: Borrow&lt;?U&gt;` =&gt; ambiguous
+
+    // New stuff:
+    u = Some(vec![]); // ?U = Vec&lt;?V&gt;
+}
+</code></pre>
+<p>As a result of this assignment, the type of <code>u</code> is forced to be
+<code>Option&lt;Vec&lt;?V&gt;&gt;</code>, where <code>?V</code> represents the element type of the
+vector. This in turn implies that <code>?U</code> is unified to <code>Vec&lt;?V&gt;</code>.</p>
+<p>Let's suppose that the type checker decides to revisit the
+&quot;as-yet-unproven&quot; trait obligation we saw before, <code>Vec&lt;?T&gt;: Borrow&lt;?U&gt;</code>. <code>?U</code> is no longer an unbound inference variable; it now
+has a value, <code>Vec&lt;?V&gt;</code>. So, if we &quot;refresh&quot; the query with that value, we get:</p>
+<pre><code class="language-text">Vec&lt;?T&gt;: Borrow&lt;Vec&lt;?V&gt;&gt;
+</code></pre>
+<p>This time, there is only one impl that applies, the reflexive impl:</p>
+<pre><code class="language-text">impl&lt;T&gt; Borrow&lt;T&gt; for T where T: ?Sized
+</code></pre>
+<p>Therefore, the trait checker will answer:</p>
+<ul>
+<li>Certainty: <code>Proven</code></li>
+<li>Var values: <code>[?T = ?T, ?V = ?T]</code></li>
+</ul>
+<p>Here, it is saying that we have indeed proven that the obligation
+holds, and we also know that <code>?T</code> and <code>?V</code> are the same type (but we
+don't know what that type is yet!).</p>
+<p>(In fact, as the function ends here, the type checker would give an
+error at this point, since the element types of <code>t</code> and <code>u</code> are still
+not yet known, even though they are known to be the same.)</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="clauses/coherence.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="canonical_queries/canonicalization.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="clauses/coherence.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="canonical_queries/canonicalization.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="mermaid.min.js"></script>
+        
+        <script type="text/javascript" src="mermaid-init.js"></script>
+        
+
+        
+
+    </body>
+</html>

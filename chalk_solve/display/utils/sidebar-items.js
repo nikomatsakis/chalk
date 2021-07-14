@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["as_display",""],["sanitize_debug_name","Processes a name given by an [`Interner`][chalk_ir::Interner] debug method into something usable by the `display` module."]]});

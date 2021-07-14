@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["SelectedSubgoal",""],["Strand",""]],"type":[["CanonicalStrand",""]]});
