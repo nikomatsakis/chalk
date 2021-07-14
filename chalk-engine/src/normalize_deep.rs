@@ -39,7 +39,9 @@ impl<'i, I: Interner> Folder<'i, I> for DeepNormalizer<'_, 'i, I>
 where
     I: 'i,
 {
-    fn as_dyn(&mut self) -> &mut dyn Folder<'i, I> {
+    type Error = NoSolution;
+
+    fn as_dyn(&mut self) -> &mut dyn Folder<'i, I, Error = Self::Error> {
         self
     }
 

@@ -5,7 +5,7 @@ use std::fmt::Debug;
 use chalk_derive::HasInterner;
 use chalk_ir::fold::{Fold, Folder};
 use chalk_ir::interner::Interner;
-use chalk_ir::{Canonical, DebruijnIndex, Fallible, UniverseMap};
+use chalk_ir::{Canonical, DebruijnIndex, UniverseMap};
 
 #[derive(Clone, Debug, HasInterner)]
 pub(crate) struct Strand<I: Interner> {
@@ -37,11 +37,11 @@ pub(crate) struct SelectedSubgoal {
 
 impl<I: Interner> Fold<I> for Strand<I> {
     type Result = Strand<I>;
-    fn fold_with<'i>(
+    fn fold_with<'i, E>(
         self,
-        folder: &mut dyn Folder<'i, I>,
+        folder: &mut dyn Folder<'i, I, Error = E>,
         outer_binder: DebruijnIndex,
-    ) -> Fallible<Self::Result>
+    ) -> Result<Self::Result, E>
     where
         I: 'i,
     {

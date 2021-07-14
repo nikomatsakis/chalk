@@ -26,7 +26,9 @@ impl<I: Interner> Subst<'_, '_, I> {
 }
 
 impl<'i, I: Interner> Folder<'i, I> for Subst<'_, 'i, I> {
-    fn as_dyn(&mut self) -> &mut dyn Folder<'i, I> {
+    type Error = NoSolution;
+
+    fn as_dyn(&mut self) -> &mut dyn Folder<'i, I, Error = Self::Error> {
         self
     }
 

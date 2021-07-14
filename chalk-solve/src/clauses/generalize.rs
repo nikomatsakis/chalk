@@ -9,8 +9,8 @@
 use chalk_ir::{
     fold::{Fold, Folder},
     interner::{HasInterner, Interner},
-    Binders, BoundVar, DebruijnIndex, Fallible, Lifetime, LifetimeData, Ty, TyKind, TyVariableKind,
-    VariableKind, VariableKinds,
+    Binders, BoundVar, DebruijnIndex, Fallible, Lifetime, LifetimeData, NoSolution, Ty, TyKind,
+    TyVariableKind, VariableKind, VariableKinds,
 };
 use rustc_hash::FxHashMap;
 
@@ -42,7 +42,9 @@ impl<I: Interner> Generalize<'_, I> {
 }
 
 impl<'i, I: Interner> Folder<'i, I> for Generalize<'i, I> {
-    fn as_dyn(&mut self) -> &mut dyn Folder<'i, I> {
+    type Error = NoSolution;
+
+    fn as_dyn(&mut self) -> &mut dyn Folder<'i, I, Error = Self::Error> {
         self
     }
 

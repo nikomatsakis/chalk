@@ -10,11 +10,11 @@ use std::marker::PhantomData;
 
 impl<T: Fold<I>, I: Interner> Fold<I> for Vec<T> {
     type Result = Vec<T::Result>;
-    fn fold_with<'i>(
+    fn fold_with<'i, E>(
         self,
-        folder: &mut dyn Folder<'i, I>,
+        folder: &mut dyn Folder<'i, I, Error = E>,
         outer_binder: DebruijnIndex,
-    ) -> Fallible<Self::Result>
+    ) -> Result<Self::Result, E>
     where
         I: 'i,
     {
@@ -24,11 +24,11 @@ impl<T: Fold<I>, I: Interner> Fold<I> for Vec<T> {
 
 impl<T: Fold<I>, I: Interner> Fold<I> for Box<T> {
     type Result = Box<T::Result>;
-    fn fold_with<'i>(
+    fn fold_with<'i, E>(
         self,
-        folder: &mut dyn Folder<'i, I>,
+        folder: &mut dyn Folder<'i, I, Error = E>,
         outer_binder: DebruijnIndex,
-    ) -> Fallible<Self::Result>
+    ) -> Result<Self::Result, E>
     where
         I: 'i,
     {
@@ -40,7 +40,7 @@ macro_rules! tuple_fold {
     ($($n:ident),*) => {
         impl<$($n: Fold<I>,)* I: Interner> Fold<I> for ($($n,)*) {
             type Result = ($($n::Result,)*);
-            fn fold_with<'i>(self, folder: &mut dyn Folder<'i, I>, outer_binder: DebruijnIndex) -> Fallible<Self::Result>
+            fn fold_with<'i, Error>(self, folder: &mut dyn Folder<'i, I, Error = Error>, outer_binder: DebruijnIndex) -> Result<Self::Result, Error>
             where
                 I: 'i,
             {
@@ -59,11 +59,11 @@ tuple_fold!(A, B, C, D, E);
 
 impl<T: Fold<I>, I: Interner> Fold<I> for Option<T> {
     type Result = Option<T::Result>;
-    fn fold_with<'i>(
+    fn fold_with<'i, E>(
         self,
-        folder: &mut dyn Folder<'i, I>,
+        folder: &mut dyn Folder<'i, I, Error = E>,
         outer_binder: DebruijnIndex,
-    ) -> Fallible<Self::Result>
+    ) -> Result<Self::Result, E>
     where
         I: 'i,
     {
@@ -76,11 +76,11 @@ impl<T: Fold<I>, I: Interner> Fold<I> for Option<T> {
 
 impl<I: Interner> Fold<I> for GenericArg<I> {
     type Result = GenericArg<I>;
-    fn fold_with<'i>(
+    fn fold_with<'i, E>(
         self,
-        folder: &mut dyn Folder<'i, I>,
+        folder: &mut dyn Folder<'i, I, Error = E>,
         outer_binder: DebruijnIndex,
-    ) -> Fallible<Self::Result>
+    ) -> Result<Self::Result, E>
     where
         I: 'i,
     {
@@ -96,11 +96,11 @@ impl<I: Interner> Fold<I> for GenericArg<I> {
 
 impl<I: Interner> Fold<I> for Substitution<I> {
     type Result = Substitution<I>;
-    fn fold_with<'i>(
+    fn fold_with<'i, E>(
         self,
-        folder: &mut dyn Folder<'i, I>,
+        folder: &mut dyn Folder<'i, I, Error = E>,
         outer_binder: DebruijnIndex,
-    ) -> Fallible<Self::Result>
+    ) -> Result<Self::Result, E>
     where
         I: 'i,
     {
@@ -116,11 +116,11 @@ impl<I: Interner> Fold<I> for Substitution<I> {
 
 impl<I: Interner> Fold<I> for Goals<I> {
     type Result = Goals<I>;
-    fn fold_with<'i>(
+    fn fold_with<'i, E>(
         self,
-        folder: &mut dyn Folder<'i, I>,
+        folder: &mut dyn Folder<'i, I, Error = E>,
         outer_binder: DebruijnIndex,
-    ) -> Fallible<Self::Result>
+    ) -> Result<Self::Result, E>
     where
         I: 'i,
     {
@@ -135,11 +135,11 @@ impl<I: Interner> Fold<I> for Goals<I> {
 
 impl<I: Interner> Fold<I> for ProgramClauses<I> {
     type Result = ProgramClauses<I>;
-    fn fold_with<'i>(
+    fn fold_with<'i, E>(
         self,
-        folder: &mut dyn Folder<'i, I>,
+        folder: &mut dyn Folder<'i, I, Error = E>,
         outer_binder: DebruijnIndex,
-    ) -> Fallible<Self::Result>
+    ) -> Result<Self::Result, E>
     where
         I: 'i,
     {
@@ -154,11 +154,11 @@ impl<I: Interner> Fold<I> for ProgramClauses<I> {
 
 impl<I: Interner> Fold<I> for QuantifiedWhereClauses<I> {
     type Result = QuantifiedWhereClauses<I>;
-    fn fold_with<'i>(
+    fn fold_with<'i, E>(
         self,
-        folder: &mut dyn Folder<'i, I>,
+        folder: &mut dyn Folder<'i, I, Error = E>,
         outer_binder: DebruijnIndex,
-    ) -> Fallible<Self::Result>
+    ) -> Result<Self::Result, E>
     where
         I: 'i,
     {
@@ -173,11 +173,11 @@ impl<I: Interner> Fold<I> for QuantifiedWhereClauses<I> {
 
 impl<I: Interner> Fold<I> for Constraints<I> {
     type Result = Constraints<I>;
-    fn fold_with<'i>(
+    fn fold_with<'i, E>(
         self,
-        folder: &mut dyn Folder<'i, I>,
+        folder: &mut dyn Folder<'i, I, Error = E>,
         outer_binder: DebruijnIndex,
-    ) -> Fallible<Self::Result>
+    ) -> Result<Self::Result, E>
     where
         I: 'i,
     {
@@ -196,11 +196,11 @@ macro_rules! copy_fold {
     ($t:ty) => {
         impl<I: Interner> $crate::fold::Fold<I> for $t {
             type Result = Self;
-            fn fold_with<'i>(
+            fn fold_with<'i, E>(
                 self,
-                _folder: &mut dyn ($crate::fold::Folder<'i, I>),
+                _folder: &mut dyn ($crate::fold::Folder<'i, I, Error = E>),
                 _outer_binder: DebruijnIndex,
-            ) -> ::chalk_ir::Fallible<Self::Result>
+            ) -> ::std::result::Result<Self::Result, E>
             where
                 I: 'i,
             {
@@ -231,11 +231,11 @@ macro_rules! id_fold {
     ($t:ident) => {
         impl<I: Interner> $crate::fold::Fold<I> for $t<I> {
             type Result = $t<I>;
-            fn fold_with<'i>(
+            fn fold_with<'i, E>(
                 self,
-                _folder: &mut dyn ($crate::fold::Folder<'i, I>),
+                _folder: &mut dyn ($crate::fold::Folder<'i, I, Error = E>),
                 _outer_binder: DebruijnIndex,
-            ) -> ::chalk_ir::Fallible<Self::Result>
+            ) -> ::std::result::Result<Self::Result, E>
             where
                 I: 'i,
             {
@@ -256,11 +256,11 @@ id_fold!(GeneratorId);
 id_fold!(ForeignDefId);
 
 impl<I: Interner> SuperFold<I> for ProgramClauseData<I> {
-    fn super_fold_with<'i>(
+    fn super_fold_with<'i, E>(
         self,
-        folder: &mut dyn Folder<'i, I>,
+        folder: &mut dyn Folder<'i, I, Error = E>,
         outer_binder: DebruijnIndex,
-    ) -> ::chalk_ir::Fallible<Self::Result>
+    ) -> ::std::result::Result<Self::Result, E>
     where
         I: 'i,
     {
@@ -269,11 +269,11 @@ impl<I: Interner> SuperFold<I> for ProgramClauseData<I> {
 }
 
 impl<I: Interner> SuperFold<I> for ProgramClause<I> {
-    fn super_fold_with<'i>(
+    fn super_fold_with<'i, E>(
         self,
-        folder: &mut dyn Folder<'i, I>,
+        folder: &mut dyn Folder<'i, I, Error = E>,
         outer_binder: DebruijnIndex,
-    ) -> ::chalk_ir::Fallible<Self::Result>
+    ) -> ::std::result::Result<Self::Result, E>
     where
         I: 'i,
     {
@@ -287,11 +287,11 @@ impl<I: Interner> SuperFold<I> for ProgramClause<I> {
 impl<I: Interner> Fold<I> for PhantomData<I> {
     type Result = PhantomData<I>;
 
-    fn fold_with<'i>(
+    fn fold_with<'i, E>(
         self,
-        _folder: &mut dyn Folder<'i, I>,
+        _folder: &mut dyn Folder<'i, I, Error = E>,
         _outer_binder: DebruijnIndex,
-    ) -> ::chalk_ir::Fallible<Self::Result>
+    ) -> ::std::result::Result<Self::Result, E>
     where
         I: 'i,
     {

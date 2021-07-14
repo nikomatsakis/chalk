@@ -299,11 +299,11 @@ fn derive_fold(mut s: synstructure::Structure) -> TokenStream {
         quote! {
             type Result = #result;
 
-            fn fold_with<'i>(
+            fn fold_with<'i, E>(
                 self,
-                folder: &mut dyn ::chalk_ir::fold::Folder < 'i, #interner >,
+                folder: &mut dyn ::chalk_ir::fold::Folder < 'i, #interner, Error = E >,
                 outer_binder: ::chalk_ir::DebruijnIndex,
-            ) -> ::chalk_ir::Fallible<Self::Result>
+            ) -> ::std::result::Result<Self::Result, E>
             where
                 #interner: 'i,
             {

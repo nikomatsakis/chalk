@@ -7,11 +7,11 @@ use crate::*;
 
 impl<I: Interner> Fold<I> for FnPointer<I> {
     type Result = FnPointer<I>;
-    fn fold_with<'i>(
+    fn fold_with<'i, E>(
         self,
-        folder: &mut dyn Folder<'i, I>,
+        folder: &mut dyn Folder<'i, I, Error = E>,
         outer_binder: DebruijnIndex,
-    ) -> Fallible<Self::Result>
+    ) -> Result<Self::Result, E>
     where
         I: 'i,
     {
@@ -39,11 +39,11 @@ where
     I: Interner,
 {
     type Result = Binders<T::Result>;
-    fn fold_with<'i>(
+    fn fold_with<'i, E>(
         self,
-        folder: &mut dyn Folder<'i, I>,
+        folder: &mut dyn Folder<'i, I, Error = E>,
         outer_binder: DebruijnIndex,
-    ) -> Fallible<Self::Result>
+    ) -> Result<Self::Result, E>
     where
         I: 'i,
     {
@@ -66,11 +66,11 @@ where
     <T as Fold<I>>::Result: HasInterner<Interner = I>,
 {
     type Result = Canonical<T::Result>;
-    fn fold_with<'i>(
+    fn fold_with<'i, E>(
         self,
-        folder: &mut dyn Folder<'i, I>,
+        folder: &mut dyn Folder<'i, I, Error = E>,
         outer_binder: DebruijnIndex,
-    ) -> Fallible<Self::Result>
+    ) -> Result<Self::Result, E>
     where
         I: 'i,
     {

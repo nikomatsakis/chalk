@@ -2841,7 +2841,9 @@ impl<'a, I: Interner> ToGenericArg<I> for (usize, &'a VariableKind<I>) {
 }
 
 impl<'i, I: Interner, A: AsParameters<I>> Folder<'i, I> for &SubstFolder<'i, I, A> {
-    fn as_dyn(&mut self) -> &mut dyn Folder<'i, I> {
+    type Error = NoSolution;
+
+    fn as_dyn(&mut self) -> &mut dyn Folder<'i, I, Error = Self::Error> {
         self
     }
 
