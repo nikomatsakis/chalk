@@ -228,6 +228,15 @@ where
         }
     }
 
+    /// Invoked for each occurence of a `Binders`, before visiting them.
+    fn before_binders(&mut self, _kinds: &crate::VariableKinds<I>) {}
+    /// Invoked for each occurence of a `Canonical`, before visiting them.
+    fn before_canonical(&mut self, _kinds: &crate::CanonicalVarKinds<I>) {}
+    /// Invoked for each occurence of a `FnPointer`, before visiting them.
+    fn before_fn_pointer_substs(&mut self, _number: usize) {}
+    /// Invoked for each occurence of a type introducing binders, after visiting them.
+    fn after_any_binders(&mut self) {}
+
     /// Gets the visitor's interner.
     fn interner(&self) -> &'i I;
 }

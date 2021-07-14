@@ -15,14 +15,18 @@ impl<I: Interner> Visit<I> for FnPointer<I> {
     where
         I: 'i,
     {
-        self.substitution
-            .visit_with(visitor, outer_binder.shifted_in())
+        visitor.before_fn_pointer_substs(self.num_binders);
+        let result = self
+            .substitution
+            .visit_with(visitor, outer_binder.shifted_in());
+        visitor.after_any_binders();
+        result
     }
 }
 
 impl<T, I: Interner> Visit<I> for Binders<T>
 where
-    T: HasInterner + Visit<I>,
+    T: HasInterner<Interner = I> + Visit<I>,
 {
     fn visit_with<'i, B>(
         &self,
@@ -32,7 +36,10 @@ where
     where
         I: 'i,
     {
-        self.value.visit_with(visitor, outer_binder.shifted_in())
+        visitor.before_binders(&self.binders);
+        let result = self.value.visit_with(visitor, outer_binder.shifted_in());
+        visitor.after_any_binders();
+        result
     }
 }
 
@@ -49,6 +56,9 @@ where
     where
         I: 'i,
     {
-        self.value.visit_with(visitor, outer_binder.shifted_in())
+        visitor.before_canonical(&self.binders);
+        let result = self.value.visit_with(visitor, outer_binder.shifted_in());
+        visitor.after_any_binders();
+        result
     }
 }

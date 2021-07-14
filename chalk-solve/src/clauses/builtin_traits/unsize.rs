@@ -59,7 +59,7 @@ impl<'a, I: Interner> Visitor<'a, I> for UnsizeParameterCollector<'a, I> {
 
 fn outer_binder_parameters_used<I: Interner>(
     interner: &I,
-    v: &Binders<impl Visit<I> + HasInterner>,
+    v: &Binders<impl Visit<I> + HasInterner<Interner = I>>,
 ) -> HashSet<usize> {
     let mut visitor = UnsizeParameterCollector {
         interner,
@@ -123,7 +123,7 @@ impl<'a, 'p, I: Interner> Visitor<'a, I> for ParameterOccurenceCheck<'a, 'p, I> 
 
 fn uses_outer_binder_params<I: Interner>(
     interner: &I,
-    v: &Binders<impl Visit<I> + HasInterner>,
+    v: &Binders<impl Visit<I> + HasInterner<Interner = I>>,
     parameters: &HashSet<usize>,
 ) -> bool {
     let mut visitor = ParameterOccurenceCheck {
